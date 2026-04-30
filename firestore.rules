@@ -1,0 +1,193 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 2. Global Helpers
+    function isSignedIn() { return request.auth != null; }
+    function isAdmin() { 
+      return isSignedIn() && (
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid)) ||
+        (request.auth.token.email == "mdrifathossainpersonal@gmail.com" && request.auth.token.email_verified == true)
+      );
+    }
+    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+
+    // 3. Products
+    match /products/{productId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidProduct(incoming()) && incoming().createdAt == request.time;
+      allow update: if isAdmin() && isValidProduct(incoming()) && (
+        incoming().diff(existing()).affectedKeys().hasOnly(['name', 'description', 'price', 'category', 'imageUrl', 'demoUrl', 'buyUrl', 'features', 'updatedAt'])
+      );
+      allow delete: if isAdmin();
+
+      function isValidProduct(data) {
+        return data.name is string && data.name.size() > 0 && data.name.size() <= 200 &&
+               data.description is string && data.description.size() <= 5000 &&
+               data.price is number && data.price >= 0 &&
+               data.category is string && data.category.size() <= 100;
+      }
+    }
+
+    // 4. Licenses
+    match /licenses/{licenseId} {
+      allow read: if isAdmin();
+      allow write: if isAdmin();
+      
+      allow create: if isAdmin() && isValidLicense(incoming()) && incoming().createdAt == request.time;
+      
+      function isValidLicense(data) {
+        return data.productId is string && isValidId(data.productId) &&
+               data.key is string && data.key.size() > 0 && data.key.size() <= 100 &&
+               data.status in ['available', 'used'];
+      }
+    }
+
+    // 5. Coupons
+    match /coupons/{couponId} {
+      allow read: if isSignedIn(); // Users need to check if a coupon is valid
+      allow write: if isAdmin();
+      
+      allow create: if isAdmin() && isValidCoupon(incoming()) && incoming().createdAt == request.time;
+      
+      function isValidCoupon(data) {
+        return data.code is string && data.code.size() > 0 && data.code.size() <= 20 &&
+               data.discount is number && data.discount >= 0 &&
+               data.type in ['percentage', 'fixed'];
+      }
+    }
+
+    // 6. Reviews
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow create: if isSignedIn() && isValidReview(incoming()) && incoming().createdAt == request.time;
+      allow delete: if isAdmin() || (isSignedIn() && existing().userId == request.auth.uid);
+      
+      function isValidReview(data) {
+        return data.productId is string && isValidId(data.productId) &&
+               data.rating is number && data.rating >= 1 && data.rating <= 5 &&
+               data.comment is string && data.comment.size() > 0 && data.comment.size() <= 1000 &&
+               data.userId == request.auth.uid;
+      }
+    }
+
+    // 7. Subscribers
+    match /subscribers/{subscriberId} {
+      allow read: if isAdmin();
+      allow create: if isValidSubscriber(incoming()) && incoming().createdAt == request.time;
+      allow delete: if isAdmin();
+      
+      function isValidSubscriber(data) {
+        return data.email is string && data.email.size() > 0 && data.email.size() <= 255;
+      }
+    }
+
+    // 8. Announcements
+    match /announcements/{announcementId} {
+      allow read: if true;
+      allow write: if isAdmin();
+      
+      allow create: if isAdmin() && isValidAnnouncement(incoming()) && incoming().createdAt == request.time;
+      
+      function isValidAnnouncement(data) {
+        return data.title is string && data.title.size() > 0 && data.title.size() <= 200 &&
+               data.content is string && data.content.size() > 0 && data.content.size() <= 2000 &&
+               data.type in ['info', 'warning', 'success'];
+      }
+    }
+
+    // 9. Orders
+    match /orders/{orderId} {
+      allow read: if isSignedIn() && (request.auth.uid == resource.data.userId || isAdmin());
+      allow create: if isSignedIn() && isValidOrder(incoming()) && incoming().createdAt == request.time;
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+      
+      function isValidOrder(data) {
+        return data.productId is string && isValidId(data.productId) &&
+               data.amount is number && data.amount >= 0 &&
+               data.customerEmail == request.auth.token.email &&
+               data.status in ['pending', 'paid', 'delivered', 'rejected', 'completed'] &&
+               data.userId == request.auth.uid;
+      }
+    }
+
+    // 10. Admins
+    match /admins/{adminId} {
+      allow read: if isSignedIn() && request.auth.uid == adminId;
+      allow write: if false;
+    }
+
+    // 11. Site Settings
+    match /settings/global {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    // 12. Blog
+    match /blog/{postId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidBlogPost(incoming()) && incoming().createdAt == request.time;
+      allow update: if isAdmin() && isValidBlogPost(incoming()) && (
+        incoming().diff(existing()).affectedKeys().hasOnly(['title', 'content', 'excerpt', 'author', 'category', 'imageUrl', 'updatedAt'])
+      );
+      allow delete: if isAdmin();
+
+      function isValidBlogPost(data) {
+        return data.title is string && data.title.size() > 0 && data.title.size() <= 300 &&
+               data.content is string && data.content.size() > 0 && data.content.size() <= 50000 &&
+               data.author is string && data.author.size() > 0;
+      }
+    }
+
+    // 13. Notifications
+    match /notifications/{notificationId} {
+      allow read: if isAdmin();
+      allow create: if isSignedIn() && isValidNotification(incoming()) && incoming().createdAt == request.time;
+      allow delete: if isAdmin();
+
+      function isValidNotification(data) {
+        return data.to is string && data.to.size() > 0 &&
+               data.subject is string && data.subject.size() > 0 &&
+               data.body is string && data.body.size() > 0 &&
+               data.type == "order_alert";
+      }
+    }
+
+    // 14. Inquiries
+    match /inquiries/{inquiryId} {
+      allow read: if isAdmin();
+      allow create: if isValidInquiry(incoming()) && incoming().createdAt == request.time;
+      allow delete: if isAdmin();
+
+      function isValidInquiry(data) {
+        return data.name is string && data.name.size() > 0 && data.name.size() <= 200 &&
+               data.email is string && data.email.size() > 0 && data.email.size() <= 255 &&
+               data.subject is string && data.subject.size() > 0 && data.subject.size() <= 300 &&
+               data.message is string && data.message.size() > 0 && data.message.size() <= 5000;
+      }
+    }
+
+    // 15. User Profiles
+    match /users/{userId} {
+      allow read: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      
+      allow create: if isSignedIn() && request.auth.uid == userId && isValidUser(incoming());
+      allow update: if isSignedIn() && request.auth.uid == userId && isValidUser(incoming());
+      allow delete: if isAdmin();
+
+      function isValidUser(data) {
+        return (data.get('displayName', '') is string && data.get('displayName', '').size() <= 200) &&
+               (data.get('photoURL', '') is string && data.get('photoURL', '').size() <= 1000000) &&
+               (data.get('email', '') is string && data.get('email', '').size() <= 255) &&
+               (data.get('role', 'user') == 'admin' ? isAdmin() : true) &&
+               (data.get('updatedAt', request.time) <= request.time);
+      }
+    }
+  }
+}

@@ -1,0 +1,240 @@
+{
+  "entities": {
+    "product": {
+      "title": "Product",
+      "description": "Software product or service offered in the marketplace",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Name of the software" },
+        "description": { "type": "string", "description": "Detailed description" },
+        "price": { "type": "number", "description": "Price in USD" },
+        "category": { "type": "string", "description": "Category (e.g., PHP/MySQL, Invoice Software)" },
+        "imageUrl": { "type": "string", "description": "Thumbnail image URL" },
+        "demoUrl": { "type": "string", "description": "Live demo URL" },
+        "buyUrl": { "type": "string", "description": "Direct purchase link" },
+        "features": { "type": "array", "description": "List of key features" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "description", "price", "category"]
+    },
+    "admin": {
+      "title": "Admin",
+      "description": "User with administrative privileges",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string" }
+      },
+      "required": ["uid", "email"]
+    },
+    "settings": {
+      "title": "Site Settings",
+      "description": "Global configuration for site branding and metadata",
+      "type": "object",
+      "properties": {
+        "siteName": { "type": "string" },
+        "logoUrl": { "type": "string" },
+        "headerTitle": { "type": "string" },
+        "faviconUrl": { "type": "string" },
+        "description": { "type": "string" },
+        "basicPrice": { "type": "number" },
+        "bkashNumber": { "type": "string" },
+        "contactEmail": { "type": "string" },
+        "currencySymbol": { "type": "string" }
+      }
+    },
+    "order": {
+      "title": "Order",
+      "description": "Customer purchase order for a digital product",
+      "type": "object",
+      "properties": {
+        "productId": { "type": "string" },
+        "productName": { "type": "string" },
+        "amount": { "type": "number" },
+        "customerName": { "type": "string" },
+        "customerEmail": { "type": "string" },
+        "bkashNumber": { "type": "string" },
+        "transactionId": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "paid", "delivered", "rejected"] },
+        "licenseKey": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "userId": { "type": "string" }
+      },
+      "required": ["productId", "amount", "customerEmail", "status"]
+    },
+    "license": {
+      "title": "License",
+      "description": "Activation key for a product",
+      "type": "object",
+      "properties": {
+        "productId": { "type": "string" },
+        "productName": { "type": "string" },
+        "key": { "type": "string" },
+        "status": { "type": "string", "enum": ["available", "used"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["productId", "key", "status"]
+    },
+    "coupon": {
+      "title": "Coupon",
+      "description": "Discount code for purchases",
+      "type": "object",
+      "properties": {
+        "code": { "type": "string" },
+        "discount": { "type": "number" },
+        "type": { "type": "string", "enum": ["percentage", "fixed"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["code", "discount", "type"]
+    },
+    "review": {
+      "title": "Review",
+      "description": "Customer feedback for a product",
+      "type": "object",
+      "properties": {
+        "productId": { "type": "string" },
+        "productName": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "rating": { "type": "number" },
+        "comment": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["productId", "rating", "comment"]
+    },
+    "subscriber": {
+      "title": "Subscriber",
+      "description": "Newsletter mailing list entry",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email"]
+    },
+    "announcement": {
+      "title": "Announcement",
+      "description": "Site-wide update or news",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "type": { "type": "string", "enum": ["info", "warning", "success"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "content", "type"]
+    },
+    "blogPost": {
+      "title": "Blog Post",
+      "description": "Article or update published on the blog",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "excerpt": { "type": "string" },
+        "author": { "type": "string" },
+        "category": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "content", "author"]
+    },
+    "inquiry": {
+      "title": "Inquiry",
+      "description": "Customer message from contact form",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "subject": { "type": "string" },
+        "message": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "email", "subject", "message"]
+    },
+    "notification": {
+      "title": "Notification",
+      "description": "System notification or email log",
+      "type": "object",
+      "properties": {
+        "to": { "type": "string" },
+        "subject": { "type": "string" },
+        "body": { "type": "string" },
+        "orderId": { "type": "string" },
+        "type": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["to", "subject", "body", "type"]
+    },
+    "user": {
+      "title": "User Profile",
+      "description": "Extended user profile information",
+      "type": "object",
+      "properties": {
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "user",
+      "description": "Collection of extended user profiles"
+    },
+    "products/{productId}": {
+      "schema": "product",
+      "description": "Collection of available software products"
+    },
+    "admins/{adminId}": {
+      "schema": "admin",
+      "description": "List of authorized administrators"
+    },
+    "settings/global": {
+      "schema": "settings",
+      "description": "Single document for global site configuration"
+    },
+    "orders/{orderId}": {
+      "schema": "order",
+      "description": "Collection of purchase orders"
+    },
+    "licenses/{licenseId}": {
+      "schema": "license",
+      "description": "Collection of product activation keys"
+    },
+    "coupons/{couponId}": {
+      "schema": "coupon",
+      "description": "Collection of discount codes"
+    },
+    "reviews/{reviewId}": {
+      "schema": "review",
+      "description": "Collection of customer feedback"
+    },
+    "subscribers/{subscriberId}": {
+      "schema": "subscriber",
+      "description": "Collection of newsletter subscriptions"
+    },
+    "announcements/{announcementId}": {
+      "schema": "announcement",
+      "description": "Collection of site-wide notifications"
+    },
+    "blog/{postId}": {
+      "schema": "blogPost",
+      "description": "Collection of blog articles"
+    },
+    "inquiries/{inquiryId}": {
+      "schema": "inquiry",
+      "description": "Collection of customer messages and contact form submissions"
+    },
+    "notifications/{notificationId}": {
+      "schema": "notification",
+      "description": "Log of sent notifications and emails"
+    }
+  }
+}
