@@ -48,7 +48,8 @@ export function Home() {
       period: isYearly ? 'Lifetime Support' : 'One Time Payment',
       desc: 'Perfect for small retail shops getting started with automation.',
       features: ['Up to 1,000 Products', 'Single User Access', 'Basic Reports', 'Standard Email Support'],
-      href: user ? '/marketplace' : '/auth'
+      checkoutPath: isYearly ? '/checkout/starter-lifetime' : '/checkout/starter-one-time',
+      href: user ? (isYearly ? '/checkout/starter-lifetime' : '/checkout/starter-one-time') : '/auth'
     },
     {
       name: 'Pro Plan',
@@ -58,7 +59,8 @@ export function Home() {
       desc: 'Manage your store like a pro with advanced features.',
       features: ['Unlimited Products', 'Multi-User Access', 'Advanced POS System', 'Cloud Database Sync', 'Priority 24/7 Support', 'Custom Reports'],
       featured: true,
-      href: user ? '/marketplace' : '/auth'
+      checkoutPath: isYearly ? '/checkout/pro-lifetime' : '/checkout/pro-one-time',
+      href: user ? (isYearly ? '/checkout/pro-lifetime' : '/checkout/pro-one-time') : '/auth'
     },
     {
       name: 'Enterprise',
@@ -67,6 +69,7 @@ export function Home() {
       period: 'Billed Yearly',
       desc: 'Tailored solutions for large chain shops and supermarkets.',
       features: ['Multi-Store Connection', 'Warehouse Tracking', 'Full Accounting Suite', 'Dedicated Account Manager', 'Custom Integration'],
+      checkoutPath: '/contact',
       href: '/contact'
     }
   ];
@@ -528,6 +531,7 @@ export function Home() {
 
                 <Link 
                   to={plan.href}
+                  state={!user && plan.checkoutPath ? { from: { pathname: plan.checkoutPath } } : undefined}
                   className={cn(
                     "w-full py-4 rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all active:scale-95 text-center",
                     plan.featured 

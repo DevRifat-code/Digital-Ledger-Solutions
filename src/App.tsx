@@ -6,6 +6,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { testFirestoreConnection } from './lib/firebase';
+import { ThemeProvider } from './context/ThemeContext';
 import { useSiteSettings } from './hooks/useSiteSettings';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
@@ -28,6 +29,36 @@ function Layout({ children }: { children: React.ReactNode }) {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith('/admin');
+  const [progress, setProgress] = useState(0);
+  const [isVerifyingRoute, setIsVerifyingRoute] = useState(false);
+
+  useEffect(() => {
+    setIsVerifyingRoute(true);
+    setProgress(15);
+    
+    const t1 = setTimeout(() => {
+      setProgress(45);
+    }, 80);
+    
+    const t2 = setTimeout(() => {
+      setProgress(75);
+    }, 250);
+
+    const t3 = setTimeout(() => {
+      setProgress(100);
+    }, 500);
+
+    const t4 = setTimeout(() => {
+      setIsVerifyingRoute(false);
+    }, 850);
+
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      clearTimeout(t4);
+    };
+  }, [location.pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -50,7 +81,29 @@ function Layout({ children }: { children: React.ReactNode }) {
   }, [location]);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 selection:bg-indigo-500/30">
+    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 selection:bg-indigo-500/30 transition-colors duration-300">
+      {/* Dynamic top-of-page progress bar during page transitions */}
+      <AnimatePresence>
+        {isVerifyingRoute && (
+          <motion.div
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.2, ease: 'easeOut' } }}
+            className="fixed top-0 left-0 right-0 z-[9999] h-[3px] bg-indigo-50/20 pointer-events-none"
+          >
+            <motion.div
+              initial={{ width: '0%' }}
+              animate={{ width: `${progress}%` }}
+              transition={{ type: 'spring', stiffness: 85, damping: 15 }}
+              className="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-500 relative"
+            >
+              {/* Shimmer / light glow indicator at leading edge */}
+              <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-r from-transparent via-white/40 to-white blur-[2px]" />
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-emerald-400 blur-md opacity-75" />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {!isAdminPage && <Navbar />}
       <main>
         {children}
@@ -75,7 +128,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 
       {!isAdminPage && (
         <a 
-          href="https://wa.me/8801700000000" 
+          href="https://wa.me/8801889933520" 
           target="_blank"
           rel="noopener noreferrer"
           className="fixed bottom-10 left-10 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl transition-transform hover:scale-110 active:scale-95 group"
@@ -127,22 +180,24 @@ export default function App() {
   }, [settings]);
 
   return (
-    <Router>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/marketplace" element={<Marketplace />} />
-          <Route path="/product/:id" element={<ProductDetails />} />
-          <Route path="/checkout/:id" element={<Checkout />} />
-          <Route path="/success/:orderId" element={<OrderSuccess />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:id" element={<BlogPostDetails />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/admin/*" element={<Admin />} />
-        </Routes>
-      </Layout>
-    </Router>
+    <ThemeProvider>
+      <Router>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/marketplace" element={<Marketplace />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/checkout/:id" element={<Checkout />} />
+            <Route path="/success/:orderId" element={<OrderSuccess />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:id" element={<BlogPostDetails />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/admin/*" element={<Admin />} />
+          </Routes>
+        </Layout>
+      </Router>
+    </ThemeProvider>
   );
 }

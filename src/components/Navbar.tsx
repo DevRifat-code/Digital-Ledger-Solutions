@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { Menu, X, LayoutGrid, Home, User, Code2, LogIn, Zap } from 'lucide-react';
+import { Menu, X, LayoutGrid, Home, User, Code2, LogIn, Zap, Sun, Moon } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { useSiteSettings } from '../hooks/useSiteSettings';
 import { auth } from '../lib/firebase';
 import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
+import { useTheme } from '../context/ThemeContext';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +14,7 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const { settings } = useSiteSettings();
   const location = useLocation();
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (u) => setUser(u));
@@ -45,10 +47,10 @@ export function Navbar() {
       isScrolled 
         ? location.pathname === '/' 
           ? "bg-[#061D19]/80 backdrop-blur-md border-[#0a2e28] text-white shadow-[0_10px_30px_rgb(6,29,25,0.4)] border-b py-0" 
-          : "bg-white/70 backdrop-blur-lg border-b border-slate-200/50 text-slate-900 shadow-lg shadow-slate-100/50 py-0"
+          : "bg-white/70 dark:bg-slate-900/80 backdrop-blur-lg border-b border-slate-200/50 dark:border-slate-800 text-slate-900 dark:text-white shadow-lg shadow-slate-100/50 dark:shadow-none py-0"
         : location.pathname === '/' 
           ? "bg-transparent text-white border-b border-transparent py-2" 
-          : "bg-white/80 backdrop-blur-md border-b border-slate-200 text-slate-900 py-2"
+          : "bg-white/80 dark:bg-slate-900/50 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white py-2"
     )}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className={cn(
@@ -65,7 +67,7 @@ export function Navbar() {
             )}
             <span className={cn(
               "font-display font-black text-2xl tracking-tighter",
-              location.pathname === '/' ? "text-white" : "text-slate-900"
+              location.pathname === '/' ? "text-white" : "text-slate-900 dark:text-white"
             )}>
               {settings.siteName}
             </span>
@@ -85,9 +87,9 @@ export function Navbar() {
                   }}
                   className={cn(
                     "text-[13px] font-black uppercase tracking-widest transition-all hover:opacity-100",
-                    location.pathname === link.href ? "opacity-100" : "opacity-60 hover:opacity-80",
+                    location.pathname === link.href ? "opacity-100" : "opacity-60 dark:opacity-75 hover:opacity-80 dark:hover:opacity-100",
                     location.pathname === '/' && location.pathname === link.href ? "text-yellow-500" : 
-                    location.pathname !== '/' && location.pathname === link.href ? "text-emerald-600" : ""
+                    location.pathname !== '/' && location.pathname === link.href ? "text-emerald-600 dark:text-emerald-400" : ""
                   )}
                 >
                   {link.name}
@@ -96,11 +98,50 @@ export function Navbar() {
             </div>
             
             <div className="flex items-center space-x-4 pl-6 border-l border-white/10">
+              {/* Theme Toggle Button */}
+              <button
+                onClick={toggleTheme}
+                className={cn(
+                  "p-2.5 rounded-xl transition-all relative overflow-hidden border",
+                  location.pathname === '/' 
+                    ? "bg-white/10 hover:bg-white/20 border-white/10 text-white" 
+                    : "bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
+                )}
+                aria-label="Toggle Theme"
+              >
+                <div className="relative w-5 h-5 flex items-center justify-center">
+                  <motion.div
+                    initial={false}
+                    animate={{ 
+                      scale: theme === 'dark' ? 0 : 1, 
+                      rotate: theme === 'dark' ? -90 : 0,
+                      opacity: theme === 'dark' ? 0 : 1 
+                    }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute"
+                  >
+                    <Sun size={20} className="text-amber-500" />
+                  </motion.div>
+                  <motion.div
+                    initial={false}
+                    animate={{ 
+                      scale: theme === 'dark' ? 1 : 0, 
+                      rotate: theme === 'dark' ? 0 : 90,
+                      opacity: theme === 'dark' ? 1 : 0 
+                    }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute"
+                  >
+                    <Moon size={20} className="text-indigo-400" />
+                  </motion.div>
+                </div>
+              </button>
+
               {!user ? (
                 <>
                   <Link to="/auth" className={cn(
                     "text-[11px] font-black uppercase tracking-[0.2em] px-6 py-2.5 rounded-xl border transition-all",
-                    location.pathname === '/' ? "border-white/20 text-white hover:bg-white/10" : "border-slate-200 text-slate-900 hover:bg-slate-50"
+                    location.pathname === '/' ? "border-white/20 text-white hover:bg-white/10" : "border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-800"
                   )}>
                     Login
                   </Link>
@@ -114,7 +155,7 @@ export function Navbar() {
                     to="/profile"
                     className={cn(
                       "px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-[0.2em] transition-all flex items-center gap-2",
-                      location.pathname === '/' ? "bg-white/10 text-white border border-white/20 hover:bg-white/20" : "bg-white border border-slate-200 text-slate-900 hover:bg-slate-50"
+                      location.pathname === '/' ? "bg-white/10 text-white border border-white/20 hover:bg-white/20" : "bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700"
                     )}
                   >
                     <User size={16} />
@@ -139,7 +180,7 @@ export function Navbar() {
               onClick={() => setIsOpen(!isOpen)}
               className={cn(
                 "p-2 rounded-lg transition-colors",
-                location.pathname === '/' ? "text-white hover:bg-white/10" : "text-slate-900 hover:bg-slate-100"
+                location.pathname === '/' ? "text-white hover:bg-white/10" : "text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800"
               )}
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -153,14 +194,14 @@ export function Navbar() {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="lg:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-6 space-y-4"
+          className="lg:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 pt-2 pb-6 space-y-4"
         >
           {navLinks.map((link) => (
             <Link
               key={link.name}
               to={link.href}
               onClick={() => setIsOpen(false)}
-              className="block text-lg font-bold text-slate-700 hover:text-indigo-600"
+              className="block text-lg font-bold text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-emerald-400"
             >
               {link.name}
             </Link>
@@ -170,15 +211,15 @@ export function Navbar() {
               <Link
                 to="/profile"
                 onClick={() => setIsOpen(false)}
-                className="block text-lg font-bold text-slate-700 hover:text-indigo-600 transition-colors"
+                className="block text-lg font-bold text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-emerald-400 transition-colors"
               >
                 Profile
               </Link>
-              {user.email === 'mdrifathossainpersonal@gmail.com' && (
+              {(user.email === 'mdrifathossainpersonal@gmail.com' || settings.contactEmail === user.email) && (
                 <Link
                   to="/admin"
                   onClick={() => setIsOpen(false)}
-                  className="block text-lg font-bold text-indigo-600 hover:text-indigo-700 transition-colors"
+                  className="block text-lg font-bold text-indigo-600 dark:text-emerald-400 hover:text-indigo-700 dark:hover:text-emerald-300 transition-colors"
                 >
                   Dashboard
                 </Link>
@@ -188,11 +229,32 @@ export function Navbar() {
             <Link
               to="/auth"
               onClick={() => setIsOpen(false)}
-              className="block text-lg font-bold text-indigo-600 hover:text-indigo-700 transition-colors"
+              className="block text-lg font-bold text-indigo-600 dark:text-emerald-400 hover:text-indigo-700 dark:hover:text-emerald-300 transition-colors"
             >
               Login
             </Link>
           )}
+
+          {/* Mobile Theme Toggle */}
+          <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
+            <span className="text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Appearance</span>
+            <button
+              onClick={toggleTheme}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs border border-slate-200/50 dark:border-slate-700/50"
+            >
+              {theme === 'dark' ? (
+                <>
+                  <Moon size={14} className="text-indigo-400" />
+                  Dark Mode
+                </>
+              ) : (
+                <>
+                  <Sun size={14} className="text-amber-500" />
+                  Light Mode
+                </>
+              )}
+            </button>
+          </div>
         </motion.div>
       )}
     </nav>

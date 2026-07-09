@@ -104,7 +104,7 @@ export function Blog() {
                   <p className="text-slate-500 text-sm leading-relaxed mb-6">
                     {post.excerpt || (post.content.length > 150 ? post.content.substring(0, 150) + '...' : post.content)}
                   </p>
-                  <Link to={`/blog/${post.id}`} className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-indigo-600 group-hover:gap-4 transition-all">
+                  <Link to={`/blog/${post.permalink || post.id}`} className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-indigo-600 group-hover:gap-4 transition-all">
                     Read Full Story
                     <ArrowRight size={14} />
                   </Link>

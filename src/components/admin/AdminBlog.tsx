@@ -7,6 +7,14 @@ import { FileText, Plus, Search, Filter, Edit3, Trash2, Calendar, User, Image as
 import { motion, AnimatePresence } from 'motion/react';
 import { compressImage } from '../../lib/imageUtils';
 
+function generateSlug(title: string) {
+  return title
+    .toLowerCase()
+    .trim()
+    .replace(/[^\p{L}\p{N}\s-]/gu, '') // Keep Unicode letters/numbers, spaces, and hyphens
+    .replace(/[-\s]+/g, '-');          // Replace spaces and duplicate hyphens with a single hyphen
+}
+
 export function AdminBlog() {
   const [posts, setPosts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -18,12 +26,25 @@ export function AdminBlog() {
   
   const [newPost, setNewPost] = useState({
     title: '',
+    permalink: '',
     content: '',
     excerpt: '',
     author: '',
     category: '',
     imageUrl: ''
   });
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const title = e.target.value;
+    setNewPost(prev => {
+      const updated = { ...prev, title };
+      const previousAutoSlug = generateSlug(prev.title);
+      if (!prev.permalink || prev.permalink === previousAutoSlug) {
+        updated.permalink = generateSlug(title);
+      }
+      return updated;
+    });
+  };
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const contentImageInputRef = useRef<HTMLInputElement>(null);
@@ -98,15 +119,19 @@ export function AdminBlog() {
     e.preventDefault();
     setIsSubmitting(true);
     try {
+      const finalPost = {
+        ...newPost,
+        permalink: newPost.permalink.trim() || generateSlug(newPost.title)
+      };
       if (editingPostId) {
         await updateDoc(doc(db, 'blog', editingPostId), {
-          ...newPost,
+          ...finalPost,
           updatedAt: serverTimestamp()
         });
         alert('Article updated successfully!');
       } else {
         await addDoc(collection(db, 'blog'), {
-          ...newPost,
+          ...finalPost,
           createdAt: serverTimestamp()
         });
         alert('Article published successfully!');
@@ -123,6 +148,7 @@ export function AdminBlog() {
   const handleEdit = (post: any) => {
     setNewPost({
       title: post.title,
+      permalink: post.permalink || generateSlug(post.title),
       content: post.content,
       excerpt: post.excerpt || '',
       author: post.author,
@@ -148,7 +174,7 @@ export function AdminBlog() {
     setIsModalOpen(false);
     setEditingPostId(null);
     setIsPreviewMode(false);
-    setNewPost({ title: '', content: '', excerpt: '', author: '', category: '', imageUrl: '' });
+    setNewPost({ title: '', permalink: '', content: '', excerpt: '', author: '', category: '', imageUrl: '' });
   };
 
   const filteredPosts = posts.filter(post => 
@@ -349,10 +375,29 @@ export function AdminBlog() {
                         required
                         type="text"
                         value={newPost.title}
-                        onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
+                        onChange={handleTitleChange}
                         className="w-full bg-slate-50 border border-slate-200 px-6 py-4 rounded-2xl text-sm font-bold focus:border-indigo-600 focus:bg-white outline-none transition-all"
                         placeholder="e.g. 10 Tips for Scaling Your Startup"
                       />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <div className="flex justify-between items-center">
+                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Permalink / Slug</label>
+                        <span className="text-[9px] text-indigo-600 font-bold bg-indigo-50 border border-indigo-100 px-2 py-0.5 rounded-full uppercase tracking-wider">SEO URL</span>
+                      </div>
+                      <div className="relative">
+                        <span className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 font-mono text-xs">/blog/</span>
+                        <input
+                          required
+                          type="text"
+                          value={newPost.permalink}
+                          onChange={(e) => setNewPost({ ...newPost, permalink: generateSlug(e.target.value) })}
+                          className="w-full bg-slate-50 border border-slate-200 py-4 pl-[3.5rem] pr-6 rounded-2xl text-sm font-mono font-bold focus:border-indigo-600 focus:bg-white outline-none transition-all"
+                          placeholder="article-slug-url"
+                        />
+                      </div>
+                      <p className="text-[9px] text-slate-400 font-bold px-1 uppercase tracking-widest">Auto-generated from title, can be customized</p>
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">

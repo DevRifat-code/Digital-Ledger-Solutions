@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Calendar, User, ArrowLeft, Clock, Share2, Facebook, Twitter, Linkedin, MessageSquare, Loader2, FileText } from 'lucide-react';
 import { db, handleFirestoreError } from '../lib/firebase';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, collection, query, where, getDocs, limit } from 'firebase/firestore';
 import Markdown from 'react-markdown';
 
 export function BlogPostDetails() {
@@ -17,9 +17,25 @@ export function BlogPostDetails() {
 
   const fetchPost = async () => {
     try {
-      const docSnap = await getDoc(doc(db, 'blog', id!));
-      if (docSnap.exists()) {
-        setPost({ id: docSnap.id, ...docSnap.data() });
+      // 1. Try to fetch as direct document ID first
+      try {
+        const docSnap = await getDoc(doc(db, 'blog', id!));
+        if (docSnap.exists()) {
+          setPost({ id: docSnap.id, ...docSnap.data() });
+          setIsLoading(false);
+          return;
+        }
+      } catch (docErr) {
+        // ID might not be a valid Firestore ID (it's a slug), continue to query
+        console.log('Not a direct document ID, querying by permalink...');
+      }
+
+      // 2. If direct document ID doesn't exist or is invalid, query by permalink field
+      const q = query(collection(db, 'blog'), where('permalink', '==', id!), limit(1));
+      const querySnapshot = await getDocs(q);
+      if (!querySnapshot.empty) {
+        const docObj = querySnapshot.docs[0];
+        setPost({ id: docObj.id, ...docObj.data() });
       }
     } catch (err) {
       handleFirestoreError(err, 'get', `blog/${id}`);

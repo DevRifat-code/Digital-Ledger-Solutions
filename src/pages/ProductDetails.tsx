@@ -6,6 +6,37 @@ import { motion } from 'motion/react';
 import { ChevronRight, ShoppingCart, CheckCircle2, ArrowLeft } from 'lucide-react';
 import { useSiteSettings } from '../hooks/useSiteSettings';
 
+const PLANS: Record<string, { name: string; price: number; category: string; description: string; features?: string[] }> = {
+  'starter-one-time': {
+    name: 'Starter Plan - One Time Payment',
+    price: 5000,
+    category: 'Subscription Plan',
+    description: 'Starter plan for small retail shops getting started with automation. One-time payment.',
+    features: ['Up to 1,000 Products', 'Single User Access', 'Basic Reports', 'Standard Email Support']
+  },
+  'starter-lifetime': {
+    name: 'Starter Plan - Lifetime Support',
+    price: 50000,
+    category: 'Subscription Plan',
+    description: 'Starter plan for small retail shops getting started with automation. Lifetime support.',
+    features: ['Up to 1,000 Products', 'Single User Access', 'Basic Reports', 'Standard Email Support', 'Lifetime Support']
+  },
+  'pro-one-time': {
+    name: 'Pro Plan - One Time Payment',
+    price: 12000,
+    category: 'Subscription Plan',
+    description: 'Manage your store like a pro with advanced features. One-time payment.',
+    features: ['Unlimited Products', 'Multi-User Access', 'Advanced POS System', 'Cloud Database Sync', 'Priority 24/7 Support', 'Custom Reports']
+  },
+  'pro-lifetime': {
+    name: 'Pro Plan - Lifetime Support',
+    price: 110000,
+    category: 'Subscription Plan',
+    description: 'Manage your store like a pro with advanced features. Lifetime support.',
+    features: ['Unlimited Products', 'Multi-User Access', 'Advanced POS System', 'Cloud Database Sync', 'Priority 24/7 Support', 'Custom Reports', 'Lifetime Support']
+  }
+};
+
 export function ProductDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -17,6 +48,13 @@ export function ProductDetails() {
   useEffect(() => {
     async function fetchProduct() {
       if (!id) return;
+
+      if (PLANS[id]) {
+        setProduct({ id, ...PLANS[id] });
+        setLoading(false);
+        return;
+      }
+
       try {
         const snap = await getDoc(doc(db, 'products', id));
         if (snap.exists()) {
