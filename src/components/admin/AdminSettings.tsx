@@ -201,6 +201,24 @@ export function AdminSettings({ settings, setSettings, onSave, isSaving }: Admin
                 />
                 <p className="text-[9px] text-slate-400 font-bold mt-1 px-1 uppercase tracking-widest">Comma-separated values</p>
               </div>
+
+              <div className="md:col-span-2 space-y-1.5">
+                <div className="flex justify-between items-center">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Google Search Console Verification Code</label>
+                  <span className="text-[9px] text-indigo-600 font-bold bg-indigo-50 border border-indigo-100 px-2.5 py-0.5 rounded-full uppercase tracking-wider">SEO Indexing</span>
+                </div>
+                <input
+                  type="text"
+                  value={settings.googleSiteVerification || ''}
+                  onChange={(e) => setSettings({ ...settings, googleSiteVerification: e.target.value })}
+                  className="w-full bg-slate-50 border border-slate-200 px-6 py-4 rounded-2xl text-sm font-mono font-bold focus:border-indigo-600 focus:bg-white outline-none transition-all"
+                  placeholder="e.g. cDK79RV4-1cPXAk2DDq8USAWuUfEozYAKmrlihEtIH8"
+                />
+                <p className="text-[9px] text-slate-400 font-semibold mt-1 px-1 leading-relaxed">
+                  Enter the verification code from your Google Search Console meta tag. 
+                  Example: for <code className="bg-slate-100 text-slate-800 px-1 py-0.5 rounded font-mono text-[8px]">&lt;meta name="google-site-verification" content="XYZ" /&gt;</code>, paste only <code className="bg-slate-100 text-slate-800 px-1 py-0.5 rounded font-mono text-[8px]">XYZ</code>.
+                </p>
+              </div>
             </div>
           </div>
 

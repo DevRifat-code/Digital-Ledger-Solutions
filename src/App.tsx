@@ -112,6 +112,18 @@ export default function App() {
         document.head.appendChild(newLink);
       }
     }
+    
+    // Dynamic Google Search Console Verification
+    const verificationCode = settings.googleSiteVerification || 'cDK79RV4-1cPXAk2DDq8USAWuUfEozYAKmrlihEtIH8';
+    const metaTag: HTMLMetaElement | null = document.querySelector("meta[name='google-site-verification']");
+    if (metaTag) {
+      metaTag.content = verificationCode;
+    } else {
+      const newMeta = document.createElement('meta');
+      newMeta.name = 'google-site-verification';
+      newMeta.content = verificationCode;
+      document.head.appendChild(newMeta);
+    }
   }, [settings]);
 
   return (

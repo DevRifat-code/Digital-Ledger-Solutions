@@ -77,7 +77,8 @@ export function Admin() {
     maintenanceMode: false,
     primaryColor: '#4f46e5',
     metaDescription: '',
-    metaKeywords: ''
+    metaKeywords: '',
+    googleSiteVerification: 'cDK79RV4-1cPXAk2DDq8USAWuUfEozYAKmrlihEtIH8'
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSavingSettings, setIsSavingSettings] = useState(false);

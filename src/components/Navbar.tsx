@@ -10,12 +10,25 @@ import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState<FirebaseUser | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
   const { settings } = useSiteSettings();
   const location = useLocation();
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (u) => setUser(u));
     return () => unsub();
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
@@ -28,11 +41,20 @@ export function Navbar() {
 
   return (
     <nav className={cn(
-      "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-      location.pathname === '/' ? "bg-transparent text-white" : "bg-white/80 backdrop-blur-md border-b border-slate-200 text-slate-900"
+      "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+      isScrolled 
+        ? location.pathname === '/' 
+          ? "bg-[#061D19]/80 backdrop-blur-md border-[#0a2e28] text-white shadow-[0_10px_30px_rgb(6,29,25,0.4)] border-b py-0" 
+          : "bg-white/70 backdrop-blur-lg border-b border-slate-200/50 text-slate-900 shadow-lg shadow-slate-100/50 py-0"
+        : location.pathname === '/' 
+          ? "bg-transparent text-white border-b border-transparent py-2" 
+          : "bg-white/80 backdrop-blur-md border-b border-slate-200 text-slate-900 py-2"
     )}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className={cn(
+          "flex items-center justify-between transition-all duration-500",
+          isScrolled ? "h-16" : "h-20"
+        )}>
           <Link to="/" className="flex items-center space-x-2 group">
             {settings.logoUrl && settings.logoUrl !== "" ? (
               <img src={settings.logoUrl} alt={settings.siteName} className="w-10 h-10 object-contain" referrerPolicy="no-referrer" />

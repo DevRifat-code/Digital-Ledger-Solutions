@@ -23,7 +23,8 @@ import { Link } from 'react-router-dom';
 import { ProductCard } from '../components/ProductCard';
 import { useEffect, useState } from 'react';
 import { collection, query, limit, getDocs } from 'firebase/firestore';
-import { db, handleFirestoreError } from '../lib/firebase';
+import { auth, db, handleFirestoreError } from '../lib/firebase';
+import { onAuthStateChanged, type User as FirebaseUser } from 'firebase/auth';
 import { useSiteSettings } from '../hooks/useSiteSettings';
 import { cn } from '../lib/utils';
 
@@ -31,7 +32,13 @@ export function Home() {
   const [featuredProducts, setFeaturedProducts] = useState<any[]>([]);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [isYearly, setIsYearly] = useState(false);
+  const [user, setUser] = useState<FirebaseUser | null>(null);
   const { settings } = useSiteSettings();
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (u) => setUser(u));
+    return () => unsub();
+  }, []);
 
   const pricingPlans = [
     {
@@ -41,7 +48,7 @@ export function Home() {
       period: isYearly ? 'Lifetime Support' : 'One Time Payment',
       desc: 'Perfect for small retail shops getting started with automation.',
       features: ['Up to 1,000 Products', 'Single User Access', 'Basic Reports', 'Standard Email Support'],
-      href: '/auth'
+      href: user ? '/marketplace' : '/auth'
     },
     {
       name: 'Pro Plan',
@@ -51,7 +58,7 @@ export function Home() {
       desc: 'Manage your store like a pro with advanced features.',
       features: ['Unlimited Products', 'Multi-User Access', 'Advanced POS System', 'Cloud Database Sync', 'Priority 24/7 Support', 'Custom Reports'],
       featured: true,
-      href: '/auth'
+      href: user ? '/marketplace' : '/auth'
     },
     {
       name: 'Enterprise',

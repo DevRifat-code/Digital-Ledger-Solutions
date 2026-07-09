@@ -13,9 +13,13 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           <div className="lg:col-span-1">
             <Link to="/" className="flex items-center gap-3 mb-6 group">
-                <div className="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-500/20 group-hover:rotate-6 transition-transform">
-                    <Zap size={24} />
-                </div>
+                {settings.logoUrl && settings.logoUrl !== "" ? (
+                  <img id="footer-logo" src={settings.logoUrl} alt={settings.siteName} className="w-10 h-10 object-contain group-hover:scale-105 transition-transform" referrerPolicy="no-referrer" />
+                ) : (
+                  <div className="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-500/20 group-hover:rotate-6 transition-transform">
+                      <Zap size={24} />
+                  </div>
+                )}
                 <span className="text-2xl font-display font-black text-white tracking-tighter uppercase">{settings.siteName}</span>
             </Link>
             <p className="mb-8 text-sm leading-relaxed max-w-xs">{settings.description}</p>

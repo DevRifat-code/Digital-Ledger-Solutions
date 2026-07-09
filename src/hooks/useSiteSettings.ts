@@ -15,6 +15,7 @@ export interface SiteSettings {
   orderNotificationsEnabled?: boolean;
   metaDescription?: string;
   metaKeywords?: string;
+  googleSiteVerification?: string;
 }
 
 const DEFAULT_SETTINGS: SiteSettings = {
@@ -29,7 +30,8 @@ const DEFAULT_SETTINGS: SiteSettings = {
   contactEmail: '',
   orderNotificationsEnabled: false,
   metaDescription: '',
-  metaKeywords: ''
+  metaKeywords: '',
+  googleSiteVerification: 'cDK79RV4-1cPXAk2DDq8USAWuUfEozYAKmrlihEtIH8'
 };
 
 export function useSiteSettings() {
