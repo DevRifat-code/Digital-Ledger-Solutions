@@ -4,10 +4,18 @@ import { Calendar, User, ArrowRight, Rss, Loader2, FileText } from 'lucide-react
 import { Link } from 'react-router-dom';
 import { db, handleFirestoreError } from '../lib/firebase';
 import { collection, query, getDocs, orderBy } from 'firebase/firestore';
+import { useSEO } from '../hooks/useSEO';
 
 export function Blog() {
   const [posts, setPosts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  useSEO({
+    title: 'Blog & Industry Insights | Digital Ledger Solutions',
+    description: 'Deep dives into technology, business strategies, POS automation, and industry trends from the Digital Ledger Solutions team.',
+    canonical: 'https://digitalledgersolutions.pro.bd/blog',
+    ogType: 'website'
+  });
 
   useEffect(() => {
     fetchPosts();

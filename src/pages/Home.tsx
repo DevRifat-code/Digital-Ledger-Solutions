@@ -27,6 +27,7 @@ import { auth, db, handleFirestoreError } from '../lib/firebase';
 import { onAuthStateChanged, type User as FirebaseUser } from 'firebase/auth';
 import { useSiteSettings } from '../hooks/useSiteSettings';
 import { cn } from '../lib/utils';
+import { useSEO } from '../hooks/useSEO';
 
 export function Home() {
   const [featuredProducts, setFeaturedProducts] = useState<any[]>([]);
@@ -34,6 +35,13 @@ export function Home() {
   const [isYearly, setIsYearly] = useState(false);
   const [user, setUser] = useState<FirebaseUser | null>(null);
   const { settings } = useSiteSettings();
+
+  useSEO({
+    title: 'Digital Ledger Solutions | Business & POS Software Bangladesh',
+    description: 'Empowering retail shops and enterprises across Bangladesh with advanced POS software, accounting suites, and business automation.',
+    canonical: 'https://digitalledgersolutions.pro.bd/',
+    ogType: 'website'
+  });
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (u) => setUser(u));

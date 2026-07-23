@@ -5,11 +5,49 @@ import { Calendar, User, ArrowLeft, Clock, Share2, Facebook, Twitter, Linkedin, 
 import { db, handleFirestoreError } from '../lib/firebase';
 import { doc, getDoc, collection, query, where, getDocs, limit } from 'firebase/firestore';
 import Markdown from 'react-markdown';
+import { useSEO } from '../hooks/useSEO';
 
 export function BlogPostDetails() {
   const { id } = useParams();
   const [post, setPost] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Dynamic SEO metadata for Google indexing
+  const postExcerpt = post ? (post.excerpt || post.content?.replace(/[#*`_~]/g, '').substring(0, 160) + '...') : '';
+  const postCanonical = `https://digitalledgersolutions.pro.bd/blog/${post?.permalink || id}`;
+
+  useSEO({
+    title: post ? `${post.title} | Digital Ledger Solutions` : 'Blog Article | Digital Ledger Solutions',
+    description: postExcerpt || 'Read the full insights and article on Digital Ledger Solutions.',
+    canonical: postCanonical,
+    ogType: 'article',
+    ogImage: post?.imageUrl,
+    author: post?.author,
+    jsonLd: post ? {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      'mainEntityOfPage': {
+        '@type': 'WebPage',
+        '@id': postCanonical
+      },
+      'headline': post.title,
+      'description': postExcerpt,
+      'image': post.imageUrl ? [post.imageUrl] : undefined,
+      'datePublished': post.createdAt?.toDate ? post.createdAt.toDate().toISOString() : new Date().toISOString(),
+      'author': {
+        '@type': 'Person',
+        'name': post.author || 'Digital Ledger Solutions'
+      },
+      'publisher': {
+        '@type': 'Organization',
+        'name': 'Digital Ledger Solutions',
+        'logo': {
+          '@type': 'ImageObject',
+          'url': 'https://digitalledgersolutions.pro.bd/favicon.ico'
+        }
+      }
+    } : undefined
+  });
 
   useEffect(() => {
     if (id) fetchPost();

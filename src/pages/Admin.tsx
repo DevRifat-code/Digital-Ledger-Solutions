@@ -43,11 +43,12 @@ import { AdminSalesReport } from '../components/admin/AdminSalesReport';
 import { AdminAnalytics } from '../components/admin/AdminAnalytics';
 import { AdminProfile } from '../components/admin/AdminProfile';
 import { AdminInquiries } from '../components/admin/AdminInquiries';
+import { AdminSitemap } from '../components/admin/AdminSitemap';
 
 type AdminTab = 
   | 'dashboard' | 'products' | 'orders' | 'settings' | 'customers' 
   | 'payments' | 'licenses' | 'downloads' | 'coupons' | 'reviews' 
-  | 'subscribers' | 'announcements' | 'blog' | 'sales-report' | 'analytics' | 'profile' | 'inquiries';
+  | 'subscribers' | 'announcements' | 'blog' | 'sitemap' | 'sales-report' | 'analytics' | 'profile' | 'inquiries';
 
 export function Admin() {
   const navigate = useNavigate();
@@ -353,6 +354,8 @@ export function Admin() {
         return <AdminAnnouncements />;
       case 'blog':
         return <AdminBlog />;
+      case 'sitemap':
+        return <AdminSitemap />;
       case 'sales-report':
         return <AdminSalesReport orders={orders} />;
       case 'analytics':

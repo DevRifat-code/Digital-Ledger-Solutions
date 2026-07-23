@@ -3,7 +3,7 @@ import { db, handleFirestoreError } from '../../lib/firebase';
 import { collection, query, getDocs, addDoc, updateDoc, deleteDoc, doc, serverTimestamp, orderBy } from 'firebase/firestore';
 import Markdown from 'react-markdown';
 import { cn } from '../../lib/utils';
-import { FileText, Plus, Search, Filter, Edit3, Trash2, Calendar, User, Image as ImageIcon, X, Camera, Type, List, ListOrdered, Quote, Link as LinkIcon } from 'lucide-react';
+import { FileText, Plus, Search, Filter, Edit3, Trash2, Calendar, User, Image as ImageIcon, X, Camera, Type, List, ListOrdered, Quote, Link as LinkIcon, Download, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { compressImage } from '../../lib/imageUtils';
 
@@ -177,6 +177,42 @@ export function AdminBlog() {
     setNewPost({ title: '', permalink: '', content: '', excerpt: '', author: '', category: '', imageUrl: '' });
   };
 
+  const generateSitemapXml = () => {
+    const baseUrl = 'https://digitalledgersolutions.pro.bd';
+    const staticPages = [
+      { url: `${baseUrl}/`, priority: '1.0', changefreq: 'daily' },
+      { url: `${baseUrl}/blog`, priority: '0.9', changefreq: 'daily' },
+      { url: `${baseUrl}/marketplace`, priority: '0.8', changefreq: 'weekly' },
+      { url: `${baseUrl}/contact`, priority: '0.7', changefreq: 'monthly' }
+    ];
+
+    const postUrls = posts.map(post => {
+      const slug = post.permalink || post.id;
+      const date = post.updatedAt?.toDate
+        ? post.updatedAt.toDate().toISOString().split('T')[0]
+        : (post.createdAt?.toDate ? post.createdAt.toDate().toISOString().split('T')[0] : '2026-07-23');
+      return `  <url>\n    <loc>${baseUrl}/blog/${slug}</loc>\n    <lastmod>${date}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>`;
+    });
+
+    const staticXml = staticPages.map(p => `  <url>\n    <loc>${p.url}</loc>\n    <changefreq>${p.changefreq}</changefreq>\n    <priority>${p.priority}</priority>\n  </url>`).join('\n');
+
+    return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${staticXml}\n${postUrls.join('\n')}\n</urlset>`;
+  };
+
+  const handleDownloadSitemap = () => {
+    const xml = generateSitemapXml();
+    const blob = new Blob([xml], { type: 'text/xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'sitemap.xml';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    alert('Sitemap.xml generated and downloaded! Upload this to your root directory or Google Search Console.');
+  };
+
   const filteredPosts = posts.filter(post => 
     post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     post.author.toLowerCase().includes(searchTerm.toLowerCase())
@@ -189,13 +225,23 @@ export function AdminBlog() {
           <h1 className="text-3xl font-display font-black text-slate-900 tracking-tight">Blog Articles</h1>
           <p className="text-slate-500 font-medium mt-1">Manage your platform's editorial content and news.</p>
         </div>
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="flex items-center gap-3 px-8 py-4 bg-indigo-600 text-white rounded-3xl font-black uppercase tracking-widest hover:bg-slate-900 transition-all shadow-2xl shadow-indigo-200 active:scale-95 group"
-        >
-          <Plus size={20} className="group-hover:rotate-90 transition-transform" />
-          Write Article
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={handleDownloadSitemap}
+            className="flex items-center gap-2 px-6 py-4 bg-slate-100 text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-3xl font-bold text-xs uppercase tracking-widest transition-all shadow-sm active:scale-95"
+            title="Download sitemap.xml for Google Search Console"
+          >
+            <Download size={18} />
+            Generate Sitemap
+          </button>
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="flex items-center gap-3 px-8 py-4 bg-indigo-600 text-white rounded-3xl font-black uppercase tracking-widest hover:bg-slate-900 transition-all shadow-2xl shadow-indigo-200 active:scale-95 group"
+          >
+            <Plus size={20} className="group-hover:rotate-90 transition-transform" />
+            Write Article
+          </button>
+        </div>
       </div>
 
       <div className="bg-white rounded-[2.5rem] border border-slate-200 shadow-sm overflow-hidden">

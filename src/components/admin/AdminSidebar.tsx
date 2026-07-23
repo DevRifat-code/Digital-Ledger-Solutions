@@ -118,6 +118,7 @@ export function AdminSidebar({ activeTab, setActiveTab, onLogout, isOpen, onClos
             <SidebarItem id="subscribers" label="Subscribers" icon={Mail} active={activeTab === 'subscribers'} onClick={setActiveTab} />
             <SidebarItem id="announcements" label="Announcements" icon={Bell} active={activeTab === 'announcements'} onClick={setActiveTab} />
             <SidebarItem id="blog" label="Blog Posts" icon={FileText} active={activeTab === 'blog'} onClick={setActiveTab} />
+            <SidebarItem id="sitemap" label="Sitemap Generator" icon={Globe} active={activeTab === 'sitemap'} onClick={setActiveTab} />
             <SidebarItem id="inquiries" label="Inquiries" icon={MessageSquare} active={activeTab === 'inquiries'} onClick={setActiveTab} />
           </nav>
         </div>
