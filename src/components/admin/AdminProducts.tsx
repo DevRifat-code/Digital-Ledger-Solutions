@@ -72,16 +72,16 @@ export function AdminProducts({
   };
 
   return (
-    <div className="p-8 space-y-8 max-w-[1600px] mx-auto">
+    <div className="p-8 space-y-8 max-w-[1600px] mx-auto text-slate-900 dark:text-slate-100">
       <div className="flex items-end justify-between">
         <div>
-          <h1 className="text-3xl font-display font-black text-slate-900 tracking-tight">Product Management</h1>
-          <p className="text-slate-500 font-medium mt-1">Add, update and organize your digital assets.</p>
+          <h1 className="text-3xl font-display font-black text-slate-900 dark:text-white tracking-tight">Product Management</h1>
+          <p className="text-slate-500 dark:text-slate-400 font-medium mt-1">Add, update and organize your digital assets.</p>
         </div>
         <div className="flex items-center gap-3">
             <button 
                 onClick={() => setIsModalOpen(true)}
-                className="bg-indigo-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-indigo-600/20 hover:bg-slate-900 transition-all active:scale-95"
+                className="bg-indigo-600 dark:bg-emerald-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-indigo-600/20 dark:shadow-none hover:bg-slate-900 dark:hover:bg-emerald-500 transition-all active:scale-95"
             >
                 <Plus size={20} />
                 Create Product
@@ -97,26 +97,26 @@ export function AdminProducts({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={handleCloseModal}
-              className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
+              className="absolute inset-0 bg-slate-950/60 backdrop-blur-sm"
             />
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="bg-white rounded-[3rem] w-full max-w-2xl shadow-2xl relative overflow-hidden flex flex-col max-h-[90vh]"
+              className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[3rem] w-full max-w-2xl shadow-2xl relative overflow-hidden flex flex-col max-h-[90vh]"
             >
-              <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+              <div className="p-8 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-800/50">
                 <div>
-                  <h3 className="text-xl font-display font-black text-slate-900 uppercase tracking-tight">
+                  <h3 className="text-xl font-display font-black text-slate-900 dark:text-white uppercase tracking-tight">
                     {editingProductId ? 'Update Digital Asset' : 'New Digital Asset'}
                   </h3>
-                  <p className="text-xs text-slate-400 font-bold mt-1">
+                  <p className="text-xs text-slate-400 dark:text-slate-400 font-bold mt-1">
                     {editingProductId ? 'Modify your existing asset details' : 'Fill in the details to list your asset'}
                   </p>
                 </div>
                 <button 
                   onClick={handleCloseModal}
-                  className="p-3 text-slate-400 hover:text-red-500 hover:bg-white rounded-2xl transition-all border border-transparent hover:border-red-100"
+                  className="p-3 text-slate-400 hover:text-red-500 hover:bg-white dark:hover:bg-slate-800 rounded-2xl transition-all border border-transparent hover:border-red-100 dark:hover:border-slate-700"
                 >
                   <X size={20} />
                 </button>
@@ -127,8 +127,8 @@ export function AdminProducts({
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-4">
                         <div className="space-y-1.5">
-                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Thumbnail Preview</label>
-                            <label className="w-full aspect-video bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200 flex items-center justify-center overflow-hidden cursor-pointer hover:border-indigo-600 transition-all">
+                            <label className="text-[10px] font-black text-slate-400 dark:text-slate-400 uppercase tracking-widest pl-1">Thumbnail Preview</label>
+                            <label className="w-full aspect-video bg-slate-50 dark:bg-slate-800 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700 flex items-center justify-center overflow-hidden cursor-pointer hover:border-indigo-600 dark:hover:border-emerald-500 transition-all">
                               <input 
                                 type="file" 
                                 className="hidden" 
@@ -138,23 +138,23 @@ export function AdminProducts({
                             {newProduct.imageUrl && newProduct.imageUrl.trim() !== "" ? (
                                 <img src={newProduct.imageUrl} alt="Preview" className="w-full h-full object-contain" />
                             ) : (
-                                <div className="text-slate-300 flex flex-col items-center gap-2">
+                                <div className="text-slate-300 dark:text-slate-600 flex flex-col items-center gap-2">
                                 <Package size={32} />
                                 <span className="text-[10px] font-bold uppercase tracking-widest text-center">Click to Upload<br/>(PNG/JPG)</span>
                                 </div>
                             )}
                             </label>
-                            <p className="text-[9px] text-slate-400 font-bold uppercase pl-1 text-center">Base64 encoded storage enabled</p>
+                            <p className="text-[9px] text-slate-400 dark:text-slate-500 font-bold uppercase pl-1 text-center">Base64 encoded storage enabled</p>
                         </div>
 
                         <div className="space-y-1.5">
-                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Description</label>
+                            <label className="text-[10px] font-black text-slate-400 dark:text-slate-400 uppercase tracking-widest pl-1">Description</label>
                             <textarea
                             required
                             rows={6}
                             value={newProduct.description}
                             onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
-                            className="w-full bg-slate-50 border border-slate-200 px-5 py-3.5 rounded-2xl text-sm font-medium focus:border-indigo-600 focus:bg-white outline-none transition-all placeholder:text-slate-300 resize-none"
+                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-5 py-3.5 rounded-2xl text-sm font-medium text-slate-900 dark:text-white focus:border-indigo-600 dark:focus:border-emerald-500 focus:bg-white dark:focus:bg-slate-800 outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500 resize-none"
                             placeholder="Tell users why they need this script or asset..."
                             />
                         </div>
@@ -169,13 +169,13 @@ export function AdminProducts({
                             { label: 'Download Link', key: 'buyUrl', type: 'url', placeholder: 'https://...' },
                         ].map((field) => (
                             <div key={field.key} className="space-y-1.5">
-                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">{field.label}</label>
+                            <label className="text-[10px] font-black text-slate-400 dark:text-slate-400 uppercase tracking-widest pl-1">{field.label}</label>
                             <input
                                 required
                                 type={field.type}
                                 value={newProduct[field.key as keyof typeof newProduct]}
                                 onChange={(e) => setNewProduct({ ...newProduct, [field.key]: e.target.value })}
-                                className="w-full bg-slate-50 border border-slate-200 px-5 py-3.5 rounded-2xl text-sm font-medium focus:border-indigo-600 focus:bg-white outline-none transition-all placeholder:text-slate-300"
+                                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-5 py-3.5 rounded-2xl text-sm font-medium text-slate-900 dark:text-white focus:border-indigo-600 dark:focus:border-emerald-500 focus:bg-white dark:focus:bg-slate-800 outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500"
                                 placeholder={field.placeholder}
                             />
                             </div>
@@ -186,11 +186,11 @@ export function AdminProducts({
                   <div className="pt-4">
                     <button
                         disabled={isSubmitting}
-                        className="w-full py-5 bg-indigo-600 text-white rounded-3xl font-black uppercase tracking-widest hover:bg-slate-900 transition-all shadow-2xl shadow-indigo-200 disabled:opacity-50 active:scale-[0.98]"
+                        className="w-full py-5 bg-indigo-600 dark:bg-emerald-600 text-white rounded-3xl font-black uppercase tracking-widest hover:bg-slate-900 dark:hover:bg-emerald-500 transition-all shadow-2xl shadow-indigo-200 dark:shadow-none disabled:opacity-50 active:scale-[0.98]"
                     >
                         {isSubmitting ? 'Processing Entry...' : (editingProductId ? 'Update Asset' : 'Broadcast Asset')}
                     </button>
-                    <p className="text-[9px] text-center text-slate-400 font-bold uppercase tracking-[0.2em] mt-4">Safe & Secure Storage Implementation</p>
+                    <p className="text-[9px] text-center text-slate-400 dark:text-slate-500 font-bold uppercase tracking-[0.2em] mt-4">Safe & Secure Storage Implementation</p>
                   </div>
                 </form>
               </div>
@@ -201,11 +201,11 @@ export function AdminProducts({
 
       <div className="space-y-6">
         {/* List Search */}
-        <div className="bg-white px-8 py-4 rounded-[2.5rem] border border-slate-200 shadow-sm flex items-center gap-4">
+        <div className="bg-white dark:bg-slate-900 px-8 py-4 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-4">
             <Search size={18} className="text-slate-400" />
-            <input type="text" placeholder="Filter through your assets library..." className="flex-1 bg-transparent border-none outline-none font-medium text-sm text-slate-700 placeholder:text-slate-300" />
+            <input type="text" placeholder="Filter through your assets library..." className="flex-1 bg-transparent border-none outline-none font-medium text-sm text-slate-700 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500" />
             <div className="flex items-center gap-2">
-                <button className="p-2.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all">
+                <button className="p-2.5 text-slate-400 hover:text-indigo-600 dark:hover:text-emerald-400 hover:bg-indigo-50 dark:hover:bg-slate-800 rounded-xl transition-all">
                     <Filter size={18} />
                 </button>
             </div>
@@ -216,48 +216,48 @@ export function AdminProducts({
                 <motion.div 
                 layout
                 key={p.id} 
-                className="bg-white p-7 rounded-[3rem] border border-slate-200 shadow-sm hover:shadow-2xl hover:shadow-slate-200/50 transition-all group overflow-hidden relative"
+                className="bg-white dark:bg-slate-900 p-7 rounded-[3rem] border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-2xl transition-all group overflow-hidden relative"
                 >
-                <div className="absolute -right-6 -top-6 w-24 h-24 bg-indigo-50 rounded-full group-hover:scale-150 transition-transform duration-700 flex items-center justify-center p-8 text-indigo-400 opacity-20">
+                <div className="absolute -right-6 -top-6 w-24 h-24 bg-indigo-50 dark:bg-slate-800 rounded-full group-hover:scale-150 transition-transform duration-700 flex items-center justify-center p-8 text-indigo-400 dark:text-slate-600 opacity-20">
                     <Package size={48} />
                 </div>
                 
                 <div className="relative z-10 flex flex-col h-full">
                     <div className="flex gap-6 items-start mb-6">
-                        <div className="w-20 h-20 rounded-3xl bg-slate-100 overflow-hidden shrink-0 border-2 border-white shadow-inner flex items-center justify-center">
+                        <div className="w-20 h-20 rounded-3xl bg-slate-100 dark:bg-slate-800 overflow-hidden shrink-0 border-2 border-white dark:border-slate-700 shadow-inner flex items-center justify-center">
                             {p.imageUrl && p.imageUrl.trim() !== "" ? (
                                 <img src={p.imageUrl} alt={p.name} className="w-full h-full object-cover group-hover:scale-125 transition-transform duration-700" />
                             ) : (
-                                <Package size={24} className="text-slate-300" />
+                                <Package size={24} className="text-slate-300 dark:text-slate-600" />
                             )}
                         </div>
                         <div className="flex-1 min-w-0 pt-1">
-                            <span className="text-[9px] font-black text-indigo-500 uppercase tracking-[0.2em] block mb-1">{p.category}</span>
-                            <h4 className="font-display font-black text-slate-900 truncate mb-1 leading-tight">{p.name}</h4>
-                            <p className="text-xl font-black text-indigo-600">৳{Number(p.price).toLocaleString()}</p>
+                            <span className="text-[9px] font-black text-indigo-500 dark:text-emerald-400 uppercase tracking-[0.2em] block mb-1">{p.category}</span>
+                            <h4 className="font-display font-black text-slate-900 dark:text-white truncate mb-1 leading-tight">{p.name}</h4>
+                            <p className="text-xl font-black text-indigo-600 dark:text-emerald-400">৳{Number(p.price).toLocaleString()}</p>
                         </div>
                     </div>
 
-                    <div className="mt-auto pt-6 border-t border-slate-50 flex items-center gap-3">
+                    <div className="mt-auto pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center gap-3">
                         <button 
                             onClick={() => onEdit(p)}
-                            className="flex-1 h-12 flex items-center justify-center gap-2 bg-slate-50 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 rounded-2xl transition-all text-xs font-black uppercase tracking-widest border border-slate-100"
+                            className="flex-1 h-12 flex items-center justify-center gap-2 bg-slate-50 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-emerald-400 rounded-2xl transition-all text-xs font-black uppercase tracking-widest border border-slate-100 dark:border-slate-700"
                         >
                             <Edit3 size={14} />
                             Modify
                         </button>
                         <button 
                             onClick={() => onDelete(p.id)}
-                            className="w-12 h-12 flex items-center justify-center text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-2xl transition-all"
+                            className="w-12 h-12 flex items-center justify-center text-slate-300 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-2xl transition-all"
                         >
                             <Trash2 size={18} />
                         </button>
-                        <div className="w-px h-6 bg-slate-100 mx-1"></div>
+                        <div className="w-px h-6 bg-slate-100 dark:bg-slate-800 mx-1"></div>
                         <a 
                             href={p.demoUrl} 
                             target="_blank" 
                             rel="noreferrer"
-                            className="w-12 h-12 flex items-center justify-center text-slate-300 hover:text-slate-900 transition-all"
+                            className="w-12 h-12 flex items-center justify-center text-slate-300 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white transition-all"
                         >
                             <ExternalLink size={18} />
                         </a>
@@ -268,10 +268,10 @@ export function AdminProducts({
         </div>
 
         {products.length === 0 && (
-            <div className="py-40 text-center bg-white border-4 border-dashed border-slate-100 rounded-[4rem]">
-                <Package size={64} className="mx-auto text-slate-200 mb-6" />
-                <h3 className="text-2xl font-display font-black text-slate-900 mb-2 uppercase tracking-tight">Vault is Empty</h3>
-                <p className="text-slate-400 font-medium max-w-sm mx-auto">You haven't uploaded any digital assets yet. Use the action button above to start your catalog.</p>
+            <div className="py-40 text-center bg-white dark:bg-slate-900 border-4 border-dashed border-slate-100 dark:border-slate-800 rounded-[4rem]">
+                <Package size={64} className="mx-auto text-slate-200 dark:text-slate-700 mb-6" />
+                <h3 className="text-2xl font-display font-black text-slate-900 dark:text-white mb-2 uppercase tracking-tight">Vault is Empty</h3>
+                <p className="text-slate-400 dark:text-slate-500 font-medium max-w-sm mx-auto">You haven't uploaded any digital assets yet. Use the action button above to start your catalog.</p>
             </div>
         )}
       </div>

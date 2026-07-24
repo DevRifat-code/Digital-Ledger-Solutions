@@ -100,12 +100,9 @@ export function Admin() {
     const unsubscribe = onAuthStateChanged(auth, (u) => {
       setUser(u);
       if (u) {
-        // Only fetch admin data if the user is the admin
-        if (u.email === 'mdrifathossainpersonal@gmail.com') {
-          fetchProducts();
-          fetchSettings();
-          fetchOrders();
-        }
+        fetchSettings();
+        fetchProducts();
+        fetchOrders();
       }
       setLoading(false);
     });
@@ -114,9 +111,14 @@ export function Admin() {
 
   async function fetchProducts() {
     try {
-      const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
-      const snapshot = await getDocs(q);
-      setProducts(snapshot.docs.map(d => ({ id: d.id, ...d.data() })));
+      try {
+        const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
+        const snapshot = await getDocs(q);
+        setProducts(snapshot.docs.map(d => ({ id: d.id, ...d.data() })));
+      } catch (err) {
+        const snapshot = await getDocs(collection(db, 'products'));
+        setProducts(snapshot.docs.map(d => ({ id: d.id, ...d.data() })));
+      }
     } catch (error) {
       handleFirestoreError(error, 'list', 'products');
     }
@@ -140,9 +142,20 @@ export function Admin() {
 
   async function fetchOrders() {
     try {
-      const q = query(collection(db, 'orders'), orderBy('createdAt', 'desc'));
-      const snapshot = await getDocs(q);
-      setOrders(snapshot.docs.map(d => ({ id: d.id, ...d.data() })));
+      try {
+        const q = query(collection(db, 'orders'), orderBy('createdAt', 'desc'));
+        const snapshot = await getDocs(q);
+        setOrders(snapshot.docs.map(d => ({ id: d.id, ...d.data() })));
+      } catch (err) {
+        const snapshot = await getDocs(collection(db, 'orders'));
+        const docsList = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+        docsList.sort((a: any, b: any) => {
+          const tA = a.createdAt?.seconds || (a.createdAt ? new Date(a.createdAt).getTime() : 0);
+          const tB = b.createdAt?.seconds || (b.createdAt ? new Date(b.createdAt).getTime() : 0);
+          return tB - tA;
+        });
+        setOrders(docsList);
+      }
     } catch (error) {
       handleFirestoreError(error, 'list', 'orders');
     }
@@ -263,25 +276,25 @@ export function Admin() {
     }
   };
 
-  if (loading) return <div className="pt-32 text-center text-slate-900 font-bold">Initializing system...</div>;
+  if (loading) return <div className="pt-32 text-center text-slate-900 dark:text-white font-bold">Initializing system...</div>;
 
   if (!user) {
     return (
-      <div className="pt-32 pb-20 min-h-screen flex items-center justify-center bg-slate-50 px-4">
+      <div className="pt-32 pb-20 min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 px-4">
         <motion.div 
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="max-w-md w-full bg-white border border-slate-200 p-12 rounded-[3rem] text-center shadow-2xl shadow-slate-200"
+          className="max-w-md w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-12 rounded-[3rem] text-center shadow-2xl shadow-slate-200 dark:shadow-none"
         >
-          <div className="w-20 h-20 bg-indigo-600 rounded-[2rem] flex items-center justify-center text-white mx-auto mb-8 shadow-xl shadow-indigo-200">
+          <div className="w-20 h-20 bg-indigo-600 dark:bg-emerald-600 rounded-[2rem] flex items-center justify-center text-white mx-auto mb-8 shadow-xl shadow-indigo-200 dark:shadow-none">
             <LogIn size={40} />
           </div>
-          <h2 className="text-3xl font-display font-extrabold text-slate-900 mb-4 tracking-tight">Admin Access</h2>
-          <p className="text-slate-500 mb-10 leading-relaxed">Secure gateway for managing digital assets and site configuration. Please login with your administrative credentials.</p>
+          <h2 className="text-3xl font-display font-extrabold text-slate-900 dark:text-white mb-4 tracking-tight">Admin Access</h2>
+          <p className="text-slate-500 dark:text-slate-400 mb-10 leading-relaxed">Secure gateway for managing digital assets and site configuration. Please login with your administrative credentials.</p>
           <Link
             to="/auth"
             state={{ from: { pathname: '/admin' } }}
-            className="w-full py-5 bg-indigo-600 text-white rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-slate-900 transition-all shadow-xl shadow-indigo-100"
+            className="w-full py-5 bg-indigo-600 dark:bg-emerald-600 text-white rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-slate-900 dark:hover:bg-emerald-500 transition-all shadow-xl shadow-indigo-100 dark:shadow-none"
           >
             <LogIn size={20} />
             Login to Admin
@@ -292,22 +305,22 @@ export function Admin() {
   }
 
   // Check if unauthorized
-  if (user.email !== 'mdrifathossainpersonal@gmail.com') {
+  if (user.email !== 'mdrifathossainpersonal@gmail.com' && (!settings.contactEmail || settings.contactEmail !== user.email)) {
     return (
-      <div className="pt-32 pb-20 min-h-screen flex items-center justify-center bg-slate-50 px-4">
+      <div className="pt-32 pb-20 min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 px-4">
         <motion.div 
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="max-w-md w-full bg-white border border-slate-200 p-12 rounded-[3rem] text-center shadow-2xl shadow-slate-200"
+          className="max-w-md w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-12 rounded-[3rem] text-center shadow-2xl shadow-slate-200 dark:shadow-none"
         >
-          <div className="w-20 h-20 bg-red-600 rounded-[2rem] flex items-center justify-center text-white mx-auto mb-8 shadow-xl shadow-red-200">
+          <div className="w-20 h-20 bg-red-600 rounded-[2rem] flex items-center justify-center text-white mx-auto mb-8 shadow-xl shadow-red-200 dark:shadow-none">
             <XCircle size={40} />
           </div>
-          <h2 className="text-3xl font-display font-extrabold text-slate-900 mb-4 tracking-tight">Unauthorized</h2>
-          <p className="text-slate-500 mb-10 leading-relaxed">You do not have administrative privileges. If you are looking for your orders, please visit your profile.</p>
+          <h2 className="text-3xl font-display font-extrabold text-slate-900 dark:text-white mb-4 tracking-tight">Unauthorized</h2>
+          <p className="text-slate-500 dark:text-slate-400 mb-10 leading-relaxed">You do not have administrative privileges. If you are looking for your orders, please visit your profile.</p>
           <Link
             to="/profile"
-            className="w-full py-5 bg-slate-900 text-white rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-slate-800 transition-all shadow-xl"
+            className="w-full py-5 bg-slate-900 dark:bg-slate-800 text-white rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-slate-800 dark:hover:bg-slate-700 transition-all shadow-xl"
           >
             Go to My Profile
           </Link>
@@ -368,7 +381,7 @@ export function Admin() {
         return <AdminInquiries />;
       default:
         return (
-          <div className="p-32 text-center text-slate-400 font-bold">
+          <div className="p-32 text-center text-slate-400 dark:text-slate-500 font-bold">
             Feature "{activeTab}" is coming soon in the next update.
           </div>
         );
@@ -376,7 +389,7 @@ export function Admin() {
   };
 
   return (
-    <div className="flex min-h-screen bg-slate-50 relative">
+    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950 relative text-slate-900 dark:text-white">
       <AdminSidebar 
         activeTab={activeTab} 
         setActiveTab={handleSidebarItemClick} 

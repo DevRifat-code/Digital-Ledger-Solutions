@@ -55,18 +55,18 @@ export function AdminCoupons() {
   };
 
   return (
-    <div className="p-8 space-y-8 max-w-[1600px] mx-auto">
+    <div className="p-8 space-y-8 max-w-[1600px] mx-auto text-slate-900 dark:text-slate-100">
       <div className="flex items-end justify-between">
         <div>
-          <h1 className="text-3xl font-display font-black text-slate-900 tracking-tight">Coupon Manager</h1>
-          <p className="text-slate-500 font-medium mt-1">Create and manage discount codes for your customers.</p>
+          <h1 className="text-3xl font-display font-black text-slate-900 dark:text-white tracking-tight">Coupon Manager</h1>
+          <p className="text-slate-500 dark:text-slate-400 font-medium mt-1">Create and manage discount codes for your customers.</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <div className="lg:col-span-4">
-          <div className="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm">
-            <h3 className="text-lg font-display font-black text-slate-900 mb-6 uppercase tracking-tight">New Promo Code</h3>
+          <div className="bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-sm">
+            <h3 className="text-lg font-display font-black text-slate-900 dark:text-white mb-6 uppercase tracking-tight">New Promo Code</h3>
             <form onSubmit={handleAddCoupon} className="space-y-5">
               <div className="space-y-1.5">
                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Coupon Code</label>
@@ -76,7 +76,7 @@ export function AdminCoupons() {
                   value={newCoupon.code}
                   onChange={(e) => setNewCoupon({ ...newCoupon, code: e.target.value })}
                   placeholder="SAVE30"
-                  className="w-full bg-slate-50 border border-slate-200 px-5 py-3.5 rounded-2xl text-sm font-bold focus:border-indigo-600 focus:bg-white outline-none transition-all uppercase"
+                  className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-5 py-3.5 rounded-2xl text-sm font-bold text-slate-900 dark:text-white focus:border-indigo-600 dark:focus:border-emerald-500 focus:bg-white dark:focus:bg-slate-800 outline-none transition-all uppercase placeholder:text-slate-400 dark:placeholder:text-slate-500"
                 />
               </div>
 
@@ -88,7 +88,7 @@ export function AdminCoupons() {
                     type="number"
                     value={newCoupon.discount}
                     onChange={(e) => setNewCoupon({ ...newCoupon, discount: Number(e.target.value) })}
-                    className="w-full bg-slate-50 border border-slate-200 px-5 py-3.5 rounded-2xl text-sm font-medium focus:border-indigo-600 focus:bg-white outline-none transition-all"
+                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-5 py-3.5 rounded-2xl text-sm font-medium text-slate-900 dark:text-white focus:border-indigo-600 dark:focus:border-emerald-500 focus:bg-white dark:focus:bg-slate-800 outline-none transition-all"
                   />
                 </div>
                 <div className="space-y-1.5">
@@ -96,7 +96,7 @@ export function AdminCoupons() {
                   <select
                     value={newCoupon.type}
                     onChange={(e) => setNewCoupon({ ...newCoupon, type: e.target.value as any })}
-                    className="w-full bg-slate-50 border border-slate-200 px-5 py-3.5 rounded-2xl text-sm font-medium focus:border-indigo-600 focus:bg-white outline-none transition-all"
+                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-5 py-3.5 rounded-2xl text-sm font-medium text-slate-900 dark:text-white focus:border-indigo-600 dark:focus:border-emerald-500 focus:bg-white dark:focus:bg-slate-800 outline-none transition-all"
                   >
                     <option value="percentage">Percent (%)</option>
                     <option value="fixed">Fixed Amount</option>
@@ -104,7 +104,7 @@ export function AdminCoupons() {
                 </div>
               </div>
 
-              <button className="w-full py-4 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-slate-900 transition-all shadow-xl shadow-indigo-600/20">
+              <button className="w-full py-4 bg-indigo-600 dark:bg-emerald-600 text-white rounded-2xl font-bold hover:bg-slate-900 dark:hover:bg-emerald-500 transition-all shadow-xl shadow-indigo-600/20 dark:shadow-none">
                 Create Coupon
               </button>
             </form>
@@ -117,29 +117,29 @@ export function AdminCoupons() {
               <motion.div 
                 layout
                 key={c.id} 
-                className="bg-white p-6 rounded-[2rem] border-2 border-dashed border-slate-200 relative group overflow-hidden"
+                className="bg-white dark:bg-slate-900 p-6 rounded-[2rem] border-2 border-dashed border-slate-200 dark:border-slate-800 relative group overflow-hidden"
               >
-                <div className="absolute right-0 top-0 w-20 h-20 bg-indigo-50 -mr-10 -mt-10 rounded-full group-hover:scale-150 transition-transform"></div>
+                <div className="absolute right-0 top-0 w-20 h-20 bg-indigo-50 dark:bg-slate-800 -mr-10 -mt-10 rounded-full group-hover:scale-150 transition-transform"></div>
                 <div className="relative flex items-center justify-between">
                   <div>
                     <div className="flex items-center gap-2 mb-1">
-                      <Ticket size={16} className="text-indigo-600" />
-                      <span className="text-lg font-mono font-black text-slate-900">{c.code}</span>
+                      <Ticket size={16} className="text-indigo-600 dark:text-emerald-400" />
+                      <span className="text-lg font-mono font-black text-slate-900 dark:text-white">{c.code}</span>
                     </div>
-                    <p className="text-sm font-bold text-indigo-600">
+                    <p className="text-sm font-bold text-indigo-600 dark:text-emerald-400">
                       {c.type === 'percentage' ? `${c.discount}% OFF` : `৳${c.discount} OFF`}
                     </p>
                   </div>
-                  <button onClick={() => handleDelete(c.id)} className="p-3 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-2xl transition-all">
+                  <button onClick={() => handleDelete(c.id)} className="p-3 text-slate-400 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-2xl transition-all">
                     <Trash2 size={18} />
                   </button>
                 </div>
               </motion.div>
             ))}
             {coupons.length === 0 && !loading && (
-              <div className="md:col-span-2 py-20 text-center bg-slate-50 rounded-[2rem] border border-dashed border-slate-200">
-                <Percent size={40} className="mx-auto text-slate-200 mb-4" />
-                <p className="text-slate-400 font-bold italic">No active coupons available.</p>
+              <div className="md:col-span-2 py-20 text-center bg-slate-50 dark:bg-slate-900/50 rounded-[2rem] border border-dashed border-slate-200 dark:border-slate-800">
+                <Percent size={40} className="mx-auto text-slate-200 dark:text-slate-700 mb-4" />
+                <p className="text-slate-400 dark:text-slate-500 font-bold italic">No active coupons available.</p>
               </div>
             )}
           </div>

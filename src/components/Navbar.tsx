@@ -7,6 +7,7 @@ import { useSiteSettings } from '../hooks/useSiteSettings';
 import { auth } from '../lib/firebase';
 import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
 import { useTheme } from '../context/ThemeContext';
+import { GlobalSearch } from './GlobalSearch';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -57,20 +58,27 @@ export function Navbar() {
           "flex items-center justify-between transition-all duration-500",
           isScrolled ? "h-16" : "h-20"
         )}>
-          <Link to="/" className="flex items-center space-x-2 group">
-            {settings.logoUrl && settings.logoUrl.trim() !== "" ? (
-              <img src={settings.logoUrl} alt={settings.siteName} className="w-10 h-10 object-contain" referrerPolicy="no-referrer" />
-            ) : (
-              <div className="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-500/20 group-hover:rotate-6 transition-transform">
-                <Zap size={24} />
-              </div>
-            )}
-            <span className={cn(
-              "font-display font-black text-2xl tracking-tighter",
-              location.pathname === '/' ? "text-white" : "text-slate-900 dark:text-white"
+          <Link to="/" className="flex items-center group shrink-0" title={settings.siteName}>
+            <div className={cn(
+              "flex items-center gap-2.5 px-3 py-1.5 rounded-2xl border transition-all shadow-2xs group-hover:scale-[1.02]",
+              location.pathname === '/' && !isScrolled
+                ? "bg-white/10 border-white/20 text-white hover:bg-white/15"
+                : "bg-slate-100/90 dark:bg-slate-800/90 border-slate-200/80 dark:border-slate-700/80 text-slate-900 dark:text-white hover:border-emerald-500/40"
             )}>
-              {settings.siteName}
-            </span>
+              {settings.logoUrl && settings.logoUrl.trim() !== "" ? (
+                <img src={settings.logoUrl} alt={settings.siteName} className="w-6 h-6 sm:w-7 sm:h-7 object-contain group-hover:scale-105 transition-transform" referrerPolicy="no-referrer" />
+              ) : (
+                <div className="w-6 h-6 sm:w-7 sm:h-7 bg-emerald-600 rounded-lg flex items-center justify-center text-white shadow-xs group-hover:rotate-6 transition-transform">
+                  <Zap size={14} />
+                </div>
+              )}
+              <span className={cn(
+                "font-display font-black text-xs sm:text-sm tracking-wider uppercase",
+                location.pathname === '/' && !isScrolled ? "text-white" : "text-slate-900 dark:text-white"
+              )}>
+                {settings.siteName}
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Links */}
@@ -83,6 +91,11 @@ export function Navbar() {
                   onClick={() => {
                     if (link.href === '/' && location.pathname === '/') {
                       window.scrollTo({ top: 0, behavior: 'smooth' });
+                    } else if (link.href === '/#pricing' && location.pathname === '/') {
+                      const elem = document.getElementById('pricing');
+                      if (elem) {
+                        elem.scrollIntoView({ behavior: 'smooth' });
+                      }
                     }
                   }}
                   className={cn(
@@ -98,6 +111,9 @@ export function Navbar() {
             </div>
             
             <div className="flex items-center space-x-4 pl-6 border-l border-white/10">
+              {/* Global Search Bar */}
+              <GlobalSearch navbarThemeOverride={location.pathname === '/'} />
+
               {/* Theme Toggle Button */}
               <button
                 onClick={toggleTheme}
@@ -194,13 +210,26 @@ export function Navbar() {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="lg:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 pt-2 pb-6 space-y-4"
+          className="lg:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 pt-3 pb-6 space-y-4"
         >
+          {/* Mobile Global Search trigger */}
+          <div className="pb-1">
+            <GlobalSearch isMobileNav={true} onCloseMobileNav={() => setIsOpen(false)} />
+          </div>
+
           {navLinks.map((link) => (
             <Link
               key={link.name}
               to={link.href}
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                setIsOpen(false);
+                if (link.href === '/#pricing' && location.pathname === '/') {
+                  const elem = document.getElementById('pricing');
+                  if (elem) {
+                    elem.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }
+              }}
               className="block text-lg font-bold text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-emerald-400"
             >
               {link.name}

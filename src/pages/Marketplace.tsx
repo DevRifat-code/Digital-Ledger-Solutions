@@ -28,12 +28,13 @@ export function Marketplace() {
   }, []);
 
   const filteredProducts = products.filter(p => 
-    p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    p.category.toLowerCase().includes(searchTerm.toLowerCase())
+    (p.name && p.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (p.category && p.category.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (p.description && p.description.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   return (
-    <div className="pt-24 pb-20 min-h-screen bg-slate-50">
+    <div className="pt-24 pb-20 min-h-screen bg-slate-50 dark:bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-16 gap-8">
           <motion.div
@@ -41,8 +42,8 @@ export function Marketplace() {
             animate={{ opacity: 1, x: 0 }}
             className="flex-1"
           >
-            <h1 className="text-4xl lg:text-5xl font-display font-extrabold text-slate-900 mb-4 tracking-tight">Software Solutions</h1>
-            <p className="text-slate-500 font-medium">Ready-to-deploy digital assets and premium scripts.</p>
+            <h1 className="text-4xl lg:text-5xl font-display font-extrabold text-slate-900 dark:text-white mb-4 tracking-tight">Software Solutions</h1>
+            <p className="text-slate-500 dark:text-slate-400 font-medium">Ready-to-deploy digital assets and premium scripts.</p>
           </motion.div>
 
           <div className="flex flex-col sm:flex-row gap-4">
@@ -54,7 +55,7 @@ export function Marketplace() {
                     placeholder="Search catalog..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full bg-white border border-slate-200 rounded-2xl py-3 pl-12 pr-4 text-slate-900 focus:border-indigo-500 focus:outline-none transition-all shadow-sm"
+                    className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl py-3 pl-12 pr-4 text-slate-900 dark:text-white focus:border-indigo-500 focus:outline-none transition-all shadow-sm"
                 />
             </div>
           </div>
@@ -71,7 +72,7 @@ export function Marketplace() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-32 bg-white border border-slate-200 border-dashed rounded-[3rem]">
+          <div className="text-center py-32 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 border-dashed rounded-[3rem]">
             <p className="text-slate-400 text-xl font-bold italic tracking-tight">No products found for "{searchTerm}"</p>
           </div>
         )}

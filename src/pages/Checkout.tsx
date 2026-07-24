@@ -258,19 +258,19 @@ export function Checkout() {
     }
   };
 
-  if (loading) return <div className="pt-32 text-center text-slate-900">Validating checkout session...</div>;
-  if (!product) return <div className="pt-32 text-center text-slate-900">Product not found.</div>;
+  if (loading) return <div className="pt-32 text-center text-slate-900 dark:text-white">Validating checkout session...</div>;
+  if (!product) return <div className="pt-32 text-center text-slate-900 dark:text-white">Product not found.</div>;
 
   return (
-    <div className="pt-24 pb-20 bg-slate-50 min-h-screen">
+    <div className="pt-24 pb-20 bg-slate-50 dark:bg-slate-950 min-h-screen">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <header className="mb-12">
-            <Link to={`/product/${product.id}`} className="inline-flex items-center gap-2 text-slate-500 hover:text-indigo-600 transition-colors mb-4">
+            <Link to={`/product/${product.id}`} className="inline-flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-emerald-400 transition-colors mb-4">
                 <ArrowLeft size={16} />
                 Back to product
             </Link>
-            <h1 className="text-4xl font-display font-extrabold text-slate-900 tracking-tight flex items-center gap-4">
-                <ShoppingBag className="text-indigo-600" />
+            <h1 className="text-4xl font-display font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-4">
+                <ShoppingBag className="text-indigo-600 dark:text-emerald-400" />
                 Complete Your Order
             </h1>
         </header>
@@ -282,17 +282,17 @@ export function Checkout() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-white rounded-[2.5rem] border border-slate-200 p-12 shadow-xl shadow-slate-200/50 text-center"
+                className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 p-12 shadow-xl shadow-slate-200/50 dark:shadow-none text-center"
               >
-                <div className="w-20 h-20 bg-indigo-600 rounded-[2rem] flex items-center justify-center text-white mx-auto mb-8 shadow-xl shadow-indigo-100">
+                <div className="w-20 h-20 bg-indigo-600 rounded-[2rem] flex items-center justify-center text-white mx-auto mb-8 shadow-xl shadow-indigo-100 dark:shadow-none">
                   <UserIcon size={40} />
                 </div>
-                <h2 className="text-3xl font-display font-extrabold text-slate-900 mb-4 tracking-tight">Login Required</h2>
-                <p className="text-slate-500 mb-10 leading-relaxed font-medium">To place an order and track it in your profile, please sign in to your account.</p>
+                <h2 className="text-3xl font-display font-extrabold text-slate-900 dark:text-white mb-4 tracking-tight">Login Required</h2>
+                <p className="text-slate-500 dark:text-slate-400 mb-10 leading-relaxed font-medium">To place an order and track it in your profile, please sign in to your account.</p>
                 <Link
                   to="/auth"
                   state={{ from: { pathname: `/checkout/${id}` } }}
-                  className="w-full py-5 bg-indigo-600 text-white rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-slate-900 transition-all shadow-xl shadow-indigo-500/20"
+                  className="w-full py-5 bg-indigo-600 dark:bg-emerald-600 text-white rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-slate-900 dark:hover:bg-emerald-500 transition-all shadow-xl shadow-indigo-500/20"
                 >
                   <LogIn size={20} />
                   Login to Purchase
@@ -302,7 +302,7 @@ export function Checkout() {
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-white rounded-[2.5rem] border border-slate-200 p-8 md:p-12 shadow-xl shadow-slate-200/50"
+                className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 p-8 md:p-12 shadow-xl shadow-slate-200/50 dark:shadow-none"
               >
                 <form onSubmit={handleSubmit} className="space-y-8">
                   {/* Validation Error Banner */}
@@ -310,7 +310,7 @@ export function Checkout() {
                     <motion.div 
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="bg-red-50 border border-red-200 rounded-2xl p-4 flex items-center gap-3 text-red-700 text-sm"
+                      className="bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-900 rounded-2xl p-4 flex items-center gap-3 text-red-700 dark:text-red-300 text-sm"
                     >
                       <AlertCircle className="shrink-0 text-red-500" size={20} />
                       <span>{validationError}</span>
@@ -319,50 +319,50 @@ export function Checkout() {
 
                   {/* Customer Info */}
                   <div>
-                     <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-                         <UserIcon size={20} className="text-indigo-600" />
+                     <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+                         <UserIcon size={20} className="text-indigo-600 dark:text-emerald-400" />
                          Your Information
                      </h3>
                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                          <label className="text-[10px] uppercase font-black text-slate-500 tracking-widest pl-1">Full Name</label>
+                          <label className="text-[10px] uppercase font-black text-slate-500 dark:text-slate-400 tracking-widest pl-1">Full Name</label>
                           <input
                             required
                             type="text"
                             value={formData.fullName}
                             onChange={e => setFormData({...formData, fullName: e.target.value})}
-                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-slate-900 focus:border-indigo-500 outline-none transition-all placeholder:text-slate-400"
+                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-6 py-4 text-slate-900 dark:text-white focus:border-indigo-500 outline-none transition-all placeholder:text-slate-400"
                             placeholder="Ex: Md Rifat Hossain"
                           />
                         </div>
                         <div className="space-y-2">
-                          <label className="text-[10px] uppercase font-black text-slate-500 tracking-widest pl-1">Email Address (Read Only)</label>
+                          <label className="text-[10px] uppercase font-black text-slate-500 dark:text-slate-400 tracking-widest pl-1">Email Address (Read Only)</label>
                           <input
                             disabled
                             type="email"
                             value={user.email || ''}
-                            className="w-full bg-slate-100 border border-slate-200 rounded-2xl px-6 py-4 text-slate-500 cursor-not-allowed outline-none"
+                            className="w-full bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-2xl px-6 py-4 text-slate-500 dark:text-slate-400 cursor-not-allowed outline-none"
                           />
                         </div>
                      </div>
                   </div>
 
                   {/* Payment Methods Tabs */}
-                  <div className="pt-8 border-t border-slate-100">
-                    <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-                       <Wallet size={20} className="text-indigo-600" />
+                  <div className="pt-8 border-t border-slate-100 dark:border-slate-800">
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+                       <Wallet size={20} className="text-indigo-600 dark:text-emerald-400" />
                        Select Payment Gateway
                     </h3>
 
-                    <div className="grid grid-cols-3 gap-3 mb-8 bg-slate-50 p-1.5 rounded-2xl border border-slate-100">
+                    <div className="grid grid-cols-3 gap-3 mb-8 bg-slate-50 dark:bg-slate-800/60 p-1.5 rounded-2xl border border-slate-100 dark:border-slate-700">
                       <button
                         type="button"
                         onClick={() => { setPaymentMethod('bkash'); setValidationError(null); }}
                         className={cn(
                           "py-3.5 rounded-xl font-bold text-sm transition-all flex flex-col sm:flex-row items-center justify-center gap-2",
                           paymentMethod === 'bkash' 
-                            ? "bg-white text-pink-600 shadow-md border border-pink-100" 
-                            : "text-slate-500 hover:bg-white/50"
+                            ? "bg-white dark:bg-slate-900 text-pink-600 dark:text-pink-400 shadow-md border border-pink-100 dark:border-pink-900/50" 
+                            : "text-slate-500 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-700/50"
                         )}
                       >
                         <span className="w-2.5 h-2.5 bg-pink-500 rounded-full animate-pulse hidden sm:inline-block"></span>
@@ -375,8 +375,8 @@ export function Checkout() {
                         className={cn(
                           "py-3.5 rounded-xl font-bold text-sm transition-all flex flex-col sm:flex-row items-center justify-center gap-2",
                           paymentMethod === 'stripe' 
-                            ? "bg-indigo-600 text-white shadow-md shadow-indigo-100 border border-indigo-700" 
-                            : "text-slate-500 hover:bg-white/50"
+                            ? "bg-indigo-600 dark:bg-emerald-600 text-white shadow-md shadow-indigo-100 dark:shadow-none border border-indigo-700 dark:border-emerald-500" 
+                            : "text-slate-500 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-700/50"
                         )}
                       >
                         <CardIcon size={16} />
@@ -389,8 +389,8 @@ export function Checkout() {
                         className={cn(
                           "py-3.5 rounded-xl font-bold text-sm transition-all flex flex-col sm:flex-row items-center justify-center gap-2",
                           paymentMethod === 'paypal' 
-                            ? "bg-blue-600 text-white shadow-md shadow-blue-100 border border-blue-700" 
-                            : "text-slate-500 hover:bg-white/50"
+                            ? "bg-blue-600 dark:bg-blue-600 text-white shadow-md shadow-blue-100 dark:shadow-none border border-blue-700" 
+                            : "text-slate-500 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-700/50"
                         )}
                       >
                         <span className="font-extrabold italic hidden sm:inline text-xs text-yellow-400">Pay</span>
@@ -405,15 +405,15 @@ export function Checkout() {
                         animate={{ opacity: 1, y: 0 }}
                         className="space-y-6"
                       >
-                        <div className="bg-indigo-50 border border-indigo-100 rounded-2xl p-6 flex items-start gap-4">
-                            <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white shrink-0 shadow-lg shadow-indigo-200">
+                        <div className="bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900 rounded-2xl p-6 flex items-start gap-4">
+                            <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white shrink-0 shadow-lg shadow-indigo-200 dark:shadow-none">
                                 <span className="font-bold text-xs">P</span>
                             </div>
                             <div>
-                                <h5 className="font-bold text-indigo-900 mb-1 leading-none uppercase text-xs tracking-wider">Payment Instructions</h5>
-                                <p className="text-indigo-700 text-sm leading-relaxed mt-2">
+                                <h5 className="font-bold text-indigo-900 dark:text-indigo-300 mb-1 leading-none uppercase text-xs tracking-wider">Payment Instructions</h5>
+                                <p className="text-indigo-700 dark:text-indigo-300/80 text-sm leading-relaxed mt-2">
                                     Please send the amount to our bKash personal number: <br />
-                                    <span className="font-extrabold text-indigo-900 text-lg">{settings.bkashNumber || '018XXXXXXXX'}</span> <br />
+                                    <span className="font-extrabold text-indigo-900 dark:text-indigo-200 text-lg">{settings.bkashNumber || '018XXXXXXXX'}</span> <br />
                                     Then provide your bKash number and Transaction ID below.
                                 </p>
                             </div>
@@ -421,24 +421,24 @@ export function Checkout() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <div className="space-y-2">
-                            <label className="text-[10px] uppercase font-black text-slate-500 tracking-widest pl-1">Your bKash Number</label>
+                            <label className="text-[10px] uppercase font-black text-slate-500 dark:text-slate-400 tracking-widest pl-1">Your bKash Number</label>
                             <input
                               required={paymentMethod === 'bkash'}
                               type="text"
                               value={formData.bkashNumber}
                               onChange={e => setFormData({...formData, bkashNumber: e.target.value})}
-                              className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-slate-900 focus:border-indigo-500 outline-none transition-all placeholder:text-slate-400"
+                              className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-6 py-4 text-slate-900 dark:text-white focus:border-indigo-500 outline-none transition-all placeholder:text-slate-400"
                               placeholder="017/018XXXXXXXX"
                             />
                           </div>
                           <div className="space-y-2">
-                            <label className="text-[10px] uppercase font-black text-slate-500 tracking-widest pl-1">Transaction ID (TrxID)</label>
+                            <label className="text-[10px] uppercase font-black text-slate-500 dark:text-slate-400 tracking-widest pl-1">Transaction ID (TrxID)</label>
                             <input
                               required={paymentMethod === 'bkash'}
                               type="text"
                               value={formData.transactionId}
                               onChange={e => setFormData({...formData, transactionId: e.target.value})}
-                              className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-slate-900 focus:border-indigo-500 outline-none transition-all placeholder:text-slate-400 font-mono tracking-widest"
+                              className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-6 py-4 text-slate-900 dark:text-white focus:border-indigo-500 outline-none transition-all placeholder:text-slate-400 font-mono tracking-widest"
                               placeholder="8JAL3K9A"
                             />
                           </div>
@@ -501,8 +501,8 @@ export function Checkout() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <div className="space-y-2 md:col-span-2">
                             <div className="flex justify-between items-center">
-                              <label className="text-[10px] uppercase font-black text-slate-500 tracking-widest pl-1">Card Number (Supports 4242 For Testing)</label>
-                              <span className="text-[10px] text-indigo-600 font-bold bg-indigo-50 border border-indigo-100 px-2 py-0.5 rounded-full">Secure SSL Standard</span>
+                              <label className="text-[10px] uppercase font-black text-slate-500 dark:text-slate-400 tracking-widest pl-1">Card Number (Supports 4242 For Testing)</label>
+                              <span className="text-[10px] text-indigo-600 dark:text-emerald-400 font-bold bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-100 dark:border-indigo-900 px-2 py-0.5 rounded-full">Secure SSL Standard</span>
                             </div>
                             <div className="relative">
                               <input
@@ -511,14 +511,14 @@ export function Checkout() {
                                 placeholder="4242 4242 4242 4242"
                                 value={stripeForm.cardNumber}
                                 onChange={e => setStripeForm({ ...stripeForm, cardNumber: formatCardNumber(e.target.value) })}
-                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 pl-12 text-slate-900 focus:border-indigo-500 outline-none transition-all placeholder:text-slate-400 font-mono"
+                                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-6 py-4 pl-12 text-slate-900 dark:text-white focus:border-indigo-500 outline-none transition-all placeholder:text-slate-400 font-mono"
                               />
                               <CardIcon className="absolute left-4 top-4.5 text-slate-400" size={18} />
                             </div>
                           </div>
 
                           <div className="space-y-2">
-                            <label className="text-[10px] uppercase font-black text-slate-500 tracking-widest pl-1">Expiry Date</label>
+                            <label className="text-[10px] uppercase font-black text-slate-500 dark:text-slate-400 tracking-widest pl-1">Expiry Date</label>
                             <input
                               required={paymentMethod === 'stripe'}
                               type="text"
@@ -526,12 +526,12 @@ export function Checkout() {
                               placeholder="MM/YY"
                               value={stripeForm.cardExpiry}
                               onChange={e => setStripeForm({ ...stripeForm, cardExpiry: formatCardExpiry(e.target.value) })}
-                              className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-slate-900 focus:border-indigo-500 outline-none transition-all placeholder:text-slate-400 font-mono"
+                              className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-6 py-4 text-slate-900 dark:text-white focus:border-indigo-500 outline-none transition-all placeholder:text-slate-400 font-mono"
                             />
                           </div>
 
                           <div className="space-y-2">
-                            <label className="text-[10px] uppercase font-black text-slate-500 tracking-widest pl-1">Card Verification Code (CVC/CVV)</label>
+                            <label className="text-[10px] uppercase font-black text-slate-500 dark:text-slate-400 tracking-widest pl-1">Card Verification Code (CVC/CVV)</label>
                             <input
                               required={paymentMethod === 'stripe'}
                               type="password"
@@ -539,19 +539,19 @@ export function Checkout() {
                               placeholder="•••"
                               value={stripeForm.cardCvv}
                               onChange={e => setStripeForm({ ...stripeForm, cardCvv: e.target.value.replace(/\D/g, '') })}
-                              className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-slate-900 focus:border-indigo-500 outline-none transition-all placeholder:text-slate-400 font-mono"
+                              className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-6 py-4 text-slate-900 dark:text-white focus:border-indigo-500 outline-none transition-all placeholder:text-slate-400 font-mono"
                             />
                           </div>
 
                           <div className="space-y-2 md:col-span-2">
-                            <label className="text-[10px] uppercase font-black text-slate-500 tracking-widest pl-1">Cardholder Name</label>
+                            <label className="text-[10px] uppercase font-black text-slate-500 dark:text-slate-400 tracking-widest pl-1">Cardholder Name</label>
                             <input
                               required={paymentMethod === 'stripe'}
                               type="text"
                               placeholder="Md Rifat Hossain"
                               value={stripeForm.cardName}
                               onChange={e => setStripeForm({ ...stripeForm, cardName: e.target.value })}
-                              className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-slate-900 focus:border-indigo-500 outline-none transition-all placeholder:text-slate-400"
+                              className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-6 py-4 text-slate-900 dark:text-white focus:border-indigo-500 outline-none transition-all placeholder:text-slate-400"
                             />
                           </div>
                         </div>
@@ -565,12 +565,12 @@ export function Checkout() {
                         className="space-y-6"
                       >
                         {!paypalData.completed ? (
-                          <div className="bg-slate-50 rounded-2xl border border-slate-200 p-8 text-center flex flex-col items-center justify-center">
-                            <div className="w-16 h-16 bg-blue-50 border border-blue-100 rounded-full flex items-center justify-center text-blue-600 mb-4">
+                          <div className="bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-slate-700 p-8 text-center flex flex-col items-center justify-center">
+                            <div className="w-16 h-16 bg-blue-50 dark:bg-blue-950/50 border border-blue-100 dark:border-blue-900 rounded-full flex items-center justify-center text-blue-600 dark:text-blue-400 mb-4">
                               <Sparkles size={28} className="animate-pulse" />
                             </div>
-                            <h4 className="font-bold text-slate-800 text-lg mb-2">PayPal Smart Billing Gateway</h4>
-                            <p className="text-slate-500 text-sm max-w-md mx-auto mb-6">
+                            <h4 className="font-bold text-slate-800 dark:text-white text-lg mb-2">PayPal Smart Billing Gateway</h4>
+                            <p className="text-slate-500 dark:text-slate-400 text-sm max-w-md mx-auto mb-6">
                               Complete sandbox authorization to securely pay the custom invoice starting with immediate billing.
                             </p>
                             <button
@@ -582,23 +582,23 @@ export function Checkout() {
                             </button>
                           </div>
                         ) : (
-                          <div className="bg-green-50 border border-green-200 rounded-2xl p-6 flex items-start gap-4 shadow-sm">
+                          <div className="bg-green-50 dark:bg-green-950/40 border border-green-200 dark:border-green-900 rounded-2xl p-6 flex items-start gap-4 shadow-sm">
                             <div className="w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center text-white shrink-0">
                               <CheckCircle2 size={20} />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <h5 className="font-bold text-green-900 leading-none">PayPal Checkout Authorized</h5>
-                              <p className="text-green-700 text-sm mt-1 leading-relaxed truncate">
+                              <h5 className="font-bold text-green-900 dark:text-green-300 leading-none">PayPal Checkout Authorized</h5>
+                              <p className="text-green-700 dark:text-green-400 text-sm mt-1 leading-relaxed truncate">
                                 Email: <span className="font-medium">{paypalData.email}</span>
                               </p>
-                              <p className="text-xs text-green-600 mt-1 font-mono tracking-wider">
+                              <p className="text-xs text-green-600 dark:text-green-400 mt-1 font-mono tracking-wider">
                                 Ref ID: {paypalData.transactionId}
                               </p>
                             </div>
                             <button
                               type="button"
                               onClick={() => setPaypalData({ email: '', transactionId: '', completed: false })}
-                              className="text-xs text-red-600 hover:underline font-bold"
+                              className="text-xs text-red-600 dark:text-red-400 hover:underline font-bold"
                             >
                               Disconnect
                             </button>
@@ -612,7 +612,7 @@ export function Checkout() {
                   <button
                     disabled={isSubmitting}
                     type="submit"
-                    className="w-full bg-indigo-600 text-white rounded-[1.25rem] py-6 flex items-center justify-center gap-3 font-bold text-xl hover:bg-slate-900 transition-all shadow-2xl shadow-indigo-600/20 disabled:opacity-50"
+                    className="w-full bg-indigo-600 dark:bg-emerald-600 text-white rounded-[1.25rem] py-6 flex items-center justify-center gap-3 font-bold text-xl hover:bg-slate-900 dark:hover:bg-emerald-500 transition-all shadow-2xl shadow-indigo-600/20 dark:shadow-none disabled:opacity-50"
                   >
                     {isSubmitting ? 'Processing Order...' : 'Place Order Now'}
                     <ChevronRight size={24} />
@@ -630,13 +630,13 @@ export function Checkout() {
           {/* Order Summary Side */}
           <div className="lg:col-span-5">
             <div className="sticky top-24 space-y-6">
-                <div className="bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden shadow-xl shadow-slate-200/50">
-                    <div className="p-8 border-b border-slate-100 bg-slate-50/50">
-                        <h4 className="font-bold text-slate-900 text-lg uppercase tracking-tight">Order Summary</h4>
+                <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xl shadow-slate-200/50 dark:shadow-none">
+                    <div className="p-8 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30">
+                        <h4 className="font-bold text-slate-900 dark:text-white text-lg uppercase tracking-tight">Order Summary</h4>
                     </div>
                     <div className="p-8">
                         <div className="flex gap-6 mb-8">
-                            <div className="w-24 h-24 bg-indigo-600 rounded-2xl flex items-center justify-center p-4 border border-indigo-400 overflow-hidden shrink-0 shadow-lg shadow-indigo-100">
+                            <div className="w-24 h-24 bg-indigo-600 rounded-2xl flex items-center justify-center p-4 border border-indigo-400 overflow-hidden shrink-0 shadow-lg shadow-indigo-100 dark:shadow-none">
                                 {product.imageUrl && product.imageUrl.trim() !== "" ? (
                                     <img src={product.imageUrl} alt={product.name} className="w-full h-full object-contain drop-shadow-2xl" referrerPolicy="no-referrer" />
                                 ) : (
@@ -644,29 +644,29 @@ export function Checkout() {
                                 )}
                             </div>
                             <div>
-                                <h5 className="font-bold text-slate-900 text-xl leading-tight mb-1">{product.name}</h5>
-                                <p className="text-indigo-600 font-bold text-sm uppercase tracking-widest">{product.category}</p>
+                                <h5 className="font-bold text-slate-900 dark:text-white text-xl leading-tight mb-1">{product.name}</h5>
+                                <p className="text-indigo-600 dark:text-emerald-400 font-bold text-sm uppercase tracking-widest">{product.category}</p>
                             </div>
                         </div>
                         
-                        <div className="space-y-4 pt-8 border-t border-slate-100">
-                            <div className="flex items-center justify-between text-slate-500 font-semibold mb-2">
+                        <div className="space-y-4 pt-8 border-t border-slate-100 dark:border-slate-800">
+                            <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 font-semibold mb-2">
                                 <span>Subtotal</span>
                                 <span>{currency}{product.price.toLocaleString()}</span>
                             </div>
-                            <div className="flex items-center justify-between text-slate-500 font-semibold">
+                            <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 font-semibold">
                                 <span>Service Fee</span>
-                                <span className="text-green-600 uppercase text-xs tracking-widest">FREE</span>
+                                <span className="text-green-600 dark:text-emerald-400 uppercase text-xs tracking-widest">FREE</span>
                             </div>
-                            <div className="pt-6 mt-6 border-t border-slate-200 flex items-center justify-between">
-                                <span className="text-xl font-black text-slate-900 uppercase tracking-tighter">Total Payable</span>
-                                <span className="text-3xl font-display font-extrabold text-indigo-600">{currency}{product.price.toLocaleString()}</span>
+                            <div className="pt-6 mt-6 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                                <span className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Total Payable</span>
+                                <span className="text-3xl font-display font-extrabold text-indigo-600 dark:text-emerald-400">{currency}{product.price.toLocaleString()}</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <div className="bg-slate-900 rounded-[2.5rem] p-8 text-white relative overflow-hidden">
+                <div className="bg-slate-900 dark:bg-slate-900 rounded-[2.5rem] p-8 text-white relative overflow-hidden border border-slate-800">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/20 blur-[60px] rounded-full" />
                     <h5 className="font-bold mb-4 relative z-10 flex items-center gap-2">
                         <CheckCircle2 size={18} className="text-green-500" />

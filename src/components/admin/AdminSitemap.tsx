@@ -339,17 +339,17 @@ export function AdminSitemap() {
   );
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 text-slate-900 dark:text-slate-100">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
+            <div className="w-10 h-10 bg-indigo-600 dark:bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-500/30 dark:shadow-none">
               <Globe size={22} />
             </div>
-            <h1 className="text-3xl font-display font-black text-slate-900 tracking-tight">Sitemap Generator</h1>
+            <h1 className="text-3xl font-display font-black text-slate-900 dark:text-white tracking-tight">Sitemap Generator</h1>
           </div>
-          <p className="text-slate-500 font-medium mt-1">
+          <p className="text-slate-500 dark:text-slate-400 font-medium mt-1">
             Generate and manage your Google Search Console compliant XML sitemap for products, blogs, and static pages.
           </p>
         </div>
@@ -358,7 +358,7 @@ export function AdminSitemap() {
           <button
             onClick={fetchData}
             disabled={loading}
-            className="p-3 bg-white border border-slate-200 text-slate-600 hover:text-indigo-600 rounded-2xl transition-all shadow-sm active:scale-95 disabled:opacity-50"
+            className="p-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-emerald-400 rounded-2xl transition-all shadow-sm active:scale-95 disabled:opacity-50"
             title="Refresh database entries"
           >
             <RefreshCw size={20} className={loading ? 'animate-spin' : ''} />
@@ -366,7 +366,7 @@ export function AdminSitemap() {
 
           <button
             onClick={handleCopy}
-            className="flex items-center gap-2 px-6 py-3.5 bg-slate-900 text-white rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-slate-800 transition-all shadow-md active:scale-95"
+            className="flex items-center gap-2 px-6 py-3.5 bg-slate-900 dark:bg-slate-800 text-white rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-slate-800 dark:hover:bg-slate-700 transition-all shadow-md active:scale-95"
           >
             {copied ? <Check size={18} className="text-emerald-400" /> : <Copy size={18} />}
             {copied ? 'Copied XML!' : 'Copy XML'}
@@ -374,7 +374,7 @@ export function AdminSitemap() {
 
           <button
             onClick={handleDownload}
-            className="flex items-center gap-2 px-6 py-3.5 bg-indigo-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-500/20 active:scale-95"
+            className="flex items-center gap-2 px-6 py-3.5 bg-indigo-600 dark:bg-emerald-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-indigo-700 dark:hover:bg-emerald-500 transition-all shadow-lg shadow-indigo-500/20 dark:shadow-none active:scale-95"
           >
             <Download size={18} />
             Download sitemap.xml
@@ -385,34 +385,34 @@ export function AdminSitemap() {
       {/* Configuration & Overview Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Domain Config */}
-        <div className="bg-white p-6 rounded-[2rem] border border-slate-200 shadow-sm space-y-4">
-          <h3 className="text-sm font-black text-slate-900 uppercase tracking-widest flex items-center gap-2">
-            <Globe size={18} className="text-indigo-600" />
+        <div className="bg-white dark:bg-slate-900 p-6 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+          <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-widest flex items-center gap-2">
+            <Globe size={18} className="text-indigo-600 dark:text-emerald-400" />
             Website Base URL
           </h3>
           <div className="space-y-2">
-            <label className="text-xs font-bold text-slate-500">Domain Name</label>
+            <label className="text-xs font-bold text-slate-500 dark:text-slate-400">Domain Name</label>
             <input
               type="url"
               value={baseUrl}
               onChange={(e) => setBaseUrl(e.target.value)}
               placeholder="https://yourdomain.com"
-              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl font-mono text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-600"
+              className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:focus:ring-emerald-500"
             />
-            <p className="text-[11px] text-slate-400">All generated URLs will use this base domain prefix.</p>
+            <p className="text-[11px] text-slate-400 dark:text-slate-500">All generated URLs will use this base domain prefix.</p>
           </div>
         </div>
 
         {/* Inclusions Filter */}
-        <div className="bg-white p-6 rounded-[2rem] border border-slate-200 shadow-sm space-y-4">
-          <h3 className="text-sm font-black text-slate-900 uppercase tracking-widest flex items-center gap-2">
-            <Layers size={18} className="text-indigo-600" />
+        <div className="bg-white dark:bg-slate-900 p-6 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+          <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-widest flex items-center gap-2">
+            <Layers size={18} className="text-indigo-600 dark:text-emerald-400" />
             Content Inclusions
           </h3>
           <div className="space-y-3">
-            <label className="flex items-center justify-between p-3 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-indigo-50/50 transition-colors">
-              <span className="text-xs font-bold text-slate-700 flex items-center gap-2">
-                <ShoppingBag size={16} className="text-indigo-600" />
+            <label className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-800 transition-colors">
+              <span className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                <ShoppingBag size={16} className="text-indigo-600 dark:text-emerald-400" />
                 Include Products ({products.length})
               </span>
               <input
@@ -423,9 +423,9 @@ export function AdminSitemap() {
               />
             </label>
 
-            <label className="flex items-center justify-between p-3 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-indigo-50/50 transition-colors">
-              <span className="text-xs font-bold text-slate-700 flex items-center gap-2">
-                <FileText size={16} className="text-indigo-600" />
+            <label className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-800 transition-colors">
+              <span className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                <FileText size={16} className="text-indigo-600 dark:text-emerald-400" />
                 Include Blog Posts ({blogPosts.length})
               </span>
               <input
@@ -436,9 +436,9 @@ export function AdminSitemap() {
               />
             </label>
 
-            <label className="flex items-center justify-between p-3 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-indigo-50/50 transition-colors">
-              <span className="text-xs font-bold text-slate-700 flex items-center gap-2">
-                <FileCode size={16} className="text-indigo-600" />
+            <label className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-800 transition-colors">
+              <span className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                <FileCode size={16} className="text-indigo-600 dark:text-emerald-400" />
                 Include Image Tags (`&lt;image:image&gt;`)
               </span>
               <input
@@ -452,9 +452,9 @@ export function AdminSitemap() {
         </div>
 
         {/* Stats Counter */}
-        <div className="bg-gradient-to-br from-slate-900 to-indigo-950 p-6 rounded-[2rem] text-white flex flex-col justify-between shadow-xl relative overflow-hidden">
+        <div className="bg-gradient-to-br from-slate-900 to-indigo-950 dark:from-slate-950 dark:to-slate-900 border border-transparent dark:border-slate-800 p-6 rounded-[2rem] text-white flex flex-col justify-between shadow-xl relative overflow-hidden">
           <div className="space-y-1 relative z-10">
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400">Search Engine Coverage</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400 dark:text-emerald-400">Search Engine Coverage</span>
             <div className="text-4xl font-display font-black tracking-tight">{urlList.length} URLs</div>
             <p className="text-xs text-slate-300 font-medium pt-2">
               Ready to submit to Google Search Console for instant crawling & indexing.
@@ -463,15 +463,15 @@ export function AdminSitemap() {
 
           <div className="grid grid-cols-3 gap-2 pt-4 border-t border-white/10 text-center relative z-10">
             <div>
-              <div className="text-sm font-bold text-indigo-300">4</div>
+              <div className="text-sm font-bold text-indigo-300 dark:text-emerald-300">4</div>
               <div className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Static</div>
             </div>
             <div>
-              <div className="text-sm font-bold text-indigo-300">{includeBlog ? blogPosts.length : 0}</div>
+              <div className="text-sm font-bold text-indigo-300 dark:text-emerald-300">{includeBlog ? blogPosts.length : 0}</div>
               <div className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Blogs</div>
             </div>
             <div>
-              <div className="text-sm font-bold text-indigo-300">{includeProducts ? products.length : 0}</div>
+              <div className="text-sm font-bold text-indigo-300 dark:text-emerald-300">{includeProducts ? products.length : 0}</div>
               <div className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Products</div>
             </div>
           </div>
@@ -479,16 +479,16 @@ export function AdminSitemap() {
       </div>
 
       {/* Main Tabs: Visual List vs XML Source */}
-      <div className="bg-white rounded-[2.5rem] border border-slate-200 shadow-sm overflow-hidden">
+      <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
         {/* Tab Controls & Search */}
-        <div className="p-6 border-b border-slate-100 flex flex-col md:flex-row items-center justify-between gap-4 bg-slate-50/50">
-          <div className="flex items-center gap-2 p-1.5 bg-slate-200/60 rounded-2xl">
+        <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4 bg-slate-50/50 dark:bg-slate-800/50">
+          <div className="flex items-center gap-2 p-1.5 bg-slate-200/60 dark:bg-slate-800 rounded-2xl">
             <button
               onClick={() => setActiveView('preview')}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs transition-all ${
                 activeView === 'preview'
-                  ? 'bg-white text-indigo-600 shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-emerald-400 shadow-sm'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               <Eye size={16} />
@@ -503,8 +503,8 @@ export function AdminSitemap() {
               }}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs transition-all ${
                 activeView === 'inspector'
-                  ? 'bg-white text-indigo-600 shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-emerald-400 shadow-sm'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               <SearchCheck size={16} />
@@ -514,8 +514,8 @@ export function AdminSitemap() {
               onClick={() => setActiveView('xml')}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs transition-all ${
                 activeView === 'xml'
-                  ? 'bg-white text-indigo-600 shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-emerald-400 shadow-sm'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               <Code size={16} />
@@ -525,13 +525,13 @@ export function AdminSitemap() {
 
           {activeView === 'preview' && (
             <div className="relative w-full md:w-80">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500" size={16} />
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search indexed URLs..."
-                className="w-full pl-11 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                className="w-full pl-11 pr-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:focus:ring-emerald-500"
               />
             </div>
           )}
@@ -539,9 +539,9 @@ export function AdminSitemap() {
 
         {/* View Content */}
         {activeView === 'preview' ? (
-          <div className="divide-y divide-slate-100 overflow-x-auto">
+          <div className="divide-y divide-slate-100 dark:divide-slate-800 overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 text-slate-400 font-black uppercase tracking-widest text-[10px]">
+              <thead className="bg-slate-50 dark:bg-slate-800/80 text-slate-400 dark:text-slate-500 font-black uppercase tracking-widest text-[10px]">
                 <tr>
                   <th className="px-6 py-4">Title / Name</th>
                   <th className="px-6 py-4">URL Location (`loc`)</th>
@@ -551,20 +551,20 @@ export function AdminSitemap() {
                   <th className="px-6 py-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium text-slate-700 dark:text-slate-300">
                 {filteredUrls.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="px-6 py-12 text-center text-slate-400">
+                    <td colSpan={6} className="px-6 py-12 text-center text-slate-400 dark:text-slate-500">
                       No URLs match your search or filters.
                     </td>
                   </tr>
                 ) : (
                   filteredUrls.map((item, idx) => (
-                    <tr key={idx} className="hover:bg-slate-50/80 transition-colors">
-                      <td className="px-6 py-4 font-bold text-slate-900 max-w-xs truncate">
+                    <tr key={idx} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors">
+                      <td className="px-6 py-4 font-bold text-slate-900 dark:text-white max-w-xs truncate">
                         {item.title || 'Untitled'}
                       </td>
-                      <td className="px-6 py-4 font-mono text-[11px] text-indigo-600">
+                      <td className="px-6 py-4 font-mono text-[11px] text-indigo-600 dark:text-indigo-400">
                         <a href={item.loc} target="_blank" rel="noopener noreferrer" className="hover:underline flex items-center gap-1">
                           {item.loc}
                           <ExternalLink size={12} />
@@ -572,19 +572,19 @@ export function AdminSitemap() {
                       </td>
                       <td className="px-6 py-4">
                         <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${
-                          item.type === 'static' ? 'bg-slate-100 text-slate-600' :
-                          item.type === 'blog' ? 'bg-purple-50 text-purple-600' : 'bg-emerald-50 text-emerald-600'
+                          item.type === 'static' ? 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300' :
+                          item.type === 'blog' ? 'bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-300' : 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-300'
                         }`}>
                           {item.type}
                         </span>
                       </td>
                       <td className="px-6 py-4">
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 border border-emerald-200 text-emerald-700 font-black text-[10px] rounded-full uppercase tracking-wider">
-                          <CheckCircle2 size={12} className="text-emerald-500" />
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-900/50 text-emerald-700 dark:text-emerald-300 font-black text-[10px] rounded-full uppercase tracking-wider">
+                          <CheckCircle2 size={12} className="text-emerald-500 dark:text-emerald-400" />
                           Conditions Met
                         </span>
                       </td>
-                      <td className="px-6 py-4 font-mono font-bold text-slate-900">{item.priority}</td>
+                      <td className="px-6 py-4 font-mono font-bold text-slate-900 dark:text-white">{item.priority}</td>
                       <td className="px-6 py-4 text-right">
                         <button
                           type="button"
@@ -592,7 +592,7 @@ export function AdminSitemap() {
                             setActiveView('inspector');
                             runUrlIndexingAudit(item.loc, item.title);
                           }}
-                          className="px-3.5 py-1.5 bg-indigo-50 border border-indigo-100 text-indigo-600 hover:bg-indigo-600 hover:text-white rounded-xl font-bold text-[10px] uppercase tracking-wider transition-all flex items-center gap-1 ml-auto"
+                          className="px-3.5 py-1.5 bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-100 dark:border-indigo-900/50 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 dark:hover:bg-indigo-600 hover:text-white rounded-xl font-bold text-[10px] uppercase tracking-wider transition-all flex items-center gap-1 ml-auto"
                         >
                           <SearchCheck size={13} />
                           <span>Inspect Conditions</span>
@@ -607,12 +607,12 @@ export function AdminSitemap() {
         ) : activeView === 'inspector' ? (
           <div className="p-6 md:p-8 space-y-6">
             {/* Inspector Header & URL Input */}
-            <div className="bg-slate-900 text-white rounded-3xl p-6 md:p-8 space-y-4 shadow-xl">
+            <div className="bg-slate-900 dark:bg-slate-950 text-white rounded-3xl p-6 md:p-8 space-y-4 shadow-xl border border-transparent dark:border-slate-800">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                   <div className="flex items-center gap-2">
                     <Sparkles size={18} className="text-amber-400" />
-                    <span className="text-[10px] font-black uppercase tracking-widest text-indigo-300">Search Console Compliance</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-indigo-300 dark:text-emerald-400">Search Console Compliance</span>
                   </div>
                   <h3 className="text-xl font-display font-black text-white mt-1">
                     URL Indexability & Conditions Inspector
@@ -623,7 +623,7 @@ export function AdminSitemap() {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="px-3 py-1.5 bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-xs font-mono font-bold rounded-xl">
+                  <span className="px-3 py-1.5 bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 dark:text-emerald-300 text-xs font-mono font-bold rounded-xl">
                     Googlebot Audit Engine
                   </span>
                 </div>
@@ -636,13 +636,13 @@ export function AdminSitemap() {
                   value={customInspectUrl}
                   onChange={(e) => setCustomInspectUrl(e.target.value)}
                   placeholder="Enter full URL to inspect (e.g. https://digitalledgersolutions.pro.bd/blog/post-1)"
-                  className="w-full px-5 py-3.5 bg-slate-800 border border-slate-700 text-white placeholder-slate-400 rounded-2xl text-xs font-mono focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-5 py-3.5 bg-slate-800 border border-slate-700 text-white placeholder-slate-400 rounded-2xl text-xs font-mono focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-emerald-500"
                 />
                 <button
                   type="button"
                   onClick={() => runUrlIndexingAudit(customInspectUrl || baseUrl)}
                   disabled={inspecting}
-                  className="w-full sm:w-auto px-6 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-indigo-600/30 whitespace-nowrap flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50"
+                  className="w-full sm:w-auto px-6 py-3.5 bg-indigo-600 dark:bg-emerald-600 hover:bg-indigo-500 dark:hover:bg-emerald-500 text-white rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-indigo-600/30 dark:shadow-none whitespace-nowrap flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50"
                 >
                   <SearchCheck size={16} />
                   <span>{inspecting ? 'Checking...' : 'Check Conditions'}</span>
@@ -653,22 +653,22 @@ export function AdminSitemap() {
             {/* Inspection Results */}
             {inspecting ? (
               <div className="p-12 text-center space-y-3">
-                <RefreshCw size={32} className="mx-auto text-indigo-600 animate-spin" />
-                <p className="text-xs font-bold text-slate-700">Auditing indexing conditions for Google Search Console...</p>
+                <RefreshCw size={32} className="mx-auto text-indigo-600 dark:text-emerald-400 animate-spin" />
+                <p className="text-xs font-bold text-slate-700 dark:text-slate-300">Auditing indexing conditions for Google Search Console...</p>
               </div>
             ) : inspectionResult ? (
               <div className="space-y-6">
                 {/* Result Overview Banner */}
                 <div className={`p-6 rounded-3xl border ${
                   inspectionResult.canBeIndexed 
-                    ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-950' 
-                    : 'bg-amber-500/10 border-amber-500/30 text-amber-950'
+                    ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-950 dark:text-emerald-200' 
+                    : 'bg-amber-500/10 border-amber-500/30 text-amber-950 dark:text-amber-200'
                 } flex flex-col md:flex-row items-start md:items-center justify-between gap-4`}>
                   <div className="flex items-center gap-3">
                     {inspectionResult.canBeIndexed ? (
-                      <CheckCircle2 size={32} className="text-emerald-600 flex-shrink-0" />
+                      <CheckCircle2 size={32} className="text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
                     ) : (
-                      <AlertTriangle size={32} className="text-amber-600 flex-shrink-0" />
+                      <AlertTriangle size={32} className="text-amber-600 dark:text-amber-400 flex-shrink-0" />
                     )}
                     <div>
                       <h4 className="text-base font-black">
@@ -676,7 +676,7 @@ export function AdminSitemap() {
                           ? 'URL meets all essential conditions for Google Indexing' 
                           : 'URL requires action before Google will index it'}
                       </h4>
-                      <p className="text-xs font-mono text-slate-600 mt-0.5 truncate max-w-xl">
+                      <p className="text-xs font-mono text-slate-600 dark:text-slate-400 mt-0.5 truncate max-w-xl">
                         {inspectionResult.url}
                       </p>
                     </div>
@@ -684,10 +684,10 @@ export function AdminSitemap() {
 
                   <div className="flex items-center gap-3">
                     <div className="text-right">
-                      <span className="text-2xl font-display font-black text-slate-900">
+                      <span className="text-2xl font-display font-black text-slate-900 dark:text-white">
                         {inspectionResult.passedCount} / {inspectionResult.totalCount}
                       </span>
-                      <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Conditions Met</p>
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Conditions Met</p>
                     </div>
                     <span className={`px-4 py-2 rounded-2xl text-xs font-black uppercase tracking-wider ${
                       inspectionResult.canBeIndexed ? 'bg-emerald-600 text-white' : 'bg-amber-500 text-white'
@@ -702,35 +702,35 @@ export function AdminSitemap() {
                   {inspectionResult.conditions.map((cond) => (
                     <div 
                       key={cond.id}
-                      className="p-5 bg-slate-50 border border-slate-200/80 rounded-2xl space-y-2 flex flex-col justify-between"
+                      className="p-5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-800 rounded-2xl space-y-2 flex flex-col justify-between"
                     >
                       <div className="space-y-1">
                         <div className="flex items-center justify-between gap-2">
-                          <h5 className="text-xs font-bold text-slate-900 flex items-center gap-2">
+                          <h5 className="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-2">
                             {cond.passed ? (
-                              <CheckCircle size={16} className="text-emerald-500 flex-shrink-0" />
+                              <CheckCircle size={16} className="text-emerald-500 dark:text-emerald-400 flex-shrink-0" />
                             ) : (
-                              <XCircle size={16} className="text-amber-500 flex-shrink-0" />
+                              <XCircle size={16} className="text-amber-500 dark:text-amber-400 flex-shrink-0" />
                             )}
                             <span>{cond.title}</span>
                           </h5>
                           <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase ${
-                            cond.passed ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'
+                            cond.passed ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300' : 'bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300'
                           }`}>
                             {cond.passed ? 'PASSED' : 'CHECK'}
                           </span>
                         </div>
-                        <p className="text-[11px] text-slate-500 pl-6 leading-relaxed">
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 pl-6 leading-relaxed">
                           {cond.description}
                         </p>
                       </div>
 
-                      <div className="pt-2 border-t border-slate-200/60 pl-6 space-y-1">
-                        <p className="text-[11px] font-mono font-medium text-slate-700">
+                      <div className="pt-2 border-t border-slate-200/60 dark:border-slate-700/60 pl-6 space-y-1">
+                        <p className="text-[11px] font-mono font-medium text-slate-700 dark:text-slate-300">
                           {cond.statusText}
                         </p>
                         {cond.fixRecommendation && (
-                          <p className="text-[10px] font-bold text-amber-600">
+                          <p className="text-[10px] font-bold text-amber-600 dark:text-amber-400">
                             💡 Fix: {cond.fixRecommendation}
                           </p>
                         )}
@@ -749,39 +749,39 @@ export function AdminSitemap() {
       </div>
 
       {/* Google Search Console Submission Guide */}
-      <div className="bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-100 rounded-[2.5rem] p-8 space-y-6">
+      <div className="bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-slate-900 dark:to-slate-950 border border-indigo-100 dark:border-slate-800 rounded-[2.5rem] p-8 space-y-6">
         <div className="flex items-center gap-3">
-          <div className="p-3 bg-indigo-600 text-white rounded-2xl shadow-md">
+          <div className="p-3 bg-indigo-600 dark:bg-emerald-600 text-white rounded-2xl shadow-md">
             <ShieldCheck size={24} />
           </div>
           <div>
-            <h3 className="text-lg font-display font-black text-slate-900 tracking-tight">How to Submit to Google Search Console</h3>
-            <p className="text-xs text-slate-500 font-medium">Follow these simple steps to ensure Google indexes all your URLs quickly.</p>
+            <h3 className="text-lg font-display font-black text-slate-900 dark:text-white tracking-tight">How to Submit to Google Search Console</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Follow these simple steps to ensure Google indexes all your URLs quickly.</p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white p-5 rounded-2xl border border-indigo-100/80 shadow-sm space-y-2">
-            <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 font-black text-xs flex items-center justify-center">1</div>
-            <h4 className="text-sm font-bold text-slate-900">Download Sitemap</h4>
-            <p className="text-xs text-slate-500 leading-relaxed">
+          <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-indigo-100/80 dark:border-slate-800 shadow-sm space-y-2">
+            <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-slate-800 text-indigo-700 dark:text-emerald-400 font-black text-xs flex items-center justify-center">1</div>
+            <h4 className="text-sm font-bold text-slate-900 dark:text-white">Download Sitemap</h4>
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               Click the <strong>Download sitemap.xml</strong> button above to save your generated XML file.
             </p>
           </div>
 
-          <div className="bg-white p-5 rounded-2xl border border-indigo-100/80 shadow-sm space-y-2">
-            <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 font-black text-xs flex items-center justify-center">2</div>
-            <h4 className="text-sm font-bold text-slate-900">Upload to Web Server</h4>
-            <p className="text-xs text-slate-500 leading-relaxed">
-              Place <code className="bg-slate-100 px-1 py-0.5 rounded text-[11px]">sitemap.xml</code> in your website root folder so it is reachable at <code className="bg-slate-100 px-1 py-0.5 rounded text-[11px]">{cleanBaseUrl}/sitemap.xml</code>.
+          <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-indigo-100/80 dark:border-slate-800 shadow-sm space-y-2">
+            <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-slate-800 text-indigo-700 dark:text-emerald-400 font-black text-xs flex items-center justify-center">2</div>
+            <h4 className="text-sm font-bold text-slate-900 dark:text-white">Upload to Web Server</h4>
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              Place <code className="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded text-[11px] text-slate-800 dark:text-slate-200">sitemap.xml</code> in your website root folder so it is reachable at <code className="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded text-[11px] text-slate-800 dark:text-slate-200">{cleanBaseUrl}/sitemap.xml</code>.
             </p>
           </div>
 
-          <div className="bg-white p-5 rounded-2xl border border-indigo-100/80 shadow-sm space-y-2">
-            <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 font-black text-xs flex items-center justify-center">3</div>
-            <h4 className="text-sm font-bold text-slate-900">Submit in GSC</h4>
-            <p className="text-xs text-slate-500 leading-relaxed">
-              Open <a href="https://search.google.com/search-console" target="_blank" rel="noreferrer" className="text-indigo-600 underline font-bold">Google Search Console</a>, navigate to <strong>Sitemaps</strong>, and enter <code className="bg-slate-100 px-1 py-0.5 rounded text-[11px]">sitemap.xml</code>.
+          <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-indigo-100/80 dark:border-slate-800 shadow-sm space-y-2">
+            <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-slate-800 text-indigo-700 dark:text-emerald-400 font-black text-xs flex items-center justify-center">3</div>
+            <h4 className="text-sm font-bold text-slate-900 dark:text-white">Submit in GSC</h4>
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              Open <a href="https://search.google.com/search-console" target="_blank" rel="noreferrer" className="text-indigo-600 dark:text-emerald-400 underline font-bold">Google Search Console</a>, navigate to <strong>Sitemaps</strong>, and enter <code className="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded text-[11px] text-slate-800 dark:text-slate-200">sitemap.xml</code>.
             </p>
           </div>
         </div>

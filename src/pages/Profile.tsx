@@ -66,13 +66,26 @@ export function Profile() {
 
   async function fetchOrders(uid: string) {
     try {
-      const q = query(
-        collection(db, 'orders'),
-        where('userId', '==', uid),
-        orderBy('createdAt', 'desc')
-      );
-      const snap = await getDocs(q);
-      setOrders(snap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      try {
+        const q = query(
+          collection(db, 'orders'),
+          where('userId', '==', uid),
+          orderBy('createdAt', 'desc')
+        );
+        const snap = await getDocs(q);
+        setOrders(snap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      } catch (indexErr) {
+        // Fallback without orderBy to prevent Firestore composite index requirement errors
+        const qSimple = query(collection(db, 'orders'), where('userId', '==', uid));
+        const snapSimple = await getDocs(qSimple);
+        const docsList = snapSimple.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        docsList.sort((a: any, b: any) => {
+          const tA = a.createdAt?.seconds || (a.createdAt ? new Date(a.createdAt).getTime() : 0);
+          const tB = b.createdAt?.seconds || (b.createdAt ? new Date(b.createdAt).getTime() : 0);
+          return tB - tA;
+        });
+        setOrders(docsList);
+      }
     } catch (err) {
       console.error('Error fetching orders:', err);
     } finally {
@@ -156,8 +169,8 @@ export function Profile() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 gap-4">
-        <Loader2 className="animate-spin text-indigo-600" size={40} />
+      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-950 gap-4">
+        <Loader2 className="animate-spin text-indigo-600 dark:text-emerald-400" size={40} />
         <p className="text-slate-400 font-black uppercase tracking-widest text-[10px]">Synchronizing Secure Data...</p>
       </div>
     );
@@ -165,14 +178,14 @@ export function Profile() {
 
   if (!user) {
     return (
-      <div className="pt-32 pb-20 min-h-screen flex items-center justify-center bg-slate-50 px-4">
-        <div className="max-w-md w-full bg-white border border-slate-200 p-12 rounded-[3rem] text-center shadow-2xl">
+      <div className="pt-32 pb-20 min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 px-4">
+        <div className="max-w-md w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-12 rounded-[3rem] text-center shadow-2xl dark:shadow-none">
           <div className="w-20 h-20 bg-indigo-600 rounded-[2rem] flex items-center justify-center text-white mx-auto mb-8">
             <ShoppingBag size={40} />
           </div>
-          <h2 className="text-3xl font-display font-extrabold text-slate-900 mb-4 tracking-tight">Identity Required</h2>
-          <p className="text-slate-500 mb-10 font-medium">You must be authenticated to access your digital environment.</p>
-          <Link to="/auth" className="block w-full py-5 bg-indigo-600 text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-indigo-100 hover:bg-slate-900 transition-all">
+          <h2 className="text-3xl font-display font-extrabold text-slate-900 dark:text-white mb-4 tracking-tight">Identity Required</h2>
+          <p className="text-slate-500 dark:text-slate-400 mb-10 font-medium">You must be authenticated to access your digital environment.</p>
+          <Link to="/auth" className="block w-full py-5 bg-indigo-600 dark:bg-emerald-600 text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-indigo-100 dark:shadow-none hover:bg-slate-900 dark:hover:bg-emerald-500 transition-all">
             Enter Portal
           </Link>
         </div>
@@ -181,16 +194,16 @@ export function Profile() {
   }
 
   return (
-    <div className="pt-24 pb-20 bg-slate-50 min-h-screen">
+    <div className="pt-24 pb-20 bg-slate-50 dark:bg-slate-950 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         
         {/* Breadcrumb & Tab Switches */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
-            <p className="text-[10px] font-black text-indigo-600 uppercase tracking-widest mb-2 flex items-center gap-2">
+            <p className="text-[10px] font-black text-indigo-600 dark:text-emerald-400 uppercase tracking-widest mb-2 flex items-center gap-2">
               User Intelligence <ArrowRight size={12} /> Account Dashboard
             </p>
-            <h1 className="text-5xl font-display font-black text-slate-900 tracking-tight">
+            <h1 className="text-5xl font-display font-black text-slate-900 dark:text-white tracking-tight">
               Hello, {user.displayName?.split(' ')[0] || 'User'}
             </h1>
           </div>
@@ -199,7 +212,7 @@ export function Profile() {
               onClick={() => setActiveTab('orders')}
               className={cn(
                 "px-6 py-3 rounded-2xl font-black text-[10px] uppercase tracking-widest border transition-all",
-                activeTab === 'orders' ? "bg-indigo-600 text-white border-indigo-600 shadow-xl shadow-indigo-100" : "bg-white text-slate-600 border-slate-200 hover:border-indigo-600 shadow-sm"
+                activeTab === 'orders' ? "bg-indigo-600 dark:bg-emerald-600 text-white border-indigo-600 dark:border-emerald-500 shadow-xl shadow-indigo-100 dark:shadow-none" : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-indigo-600 dark:hover:border-emerald-500 shadow-sm"
               )}
             >
               Order Architecture
@@ -208,7 +221,7 @@ export function Profile() {
               onClick={() => setActiveTab('settings')}
               className={cn(
                 "px-6 py-3 rounded-2xl font-black text-[10px] uppercase tracking-widest border transition-all",
-                activeTab === 'settings' ? "bg-indigo-600 text-white border-indigo-600 shadow-xl shadow-indigo-100" : "bg-white text-slate-600 border-slate-200 hover:border-indigo-600 shadow-sm"
+                activeTab === 'settings' ? "bg-indigo-600 dark:bg-emerald-600 text-white border-indigo-600 dark:border-emerald-500 shadow-xl shadow-indigo-100 dark:shadow-none" : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-indigo-600 dark:hover:border-emerald-500 shadow-sm"
               )}
             >
               Security & Identity
@@ -227,28 +240,28 @@ export function Profile() {
             >
               {/* Stats Overview */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm relative overflow-hidden group">
+                <div className="bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden group">
                   <div className="relative z-10">
                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">Total Lifecycle Value</p>
-                    <h3 className="text-4xl font-display font-black text-slate-900">{currency}{stats.totalSpent.toLocaleString()}</h3>
+                    <h3 className="text-4xl font-display font-black text-slate-900 dark:text-white">{currency}{stats.totalSpent.toLocaleString()}</h3>
                   </div>
-                  <CreditCard className="absolute -right-6 -bottom-6 w-32 h-32 text-slate-50 rotate-12 group-hover:rotate-0 transition-transform duration-700" />
+                  <CreditCard className="absolute -right-6 -bottom-6 w-32 h-32 text-slate-50 dark:text-slate-800/40 rotate-12 group-hover:rotate-0 transition-transform duration-700" />
                 </div>
-                <div className="bg-indigo-600 p-8 rounded-[2.5rem] text-white shadow-2xl shadow-indigo-100 relative overflow-hidden">
+                <div className="bg-indigo-600 dark:bg-emerald-600 p-8 rounded-[2.5rem] text-white shadow-2xl shadow-indigo-100 dark:shadow-none relative overflow-hidden">
                   <div className="relative z-10">
                     <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-60 mb-2">Successful Assets</p>
                     <h3 className="text-4xl font-display font-black">{stats.orderCount} <span className="text-xl font-medium opacity-60">Orders</span></h3>
                   </div>
                   <Package className="absolute -right-6 -bottom-6 w-32 h-32 text-white/10 rotate-12" />
                 </div>
-                <div className="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm flex items-center justify-between">
+                <div className="bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
                   <div>
                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">Last Interaction</p>
-                    <h3 className="text-xl font-display font-black text-slate-900">
+                    <h3 className="text-xl font-display font-black text-slate-900 dark:text-white">
                       {stats.lastOrder ? stats.lastOrder.toDate().toLocaleDateString() : 'No History'}
                     </h3>
                   </div>
-                  <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-300">
+                  <div className="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-slate-300 dark:text-slate-600">
                     <Calendar size={32} />
                   </div>
                 </div>
@@ -263,10 +276,10 @@ export function Profile() {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         key={order.id}
-                        className="bg-white rounded-[2.5rem] border border-slate-200 p-8 shadow-sm flex flex-col lg:flex-row items-center justify-between gap-8 group hover:border-indigo-200 transition-all"
+                        className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 p-8 shadow-sm flex flex-col lg:flex-row items-center justify-between gap-8 group hover:border-indigo-200 dark:hover:border-slate-700 transition-all"
                       >
                         <div className="flex items-center gap-8 w-full lg:w-auto">
-                          <div className="w-20 h-20 bg-slate-50 rounded-[1.5rem] flex items-center justify-center text-indigo-600 border border-slate-100 shrink-0 group-hover:bg-indigo-50 transition-colors">
+                          <div className="w-20 h-20 bg-slate-50 dark:bg-slate-800 rounded-[1.5rem] flex items-center justify-center text-indigo-600 dark:text-emerald-400 border border-slate-100 dark:border-slate-700 shrink-0 group-hover:bg-indigo-50 dark:group-hover:bg-slate-700/50 transition-colors">
                             <Package size={32} />
                           </div>
                           <div className="overflow-hidden">
@@ -274,30 +287,30 @@ export function Profile() {
                               <span className="text-[10px] font-mono font-black text-slate-400 uppercase tracking-widest">#{order.id.slice(-6).toUpperCase()}</span>
                               <span className={cn(
                                 "px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border",
-                                order.status === 'paid' ? "bg-emerald-50 text-emerald-600 border-emerald-100" :
-                                order.status === 'pending' ? "bg-amber-50 text-amber-600 border-amber-100" :
-                                "bg-red-50 text-red-600 border-red-100"
+                                order.status === 'paid' ? "bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 border-emerald-100 dark:border-emerald-900" :
+                                order.status === 'pending' ? "bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 border-amber-100 dark:border-amber-900" :
+                                "bg-red-50 dark:bg-red-950/50 text-red-600 dark:text-red-400 border-red-100 dark:border-red-900"
                               )}>
                                 {order.status}
                               </span>
                             </div>
-                            <h3 className="text-xl font-display font-black text-slate-900 mb-1 group-hover:text-indigo-600 transition-colors">{order.productName}</h3>
-                            <p className="text-indigo-600 font-black text-lg">{currency}{order.amount.toLocaleString()}</p>
+                            <h3 className="text-xl font-display font-black text-slate-900 dark:text-white mb-1 group-hover:text-indigo-600 dark:group-hover:text-emerald-400 transition-colors">{order.productName}</h3>
+                            <p className="text-indigo-600 dark:text-emerald-400 font-black text-lg">{currency}{order.amount.toLocaleString()}</p>
                           </div>
                         </div>
 
                         <div className="flex flex-col sm:flex-row items-center gap-4 w-full lg:w-auto">
                           {order.licenseKey && (
-                            <div className="bg-slate-50 border border-slate-100 rounded-2xl p-4 flex-1 sm:min-w-[280px]">
+                            <div className="bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-2xl p-4 flex-1 sm:min-w-[280px]">
                               <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-2">
                                 <Key size={10} /> Active Digital Component
                               </p>
-                              <p className="font-mono text-sm font-black text-slate-700 select-all tracking-tight">{order.licenseKey}</p>
+                              <p className="font-mono text-sm font-black text-slate-700 dark:text-slate-200 select-all tracking-tight">{order.licenseKey}</p>
                             </div>
                           )}
                           <Link
                             to={`/success/${order.id}`}
-                            className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 bg-white border border-slate-200 rounded-2xl font-black text-[11px] uppercase tracking-widest text-slate-600 hover:text-indigo-600 hover:border-indigo-600 transition-all shadow-sm"
+                            className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl font-black text-[11px] uppercase tracking-widest text-slate-600 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-emerald-400 hover:border-indigo-600 dark:hover:border-emerald-400 transition-all shadow-sm"
                           >
                             <ExternalLink size={16} />
                             View Assets
@@ -307,13 +320,13 @@ export function Profile() {
                     ))}
                   </div>
                 ) : (
-                  <div className="bg-white border border-slate-200 border-dashed rounded-[3rem] py-32 text-center shadow-sm">
-                    <div className="w-24 h-24 bg-slate-50 rounded-[2rem] flex items-center justify-center text-slate-200 mx-auto mb-8">
+                  <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 border-dashed rounded-[3rem] py-32 text-center shadow-sm">
+                    <div className="w-24 h-24 bg-slate-50 dark:bg-slate-800 rounded-[2rem] flex items-center justify-center text-slate-200 dark:text-slate-700 mx-auto mb-8">
                       <ShoppingBag size={48} />
                     </div>
-                    <h3 className="text-2xl font-display font-black text-slate-900 uppercase mb-2 tracking-tight">Empty Inventory</h3>
+                    <h3 className="text-2xl font-display font-black text-slate-900 dark:text-white uppercase mb-2 tracking-tight">Empty Inventory</h3>
                     <p className="text-slate-400 font-medium text-lg mb-12">Your command center shows no history of acquisitions.</p>
-                    <Link to="/marketplace" className="inline-flex items-center gap-3 bg-indigo-600 text-white px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-indigo-100 hover:bg-slate-900 transition-all">
+                    <Link to="/marketplace" className="inline-flex items-center gap-3 bg-indigo-600 dark:bg-emerald-600 text-white px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-indigo-100 dark:shadow-none hover:bg-slate-900 dark:hover:bg-emerald-500 transition-all">
                       Acquire Assets <ArrowRight size={18} />
                     </Link>
                   </div>
@@ -330,9 +343,9 @@ export function Profile() {
             >
               {/* Profile Card */}
               <div className="space-y-8">
-                <div className="bg-white p-10 rounded-[3rem] border border-slate-200 shadow-sm text-center">
+                <div className="bg-white dark:bg-slate-900 p-10 rounded-[3rem] border border-slate-200 dark:border-slate-800 shadow-sm text-center">
                     <div className="relative inline-block mb-8 group">
-                        <div className="w-32 h-32 bg-indigo-50 rounded-[2.5rem] flex items-center justify-center text-indigo-600 text-4xl font-black border border-indigo-100 transition-transform group-hover:scale-105 duration-500 overflow-hidden shadow-inner">
+                        <div className="w-32 h-32 bg-indigo-50 dark:bg-slate-800 rounded-[2.5rem] flex items-center justify-center text-indigo-600 dark:text-emerald-400 text-4xl font-black border border-indigo-100 dark:border-slate-700 transition-transform group-hover:scale-105 duration-500 overflow-hidden shadow-inner">
                             {photoURL && photoURL.trim() !== "" ? (
                               <img src={photoURL} alt="" className="w-full h-full object-cover" />
                             ) : (
@@ -348,24 +361,24 @@ export function Profile() {
                         />
                         <button 
                           onClick={() => fileInputRef.current?.click()}
-                          className="absolute -right-2 -bottom-2 w-10 h-10 bg-white border border-slate-200 rounded-2xl flex items-center justify-center text-slate-400 shadow-lg group-hover:border-indigo-600 group-hover:text-indigo-600 transition-all cursor-pointer"
+                          className="absolute -right-2 -bottom-2 w-10 h-10 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl flex items-center justify-center text-slate-400 shadow-lg group-hover:border-indigo-600 dark:group-hover:border-emerald-400 group-hover:text-indigo-600 dark:group-hover:text-emerald-400 transition-all cursor-pointer"
                         >
                             <Camera size={18} />
                         </button>
                     </div>
-                    <h2 className="text-2xl font-display font-black text-slate-900 mb-1">{user.displayName || 'Identity Pending'}</h2>
+                    <h2 className="text-2xl font-display font-black text-slate-900 dark:text-white mb-1">{user.displayName || 'Identity Pending'}</h2>
                     <p className="text-slate-400 font-medium mb-8 select-all">{user.email}</p>
                     
                     <button 
                       onClick={handleLogout}
-                      className="w-full py-4 bg-red-50 text-red-600 rounded-2xl font-black text-[10px] uppercase tracking-widest border border-red-100 hover:bg-red-600 hover:text-white transition-all flex items-center justify-center gap-2"
+                      className="w-full py-4 bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 rounded-2xl font-black text-[10px] uppercase tracking-widest border border-red-100 dark:border-red-900 hover:bg-red-600 hover:text-white transition-all flex items-center justify-center gap-2"
                     >
                       <LogOut size={16} />
                       Terminate Session
                     </button>
                 </div>
 
-                <div className="bg-slate-900 p-10 rounded-[3rem] text-white shadow-2xl shadow-slate-200 relative overflow-hidden group">
+                <div className="bg-slate-900 dark:bg-slate-900 p-10 rounded-[3rem] text-white shadow-2xl shadow-slate-200 dark:shadow-none border border-slate-800 relative overflow-hidden group">
                     <h4 className="text-xs font-black uppercase tracking-widest text-white/40 mb-6 relative z-10">Endpoint Intelligence</h4>
                     <div className="space-y-6 relative z-10">
                         <div className="flex items-center gap-4">
@@ -393,10 +406,10 @@ export function Profile() {
 
               {/* Forms Panel */}
               <div className="lg:col-span-2 space-y-10">
-                <div className="bg-white p-10 rounded-[3rem] border border-slate-200 shadow-sm">
+                <div className="bg-white dark:bg-slate-900 p-10 rounded-[3rem] border border-slate-200 dark:border-slate-800 shadow-sm">
                    <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-10 gap-6">
                       <div>
-                        <h3 className="text-2xl font-display font-black text-slate-900 tracking-tight">Identity Configuration</h3>
+                        <h3 className="text-2xl font-display font-black text-slate-900 dark:text-white tracking-tight">Identity Configuration</h3>
                         <p className="text-slate-400 text-xs font-medium uppercase tracking-widest mt-1">Configure your digital representation</p>
                       </div>
                       <AnimatePresence>
@@ -407,7 +420,7 @@ export function Profile() {
                             exit={{ opacity: 0, x: 20 }}
                             className={cn(
                               "px-4 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 border shadow-sm",
-                              message.type === 'success' ? "bg-emerald-50 text-emerald-600 border-emerald-100" : "bg-red-50 text-red-600 border-red-100"
+                              message.type === 'success' ? "bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 border-emerald-100 dark:border-emerald-900" : "bg-red-50 dark:bg-red-950/50 text-red-600 dark:text-red-400 border-red-100 dark:border-red-900"
                             )}
                           >
                             {message.type === 'success' ? <CheckCircle size={14} /> : <AlertCircle size={14} />}
@@ -427,7 +440,7 @@ export function Profile() {
                                 type="text"
                                 value={displayName}
                                 onChange={(e) => setDisplayName(e.target.value)}
-                                className="w-full bg-slate-50 border border-slate-200 py-4 pl-12 pr-6 rounded-2xl text-sm font-bold focus:bg-white focus:border-indigo-600 outline-none transition-all shadow-sm focus:shadow-indigo-50"
+                                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 py-4 pl-12 pr-6 rounded-2xl text-sm font-bold text-slate-900 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:border-indigo-600 dark:focus:border-emerald-500 outline-none transition-all shadow-sm"
                                 placeholder="Your full name"
                               />
                            </div>
@@ -440,7 +453,7 @@ export function Profile() {
                                 type="text"
                                 value={photoURL}
                                 onChange={(e) => setPhotoURL(e.target.value)}
-                                className="w-full bg-slate-50 border border-slate-200 py-4 pl-12 pr-6 rounded-2xl text-sm font-bold focus:bg-white focus:border-indigo-600 outline-none transition-all shadow-sm focus:shadow-indigo-50"
+                                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 py-4 pl-12 pr-6 rounded-2xl text-sm font-bold text-slate-900 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:border-indigo-600 dark:focus:border-emerald-500 outline-none transition-all shadow-sm"
                                 placeholder="https://image-url..."
                               />
                            </div>
@@ -451,8 +464,8 @@ export function Profile() {
                                   type="button"
                                   onClick={() => setPhotoURL(url)}
                                   className={cn(
-                                    "w-12 h-12 rounded-xl border-2 transition-all p-1 bg-white overflow-hidden hover:scale-110",
-                                    photoURL === url ? "border-indigo-600 scale-110" : "border-slate-100"
+                                    "w-12 h-12 rounded-xl border-2 transition-all p-1 bg-white dark:bg-slate-800 overflow-hidden hover:scale-110",
+                                    photoURL === url ? "border-indigo-600 dark:border-emerald-500 scale-110" : "border-slate-100 dark:border-slate-700"
                                   )}
                                 >
                                   {url && url.trim() !== "" && (
@@ -466,7 +479,7 @@ export function Profile() {
                       <div className="pt-4">
                          <button 
                             disabled={isUpdating}
-                            className="px-10 py-5 bg-indigo-600 text-white rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-indigo-200 hover:bg-slate-900 disabled:bg-slate-300 transition-all active:scale-95 flex items-center gap-3"
+                            className="px-10 py-5 bg-indigo-600 dark:bg-emerald-600 text-white rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-indigo-200 dark:shadow-none hover:bg-slate-900 dark:hover:bg-emerald-500 disabled:bg-slate-300 transition-all active:scale-95 flex items-center gap-3"
                          >
                             {isUpdating ? <Loader2 className="animate-spin" size={16} /> : <CheckCircle size={16} />}
                             Save Profile Changes
@@ -476,21 +489,21 @@ export function Profile() {
                 </div>
 
                 {/* Security Panel */}
-                <div className="bg-white p-10 rounded-[3rem] border border-slate-200 shadow-sm relative overflow-hidden group">
+                <div className="bg-white dark:bg-slate-900 p-10 rounded-[3rem] border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden group">
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 relative z-10">
                         <div className="flex items-center gap-6">
-                            <div className="w-20 h-20 bg-slate-50 rounded-[1.5rem] flex items-center justify-center text-indigo-600 border border-slate-100 group-hover:bg-indigo-50 transition-colors">
+                            <div className="w-20 h-20 bg-slate-50 dark:bg-slate-800 rounded-[1.5rem] flex items-center justify-center text-indigo-600 dark:text-emerald-400 border border-slate-100 dark:border-slate-700 group-hover:bg-indigo-50 dark:group-hover:bg-slate-700/50 transition-colors">
                                 <Shield size={32} />
                             </div>
                             <div>
-                                <h3 className="text-xl font-display font-black text-slate-900 tracking-tight uppercase">Credential Guard</h3>
+                                <h3 className="text-xl font-display font-black text-slate-900 dark:text-white tracking-tight uppercase">Credential Guard</h3>
                                 <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest mt-1">Receive a cryptographic reset link via email</p>
                             </div>
                         </div>
                         <button 
                           onClick={handlePasswordReset}
                           disabled={isUpdating}
-                          className="px-8 py-5 bg-indigo-50 text-indigo-600 border border-indigo-100 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-indigo-600 hover:text-white transition-all disabled:opacity-50 shadow-sm"
+                          className="px-8 py-5 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-indigo-600 hover:text-white transition-all disabled:opacity-50 shadow-sm"
                         >
                             Execute Security Reset
                         </button>

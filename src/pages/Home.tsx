@@ -217,13 +217,13 @@ export function Home() {
               </div>
               
               {/* Floating badges pattern */}
-              <div className="absolute -bottom-10 -left-10 p-6 bg-white rounded-3xl shadow-2xl border border-slate-100 flex items-center gap-4 animate-bounce" style={{ animationDuration: '6s' }}>
+              <div className="absolute -bottom-10 -left-10 p-6 bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-800 flex items-center gap-4 animate-bounce" style={{ animationDuration: '6s' }}>
                   <div className="w-12 h-12 bg-emerald-500 rounded-xl flex items-center justify-center text-white">
                       <Zap />
                   </div>
                   <div className="pr-4">
                       <p className="text-[10px] uppercase font-black text-slate-400 tracking-widest leading-none mb-1">Performance</p>
-                      <h4 className="font-bold text-slate-900 text-sm">Ultra Fast Sync</h4>
+                      <h4 className="font-bold text-slate-900 dark:text-white text-sm">Ultra Fast Sync</h4>
                   </div>
               </div>
             </motion.div>
@@ -232,13 +232,13 @@ export function Home() {
       </section>
 
       {/* Power Section */}
-      <section id="features" className="py-24 bg-slate-50">
+      <section id="features" className="py-24 bg-slate-50 dark:bg-slate-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
             <p className="text-emerald-600 font-black uppercase text-xs tracking-[0.3em] mb-4">The Platform</p>
-            <h2 className="text-3xl lg:text-5xl font-display font-black text-slate-900 leading-tight mb-4">
+            <h2 className="text-3xl lg:text-5xl font-display font-black text-slate-900 dark:text-white leading-tight mb-4">
               Power Your Store <br />
-              with <span className="text-emerald-600">Smart Digital Solutions</span>
+              with <span className="text-emerald-600 dark:text-emerald-400">Smart Digital Solutions</span>
             </h2>
           </div>
 
@@ -250,13 +250,13 @@ export function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 group"
+                className="bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 group"
               >
-                <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center text-emerald-600 mb-6 group-hover:bg-emerald-600 group-hover:text-white transition-all transform group-hover:rotate-6">
+                <div className="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-6 group-hover:bg-emerald-600 group-hover:text-white transition-all transform group-hover:rotate-6">
                   <f.icon size={32} />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-4">{f.title}</h3>
-                <p className="text-slate-500 text-sm leading-relaxed">{f.desc}</p>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">{f.title}</h3>
+                <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{f.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -264,17 +264,17 @@ export function Home() {
       </section>
 
       {/* How it Works Section */}
-      <section className="py-24 bg-white relative overflow-hidden">
+      <section className="py-24 bg-white dark:bg-slate-950 relative overflow-hidden">
         {/* Subtle background decoration */}
-        <div className="absolute top-1/2 left-0 w-full h-0.5 bg-slate-100 -translate-y-1/2 z-0 hidden lg:block" />
+        <div className="absolute top-1/2 left-0 w-full h-0.5 bg-slate-100 dark:bg-slate-800 -translate-y-1/2 z-0 hidden lg:block" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-20">
-            <p className="text-emerald-600 font-black uppercase text-xs tracking-[0.3em] mb-4">Simple Implementation</p>
-            <h2 className="text-3xl lg:text-5xl font-display font-black text-slate-900 leading-tight">
-              How <span className="text-emerald-600">Digital Ledger</span> Works
+            <p className="text-emerald-600 dark:text-emerald-400 font-black uppercase text-xs tracking-[0.3em] mb-4">Simple Implementation</p>
+            <h2 className="text-3xl lg:text-5xl font-display font-black text-slate-900 dark:text-white leading-tight">
+              How <span className="text-emerald-600 dark:text-emerald-400">Digital Ledger</span> Works
             </h2>
-            <p className="text-slate-500 mt-6 max-w-2xl mx-auto font-medium">
+            <p className="text-slate-500 dark:text-slate-400 mt-6 max-w-2xl mx-auto font-medium">
               Getting started with the ultimate retail management solution is easy. Follow these four simple steps to transform your store operations.
             </p>
           </div>
@@ -293,12 +293,12 @@ export function Home() {
                   <div className={cn("w-20 h-20 rounded-[2rem] flex items-center justify-center shadow-xl transform transition-all duration-500 group-hover:rotate-12 group-hover:scale-110", item.color)}>
                     <item.icon size={36} />
                   </div>
-                  <div className="absolute -top-3 -right-3 w-10 h-10 bg-slate-900 text-white rounded-full flex items-center justify-center text-xs font-black ring-4 ring-white shadow-lg group-hover:bg-emerald-600 transition-colors">
+                  <div className="absolute -top-3 -right-3 w-10 h-10 bg-slate-900 dark:bg-slate-800 text-white rounded-full flex items-center justify-center text-xs font-black ring-4 ring-white dark:ring-slate-950 shadow-lg group-hover:bg-emerald-600 transition-colors">
                     {item.step}
                   </div>
                 </div>
-                <h3 className="text-xl font-black text-slate-900 mb-4">{item.title}</h3>
-                <p className="text-slate-500 text-sm leading-relaxed font-medium">
+                <h3 className="text-xl font-black text-slate-900 dark:text-white mb-4">{item.title}</h3>
+                <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed font-medium">
                   {item.desc}
                 </p>
               </motion.div>
@@ -308,43 +308,43 @@ export function Home() {
       </section>
 
       {/* Device Showcase */}
-      <section className="py-24 bg-white overflow-hidden text-center">
+      <section className="py-24 bg-white dark:bg-slate-950 overflow-hidden text-center">
         <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-2xl lg:text-4xl font-display font-black text-slate-900 mb-16 uppercase tracking-tight">
-              Manage Stores with the <span className="text-emerald-600">Digital Ledger</span> <br />
-              <span className="text-emerald-600">Solutions</span>
+          <h2 className="text-2xl lg:text-4xl font-display font-black text-slate-900 dark:text-white mb-16 uppercase tracking-tight">
+              Manage Stores with the <span className="text-emerald-600 dark:text-emerald-400">Digital Ledger</span> <br />
+              <span className="text-emerald-600 dark:text-emerald-400">Solutions</span>
           </h2>
           <div className="relative">
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[60%] bg-emerald-500/5 blur-[120px] rounded-full" />
               <img 
                 src="https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&q=80&w=2070" 
                 alt="Manage Multi-Store"
-                className="relative z-10 w-full rounded-3xl shadow-2xl border border-slate-100"
+                className="relative z-10 w-full rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-800"
               />
           </div>
         </div>
       </section>
 
       {/* Offers Section */}
-      <section className="py-24 bg-slate-50">
+      <section className="py-24 bg-slate-50 dark:bg-slate-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-xl lg:text-2xl font-display font-black text-slate-900 uppercase tracking-widest mb-4">
+            <h2 className="text-xl lg:text-2xl font-display font-black text-slate-900 dark:text-white uppercase tracking-widest mb-4">
               Digital Ledger Solutions Offers
             </h2>
-            <p className="text-emerald-600 font-black uppercase tracking-[0.2em] text-sm">
+            <p className="text-emerald-600 dark:text-emerald-400 font-black uppercase tracking-[0.2em] text-sm">
               The Best Retail Management Solution
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {valueProps.map((p, i) => (
-              <div key={i} className="bg-white p-8 rounded-[2rem] border border-slate-200/60 shadow-sm hover:shadow-md transition-shadow">
+              <div key={i} className="bg-white dark:bg-slate-900 p-8 rounded-[2rem] border border-slate-200/60 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow">
                 <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center mb-6", p.color)}>
                   <Zap size={24} />
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 mb-3">{p.title}</h3>
-                <p className="text-slate-500 text-xs leading-relaxed">{p.desc}</p>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3">{p.title}</h3>
+                <p className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed">{p.desc}</p>
               </div>
             ))}
           </div>
@@ -352,7 +352,7 @@ export function Home() {
       </section>
 
       {/* Feature Highlight 1 */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-white dark:bg-slate-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <motion.div
@@ -360,8 +360,8 @@ export function Home() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <p className="text-emerald-600 font-black text-xs uppercase tracking-[0.3em] mb-4">Maximized Productivity</p>
-              <h2 className="text-3xl lg:text-4xl font-display font-black text-slate-900 mb-8 leading-tight">
+              <p className="text-emerald-600 dark:text-emerald-400 font-black text-xs uppercase tracking-[0.3em] mb-4">Maximized Productivity</p>
+              <h2 className="text-3xl lg:text-4xl font-display font-black text-slate-900 dark:text-white mb-8 leading-tight">
                 Experience Absolute Speed and Efficiency with Digital Ledger Solutions
               </h2>
               <ul className="space-y-4 mb-10">
@@ -370,15 +370,15 @@ export function Home() {
                   'Multi-store management features',
                   'Detailed accounting modules',
                 ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3 text-sm font-bold text-slate-600">
-                    <div className="w-5 h-5 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center">
+                  <li key={i} className="flex items-center gap-3 text-sm font-bold text-slate-600 dark:text-slate-300">
+                    <div className="w-5 h-5 bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 rounded-full flex items-center justify-center">
                       <Check size={12} />
                     </div>
                     {item}
                   </li>
                 ))}
               </ul>
-              <Link to="/marketplace" className="bg-slate-900 text-white px-8 py-4 rounded-xl font-bold hover:bg-slate-800 transition-all inline-block">
+              <Link to="/marketplace" className="bg-slate-900 dark:bg-emerald-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-slate-800 dark:hover:bg-emerald-500 transition-all inline-block">
                 Learn More
               </Link>
             </motion.div>
@@ -387,7 +387,7 @@ export function Home() {
               <img 
                 src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=2070" 
                 alt="Productivity"
-                className="relative z-10 rounded-[2.5rem] shadow-2xl border border-slate-100"
+                className="relative z-10 rounded-[2.5rem] shadow-2xl border border-slate-100 dark:border-slate-800"
               />
             </div>
           </div>
@@ -395,12 +395,12 @@ export function Home() {
       </section>
 
       {/* Grid Features */}
-      <section className="py-24 bg-slate-50">
+      <section className="py-24 bg-slate-50 dark:bg-slate-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
-            <h2 className="text-3xl lg:text-5xl font-display font-black text-slate-900 leading-tight">
+            <h2 className="text-3xl lg:text-5xl font-display font-black text-slate-900 dark:text-white leading-tight">
               Transform Your Business Structure <br />
-              with Simple <span className="text-emerald-600">Retail Solution</span>
+              with Simple <span className="text-emerald-600 dark:text-emerald-400">Retail Solution</span>
             </h2>
           </div>
 
@@ -412,12 +412,12 @@ export function Home() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="bg-white p-6 rounded-[2rem] border border-slate-200 shadow-sm flex flex-col items-center hover:shadow-xl transition-all duration-300"
+                className="bg-white dark:bg-slate-900 p-6 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col items-center hover:shadow-xl transition-all duration-300"
               >
-                <div className="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center text-emerald-600 mb-4">
+                <div className="w-12 h-12 bg-slate-50 dark:bg-slate-800 rounded-xl flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-4">
                   <s.icon size={24} />
                 </div>
-                <h4 className="text-[13px] font-black text-slate-900 text-center uppercase tracking-tight">{s.title}</h4>
+                <h4 className="text-[13px] font-black text-slate-900 dark:text-white text-center uppercase tracking-tight">{s.title}</h4>
               </motion.div>
             ))}
           </div>
@@ -468,29 +468,29 @@ export function Home() {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-24 bg-slate-50">
+      <section id="pricing" className="py-24 bg-slate-50 dark:bg-slate-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
-            <p className="text-emerald-600 font-black uppercase text-xs tracking-[0.3em] mb-4">Pricing Plans</p>
-            <h2 className="text-3xl lg:text-5xl font-display font-black text-slate-900 leading-tight mb-8">
-              Choose the Best <span className="text-emerald-600">Plan for Business</span>
+            <p className="text-emerald-600 dark:text-emerald-400 font-black uppercase text-xs tracking-[0.3em] mb-4">Pricing Plans</p>
+            <h2 className="text-3xl lg:text-5xl font-display font-black text-slate-900 dark:text-white leading-tight mb-8">
+              Choose the Best <span className="text-emerald-600 dark:text-emerald-400">Plan for Business</span>
             </h2>
             
             {/* Toggle Switch */}
             <div className="flex items-center justify-center gap-4 mb-20">
-              <span className={cn("text-xs font-black uppercase tracking-widest", !isYearly ? "text-slate-900" : "text-slate-400")}>One-Time</span>
+              <span className={cn("text-xs font-black uppercase tracking-widest", !isYearly ? "text-slate-900 dark:text-white" : "text-slate-400")}>One-Time</span>
               <button 
                 onClick={() => setIsYearly(!isYearly)}
-                className="w-16 h-8 bg-slate-200 rounded-full relative p-1 transition-colors hover:bg-slate-300"
+                className="w-16 h-8 bg-slate-200 dark:bg-slate-800 rounded-full relative p-1 transition-colors hover:bg-slate-300 dark:hover:bg-slate-700"
               >
                 <div className={cn(
-                  "w-6 h-6 bg-white rounded-full shadow-md transition-all duration-300",
+                  "w-6 h-6 bg-white dark:bg-slate-200 rounded-full shadow-md transition-all duration-300",
                   isYearly ? "translate-x-8" : "translate-x-0"
                 )} />
               </button>
-              <span className={cn("text-xs font-black uppercase tracking-widest flex items-center gap-2", isYearly ? "text-emerald-600" : "text-slate-400")}>
+              <span className={cn("text-xs font-black uppercase tracking-widest flex items-center gap-2", isYearly ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400")}>
                 Lifetime
-                <span className="bg-emerald-100 text-emerald-600 text-[8px] px-2 py-1 rounded-md">Save 20%</span>
+                <span className="bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 text-[8px] px-2 py-1 rounded-md">Save 20%</span>
               </span>
             </div>
           </div>
@@ -503,7 +503,7 @@ export function Home() {
                   "relative p-10 rounded-[3rem] border transition-all duration-500 flex flex-col group",
                   plan.featured 
                     ? "bg-[#061D19] border-emerald-500/30 text-white shadow-2xl shadow-emerald-500/20 scale-105 z-10" 
-                    : "bg-white border-slate-200 text-slate-900 hover:shadow-xl shadow-slate-200/50"
+                    : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white hover:shadow-xl shadow-slate-200/50 dark:shadow-none"
                 )}
               >
                 {plan.featured && (
@@ -513,30 +513,30 @@ export function Home() {
                 )}
                 
                 <div className="mb-8">
-                  <h3 className={cn("text-xl font-black uppercase tracking-tight mb-4", plan.featured ? "text-emerald-400" : "text-slate-900")}>
+                  <h3 className={cn("text-xl font-black uppercase tracking-tight mb-4", plan.featured ? "text-emerald-400" : "text-slate-900 dark:text-white")}>
                     {plan.name}
                   </h3>
                   <div className="flex items-baseline gap-1">
                     <span className="text-4xl font-black tracking-tighter">
                       {isYearly ? plan.yearlyPrice : plan.monthlyPrice}
                     </span>
-                    <span className={cn("text-xs font-bold uppercase tracking-widest", plan.featured ? "text-slate-400" : "text-slate-500")}>
+                    <span className={cn("text-xs font-bold uppercase tracking-widest", plan.featured ? "text-slate-400" : "text-slate-500 dark:text-slate-400")}>
                       / {plan.period}
                     </span>
                   </div>
                 </div>
 
-                <p className={cn("text-sm leading-relaxed mb-8", plan.featured ? "text-slate-400 font-medium" : "text-slate-500")}>
+                <p className={cn("text-sm leading-relaxed mb-8", plan.featured ? "text-slate-400 font-medium" : "text-slate-500 dark:text-slate-400")}>
                   {plan.desc}
                 </p>
 
                 <div className="space-y-4 mb-10 flex-grow">
                   {plan.features.map((feat, fi) => (
                     <div key={fi} className="flex items-center gap-3">
-                      <div className={cn("w-5 h-5 rounded-full flex items-center justify-center shrink-0", plan.featured ? "bg-emerald-500/20 text-emerald-400" : "bg-emerald-100 text-emerald-600")}>
+                      <div className={cn("w-5 h-5 rounded-full flex items-center justify-center shrink-0", plan.featured ? "bg-emerald-500/20 text-emerald-400" : "bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400")}>
                         <Check size={12} />
                       </div>
-                      <span className={cn("text-xs font-bold", plan.featured ? "text-slate-300" : "text-slate-600")}>{feat}</span>
+                      <span className={cn("text-xs font-bold", plan.featured ? "text-slate-300" : "text-slate-600 dark:text-slate-300")}>{feat}</span>
                     </div>
                   ))}
                 </div>
@@ -548,7 +548,7 @@ export function Home() {
                     "w-full py-4 rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all active:scale-95 text-center",
                     plan.featured 
                       ? "bg-emerald-600 text-white hover:bg-emerald-500 shadow-lg shadow-emerald-600/20" 
-                      : "bg-slate-900 text-white hover:bg-slate-800"
+                      : "bg-slate-900 dark:bg-emerald-600 text-white hover:bg-slate-800 dark:hover:bg-emerald-500"
                   )}
                 >
                   Get Started Now
@@ -561,21 +561,21 @@ export function Home() {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="py-24 bg-white">
+      <section id="faq" className="py-24 bg-white dark:bg-slate-950">
         <div className="max-w-3xl mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-display font-black text-slate-900 px-24">
-              Frequently Asked <span className="text-emerald-600">Questions</span>
+            <h2 className="text-3xl lg:text-4xl font-display font-black text-slate-900 dark:text-white px-24">
+              Frequently Asked <span className="text-emerald-600 dark:text-emerald-400">Questions</span>
             </h2>
           </div>
           <div className="space-y-4">
             {faqs.map((faq, i) => (
-              <div key={i} className="border-b border-slate-100 pb-4">
+              <div key={i} className="border-b border-slate-100 dark:border-slate-800 pb-4">
                 <button 
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full flex items-center justify-between text-left py-4 hover:text-emerald-600 transition-colors"
+                  className="w-full flex items-center justify-between text-left py-4 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
                 >
-                  <span className="text-lg font-bold text-slate-800">{faq.q}</span>
+                  <span className="text-lg font-bold text-slate-800 dark:text-slate-200">{faq.q}</span>
                   <ChevronDown className={cn("transition-transform text-slate-400", openFaq === i && "rotate-180")} size={20} />
                 </button>
                 <AnimatePresence>
@@ -586,7 +586,7 @@ export function Home() {
                       exit={{ height: 0, opacity: 0 }}
                       className="overflow-hidden"
                     >
-                      <p className="pb-6 text-slate-500 leading-relaxed text-sm">
+                      <p className="pb-6 text-slate-500 dark:text-slate-400 leading-relaxed text-sm">
                         {faq.a}
                       </p>
                     </motion.div>
@@ -599,14 +599,14 @@ export function Home() {
       </section>
 
       {/* Featured Marketplace Section (Keeping current functionality) */}
-      <section className="py-24 bg-slate-50">
+      <section className="py-24 bg-slate-50 dark:bg-slate-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between mb-16">
             <div>
-              <p className="text-emerald-600 font-black uppercase text-xs tracking-widest mb-3">Our Marketplace</p>
-              <h2 className="text-4xl font-display font-black text-slate-900">Featured Products</h2>
+              <p className="text-emerald-600 dark:text-emerald-400 font-black uppercase text-xs tracking-widest mb-3">Our Marketplace</p>
+              <h2 className="text-4xl font-display font-black text-slate-900 dark:text-white">Featured Products</h2>
             </div>
-            <Link to="/marketplace" className="text-emerald-600 font-bold hover:underline flex items-center gap-1">
+            <Link to="/marketplace" className="text-emerald-600 dark:text-emerald-400 font-bold hover:underline flex items-center gap-1">
               View All <ArrowRight size={16} />
             </Link>
           </div>
@@ -620,8 +620,8 @@ export function Home() {
               ))}
             </div>
           ) : (
-            <div className="text-center py-20 bg-white rounded-[2rem] border border-slate-200">
-                <p className="text-slate-500 italic">Explore our marketplace for premium digital assets.</p>
+            <div className="text-center py-20 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800">
+                <p className="text-slate-500 dark:text-slate-400 italic">Explore our marketplace for premium digital assets.</p>
             </div>
           )}
         </div>

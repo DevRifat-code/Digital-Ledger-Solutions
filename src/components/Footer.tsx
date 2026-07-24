@@ -2,25 +2,33 @@ import { motion } from 'motion/react';
 import { Mail, Github, Twitter, Facebook, Code2, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useSiteSettings } from '../hooks/useSiteSettings';
+import { NewsletterSignup } from './NewsletterSignup';
 
 export function Footer() {
   const { settings } = useSiteSettings();
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#051512] pt-24 pb-12 text-slate-400 border-t border-white/5">
+    <footer className="bg-[#051512] pt-16 sm:pt-20 pb-12 text-slate-400 border-t border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Newsletter Signup Banner */}
+        <div className="mb-16">
+          <NewsletterSignup variant="footer" />
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           <div className="lg:col-span-1">
-            <Link to="/" className="flex items-center gap-3 mb-6 group">
+            <Link to="/" className="inline-flex items-center mb-6 group">
+              <div className="flex items-center gap-2.5 px-3.5 py-2 rounded-2xl bg-emerald-950/60 border border-emerald-500/20 group-hover:border-emerald-500/40 transition-all shadow-lg shadow-black/20 group-hover:scale-[1.02]">
                 {settings.logoUrl && settings.logoUrl.trim() !== "" ? (
-                  <img id="footer-logo" src={settings.logoUrl} alt={settings.siteName} className="w-10 h-10 object-contain group-hover:scale-105 transition-transform" referrerPolicy="no-referrer" />
+                  <img id="footer-logo" src={settings.logoUrl} alt={settings.siteName} className="w-7 h-7 object-contain group-hover:scale-105 transition-transform" referrerPolicy="no-referrer" />
                 ) : (
-                  <div className="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-500/20 group-hover:rotate-6 transition-transform">
-                      <Zap size={24} />
+                  <div className="w-7 h-7 bg-emerald-600 rounded-lg flex items-center justify-center text-white shadow-md shadow-emerald-500/20 group-hover:rotate-6 transition-transform">
+                      <Zap size={16} />
                   </div>
                 )}
-                <span className="text-2xl font-display font-black text-white tracking-tighter uppercase">{settings.siteName}</span>
+                <span className="text-xs sm:text-sm font-display font-black text-white tracking-wider uppercase">{settings.siteName}</span>
+              </div>
             </Link>
             <p className="mb-8 text-sm leading-relaxed max-w-xs">{settings.description}</p>
             <div className="flex gap-4">

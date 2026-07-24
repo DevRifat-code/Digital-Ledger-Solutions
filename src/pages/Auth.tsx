@@ -80,31 +80,31 @@ export function Auth() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full">
         {/* Back Button */}
-        <Link to="/" className="inline-flex items-center gap-2 text-slate-400 hover:text-indigo-600 transition-colors mb-8 font-bold text-sm">
+        <Link to="/" className="inline-flex items-center gap-2 text-slate-400 hover:text-indigo-600 dark:hover:text-emerald-400 transition-colors mb-8 font-bold text-sm">
           <ArrowLeft size={16} />
           Back to Home
         </Link>
 
         {/* Brand */}
         <div className="text-center mb-10">
-          <div className="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center text-white mx-auto mb-6 shadow-xl shadow-indigo-100">
+          <div className="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center text-white mx-auto mb-6 shadow-xl shadow-indigo-100 dark:shadow-none">
             <Globe size={32} />
           </div>
-          <h2 className="text-3xl font-display font-black text-slate-900 tracking-tight">
+          <h2 className="text-3xl font-display font-black text-slate-900 dark:text-white tracking-tight">
             {isLogin ? 'Login to your account' : 'Create new account'}
           </h2>
-          <p className="mt-2 text-slate-500 font-medium">
+          <p className="mt-2 text-slate-500 dark:text-slate-400 font-medium">
             {isLogin ? 'Access your orders and dashboard' : 'Join our digital marketplace today'}
           </p>
         </div>
 
-        <div className="bg-white rounded-[2.5rem] border border-slate-200 p-8 md:p-10 shadow-2xl shadow-slate-200/50">
+        <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 p-8 md:p-10 shadow-2xl shadow-slate-200/50 dark:shadow-none">
           <form className="space-y-6" onSubmit={handleAuth}>
             {error && (
-              <div className="bg-red-50 border border-red-100 text-red-600 px-6 py-4 rounded-xl text-sm font-bold flex items-center gap-3">
+              <div className="bg-red-50 dark:bg-red-950/50 border border-red-100 dark:border-red-900 text-red-600 dark:text-red-400 px-6 py-4 rounded-xl text-sm font-bold flex items-center gap-3">
                 <ShieldCheck size={18} className="shrink-0" />
                 {error}
               </div>
@@ -122,7 +122,7 @@ export function Auth() {
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="block w-full bg-slate-50 border border-slate-200 py-4 pl-12 pr-6 rounded-2xl text-slate-900 focus:border-indigo-500 outline-none transition-all placeholder:text-slate-400 font-medium"
+                    className="block w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 py-4 pl-12 pr-6 rounded-2xl text-slate-900 dark:text-white focus:border-indigo-500 outline-none transition-all placeholder:text-slate-400 font-medium"
                     placeholder="Md Rifat Hossain"
                   />
                 </div>
@@ -140,7 +140,7 @@ export function Auth() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full bg-slate-50 border border-slate-200 py-4 pl-12 pr-6 rounded-2xl text-slate-900 focus:border-indigo-500 outline-none transition-all placeholder:text-slate-400 font-medium"
+                  className="block w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 py-4 pl-12 pr-6 rounded-2xl text-slate-900 dark:text-white focus:border-indigo-500 outline-none transition-all placeholder:text-slate-400 font-medium"
                   placeholder="name@example.com"
                 />
               </div>
@@ -157,7 +157,7 @@ export function Auth() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full bg-slate-50 border border-slate-200 py-4 pl-12 pr-6 rounded-2xl text-slate-900 focus:border-indigo-500 outline-none transition-all placeholder:text-slate-400 font-medium"
+                  className="block w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 py-4 pl-12 pr-6 rounded-2xl text-slate-900 dark:text-white focus:border-indigo-500 outline-none transition-all placeholder:text-slate-400 font-medium"
                   placeholder="••••••••"
                 />
               </div>
@@ -166,7 +166,7 @@ export function Auth() {
                   <button 
                     type="button" 
                     onClick={handleForgotPassword}
-                    className="text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-indigo-600 transition-colors"
+                    className="text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-indigo-600 dark:hover:text-emerald-400 transition-colors"
                   >
                     Forgot Password?
                   </button>
@@ -177,7 +177,7 @@ export function Auth() {
             <button
               disabled={loading}
               type="submit"
-              className="w-full bg-indigo-600 text-white py-5 rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-slate-900 transition-all shadow-xl shadow-indigo-100 disabled:opacity-50"
+              className="w-full bg-indigo-600 dark:bg-emerald-600 text-white py-5 rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-slate-900 dark:hover:bg-emerald-500 transition-all shadow-xl shadow-indigo-100 dark:shadow-none disabled:opacity-50"
             >
               {loading ? (
                 'Processing...'
@@ -192,10 +192,10 @@ export function Auth() {
 
           <div className="mt-8 relative">
             <div className="absolute inset-0 flex items-center" aria-hidden="true">
-              <div className="w-full border-t border-slate-100"></div>
+              <div className="w-full border-t border-slate-100 dark:border-slate-800"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-white text-slate-400 font-bold uppercase tracking-widest text-[10px]">
+              <span className="px-4 bg-white dark:bg-slate-900 text-slate-400 font-bold uppercase tracking-widest text-[10px]">
                 Or continue with
               </span>
             </div>
@@ -205,7 +205,7 @@ export function Auth() {
             <button
               onClick={handleGoogleLogin}
               disabled={loading}
-              className="w-full bg-white border border-slate-200 text-slate-700 py-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-slate-50 transition-all shadow-sm disabled:opacity-50"
+              className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 py-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all shadow-sm disabled:opacity-50"
             >
               <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5" />
               Sign in with Google
@@ -215,7 +215,7 @@ export function Auth() {
           <div className="mt-10 text-center">
             <button
               onClick={() => setIsLogin(!isLogin)}
-              className="text-sm font-bold text-slate-400 hover:text-indigo-600 transition-colors"
+              className="text-sm font-bold text-slate-400 hover:text-indigo-600 dark:hover:text-emerald-400 transition-colors"
             >
               {isLogin ? "Don't have an account? Sign Up" : "Already have an account? Login"}
             </button>

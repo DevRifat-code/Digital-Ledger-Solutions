@@ -35,11 +35,11 @@ export function AdminReviews() {
   };
 
   return (
-    <div className="p-8 space-y-8 max-w-[1600px] mx-auto">
+    <div className="p-8 space-y-8 max-w-[1600px] mx-auto text-slate-900 dark:text-slate-100">
       <div className="flex items-end justify-between">
         <div>
-          <h1 className="text-3xl font-display font-black text-slate-900 tracking-tight">Reviews & Feedback</h1>
-          <p className="text-slate-500 font-medium mt-1">Monitor and moderate what customers are saying about your assets.</p>
+          <h1 className="text-3xl font-display font-black text-slate-900 dark:text-white tracking-tight">Reviews & Feedback</h1>
+          <p className="text-slate-500 dark:text-slate-400 font-medium mt-1">Monitor and moderate what customers are saying about your assets.</p>
         </div>
       </div>
 
@@ -48,44 +48,44 @@ export function AdminReviews() {
           <motion.div 
             layout
             key={r.id} 
-            className="bg-white p-6 rounded-[2rem] border border-slate-200 shadow-sm relative group"
+            className="bg-white dark:bg-slate-900 p-6 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-sm relative group"
           >
             <div className="flex items-center gap-2 mb-4">
               {[...Array(5)].map((_, i) => (
                 <Star 
                   key={i} 
                   size={14} 
-                  className={i < r.rating ? "fill-amber-400 text-amber-400" : "text-slate-200"} 
+                  className={i < r.rating ? "fill-amber-400 text-amber-400" : "text-slate-200 dark:text-slate-700"} 
                 />
               ))}
-              <span className="text-[10px] font-black text-slate-400 ml-auto uppercase tracking-widest">
+              <span className="text-[10px] font-black text-slate-400 dark:text-slate-500 ml-auto uppercase tracking-widest">
                 {r.createdAt?.toDate().toLocaleDateString() || 'Just now'}
               </span>
             </div>
 
-            <p className="text-sm text-slate-600 italic mb-6 leading-relaxed">"{r.comment}"</p>
+            <p className="text-sm text-slate-600 dark:text-slate-300 italic mb-6 leading-relaxed">"{r.comment}"</p>
 
-            <div className="flex items-center gap-3 pt-6 border-t border-slate-50">
-              <div className="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-400">
+            <div className="flex items-center gap-3 pt-6 border-t border-slate-50 dark:border-slate-800">
+              <div className="w-10 h-10 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center text-slate-400 dark:text-slate-500">
                 <User size={20} />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-bold text-slate-900 truncate">{r.userName || 'Anonymous'}</p>
-                <div className="flex items-center gap-1 text-[10px] text-indigo-600 font-black uppercase">
+                <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{r.userName || 'Anonymous'}</p>
+                <div className="flex items-center gap-1 text-[10px] text-indigo-600 dark:text-emerald-400 font-black uppercase">
                   <Package size={10} />
                   <span className="truncate">{r.productName || 'Product'}</span>
                 </div>
               </div>
-              <button onClick={() => handleDelete(r.id)} className="p-2 text-slate-300 hover:text-red-500 transition-colors">
+              <button onClick={() => handleDelete(r.id)} className="p-2 text-slate-300 dark:text-slate-600 hover:text-red-500 dark:hover:text-red-400 transition-colors">
                 <Trash2 size={16} />
               </button>
             </div>
           </motion.div>
         ))}
         {reviews.length === 0 && !loading && (
-          <div className="col-span-full py-24 text-center bg-white border border-dashed border-slate-200 rounded-[3rem]">
-            <MessageSquare size={48} className="mx-auto text-slate-100 mb-4" />
-            <p className="text-slate-400 font-bold text-xl italic">No feedback received yet.</p>
+          <div className="col-span-full py-24 text-center bg-white dark:bg-slate-900 border border-dashed border-slate-200 dark:border-slate-800 rounded-[3rem]">
+            <MessageSquare size={48} className="mx-auto text-slate-100 dark:text-slate-800 mb-4" />
+            <p className="text-slate-400 dark:text-slate-500 font-bold text-xl italic">No feedback received yet.</p>
           </div>
         )}
       </div>

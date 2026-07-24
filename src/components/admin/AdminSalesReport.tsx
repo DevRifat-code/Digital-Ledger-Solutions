@@ -13,12 +13,16 @@ import {
 } from 'recharts';
 import { TrendingUp, DollarSign, Calendar, ArrowUpRight, ArrowDownRight, Printer, Share2 } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useTheme } from '../../context/ThemeContext';
 
 interface AdminSalesReportProps {
   orders: any[];
 }
 
 export function AdminSalesReport({ orders }: AdminSalesReportProps) {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+
   const stats = useMemo(() => {
     const totalSales = orders.reduce((sum, o) => sum + (o.amount || 0), 0);
     const completedOrders = orders.filter(o => o.status === 'completed' || o.status === 'paid' || o.status === 'delivered').length;
@@ -48,18 +52,18 @@ export function AdminSalesReport({ orders }: AdminSalesReportProps) {
   }, [orders]);
 
   return (
-    <div className="p-8 space-y-8 max-w-[1600px] mx-auto">
+    <div className="p-8 space-y-8 max-w-[1600px] mx-auto text-slate-900 dark:text-slate-100">
       <div className="flex items-end justify-between">
         <div>
-          <h1 className="text-3xl font-display font-black text-slate-900 tracking-tight">Financial Reports</h1>
-          <p className="text-slate-500 font-medium mt-1">Comprehensive breakdown of your store's performance.</p>
+          <h1 className="text-3xl font-display font-black text-slate-900 dark:text-white tracking-tight">Financial Reports</h1>
+          <p className="text-slate-500 dark:text-slate-400 font-medium mt-1">Comprehensive breakdown of your store's performance.</p>
         </div>
         <div className="flex gap-3">
-          <button className="flex items-center gap-2 px-6 py-3 border border-slate-200 bg-white text-slate-600 rounded-xl font-bold hover:bg-slate-50 transition-all">
+          <button className="flex items-center gap-2 px-6 py-3 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 rounded-xl font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
             <Share2 size={18} />
             Export
           </button>
-          <button className="flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-xl font-bold hover:bg-indigo-600 transition-all">
+          <button className="flex items-center gap-2 px-6 py-3 bg-slate-900 dark:bg-emerald-600 text-white rounded-xl font-bold hover:bg-indigo-600 dark:hover:bg-emerald-500 transition-all">
             <Printer size={18} />
             Print Report
           </button>
@@ -68,41 +72,41 @@ export function AdminSalesReport({ orders }: AdminSalesReportProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {[
-          { label: 'Total Revenue', value: stats.totalSales, icon: DollarSign, color: 'text-emerald-600', trend: 12 },
-          { label: 'Avg. Order', value: stats.avgOrderValue, icon: TrendingUp, color: 'text-indigo-600', trend: 5 },
-          { label: 'Conversion Rate', value: '4.2%', icon: ArrowUpRight, color: 'text-indigo-600', trend: 8 },
+          { label: 'Total Revenue', value: stats.totalSales, icon: DollarSign, color: 'text-emerald-600 dark:text-emerald-400', trend: 12 },
+          { label: 'Avg. Order', value: stats.avgOrderValue, icon: TrendingUp, color: 'text-indigo-600 dark:text-indigo-400', trend: 5 },
+          { label: 'Conversion Rate', value: '4.2%', icon: ArrowUpRight, color: 'text-indigo-600 dark:text-indigo-400', trend: 8 },
         ].map((s, idx) => (
-          <div key={idx} className="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm relative overflow-hidden group">
+          <div key={idx} className="bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden group">
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-6">
-                <div className={`p-4 rounded-2xl bg-slate-50 ${s.color}`}>
+                <div className={`p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 ${s.color}`}>
                   <s.icon size={28} />
                 </div>
-                <div className="flex items-center gap-1 text-emerald-500 text-xs font-black bg-emerald-50 px-2 py-1 rounded-lg">
+                <div className="flex items-center gap-1 text-emerald-500 dark:text-emerald-400 text-xs font-black bg-emerald-50 dark:bg-emerald-950/60 px-2 py-1 rounded-lg">
                   <ArrowUpRight size={14} />
                   {s.trend}%
                 </div>
               </div>
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{s.label}</p>
-              <h3 className="text-3xl font-display font-black text-slate-900">
+              <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">{s.label}</p>
+              <h3 className="text-3xl font-display font-black text-slate-900 dark:text-white">
                 {typeof s.value === 'number' ? `৳${s.value.toLocaleString()}` : s.value}
               </h3>
             </div>
-            <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-slate-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
+            <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-slate-50 dark:bg-slate-800/50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
           </div>
         ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        <div className="lg:col-span-8 bg-white p-10 rounded-[3rem] border border-slate-200 shadow-sm">
+        <div className="lg:col-span-8 bg-white dark:bg-slate-900 p-10 rounded-[3rem] border border-slate-200 dark:border-slate-800 shadow-sm">
           <div className="flex items-center justify-between mb-10">
             <div>
-              <h3 className="text-xl font-display font-black text-slate-900 uppercase tracking-tight">Revenue Stream</h3>
-              <p className="text-xs text-slate-400 font-bold mt-1">Visualizing income over the past 7 days</p>
+              <h3 className="text-xl font-display font-black text-slate-900 dark:text-white uppercase tracking-tight">Revenue Stream</h3>
+              <p className="text-xs text-slate-400 dark:text-slate-500 font-bold mt-1">Visualizing income over the past 7 days</p>
             </div>
-            <div className="flex bg-slate-100 p-1 rounded-xl">
-              <button className="px-4 py-1.5 bg-white text-indigo-600 rounded-lg text-[10px] font-black uppercase shadow-sm">Weekly</button>
-              <button className="px-4 py-1.5 text-slate-500 text-[10px] font-black uppercase">Monthly</button>
+            <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
+              <button className="px-4 py-1.5 bg-white dark:bg-slate-900 text-indigo-600 dark:text-emerald-400 rounded-lg text-[10px] font-black uppercase shadow-sm">Weekly</button>
+              <button className="px-4 py-1.5 text-slate-500 dark:text-slate-400 text-[10px] font-black uppercase">Monthly</button>
             </div>
           </div>
           
@@ -111,28 +115,30 @@ export function AdminSalesReport({ orders }: AdminSalesReportProps) {
               <BarChart data={stats.chartData} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
                 <defs>
                   <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#4f46e5" stopOpacity={1}/>
-                    <stop offset="100%" stopColor="#4f46e5" stopOpacity={0.6}/>
+                    <stop offset="0%" stopColor={isDark ? "#10b981" : "#4f46e5"} stopOpacity={1}/>
+                    <stop offset="100%" stopColor={isDark ? "#10b981" : "#4f46e5"} stopOpacity={0.6}/>
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={isDark ? "#334155" : "#f1f5f9"} />
                 <XAxis 
                   dataKey="name" 
                   axisLine={false} 
                   tickLine={false} 
-                  tick={{ fontSize: 10, fontWeight: 700, fill: '#64748b' }} 
+                  tick={{ fontSize: 10, fontWeight: 700, fill: isDark ? '#94a3b8' : '#64748b' }} 
                   dy={10}
                 />
                 <YAxis 
                   axisLine={false} 
                   tickLine={false} 
-                  tick={{ fontSize: 10, fontWeight: 700, fill: '#64748b' }} 
+                  tick={{ fontSize: 10, fontWeight: 700, fill: isDark ? '#94a3b8' : '#64748b' }} 
                 />
                 <Tooltip 
-                  cursor={{ fill: '#f8fafc' }}
+                  cursor={{ fill: isDark ? '#1e293b' : '#f8fafc' }}
                   contentStyle={{ 
                     borderRadius: '1rem', 
-                    border: 'none', 
+                    border: isDark ? '1px solid #334155' : 'none', 
+                    backgroundColor: isDark ? '#0f172a' : '#ffffff',
+                    color: isDark ? '#f8fafc' : '#0f172a',
                     boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)',
                     fontSize: '12px',
                     fontWeight: 700
@@ -149,13 +155,13 @@ export function AdminSalesReport({ orders }: AdminSalesReportProps) {
           </div>
         </div>
 
-        <div className="lg:col-span-4 bg-slate-900 p-10 rounded-[3rem] text-white overflow-hidden relative">
+        <div className="lg:col-span-4 bg-slate-900 dark:bg-slate-950 p-10 rounded-[3rem] text-white overflow-hidden relative border border-transparent dark:border-slate-800">
           <div className="relative z-10">
             <h3 className="text-xl font-display font-black uppercase tracking-tight mb-8">Performance Snapshot</h3>
             
             <div className="space-y-10">
               {[
-                { label: 'Completed Orders', value: stats.completedOrders, total: orders.length, color: 'bg-indigo-500' },
+                { label: 'Completed Orders', value: stats.completedOrders, total: orders.length, color: isDark ? 'bg-emerald-500' : 'bg-indigo-500' },
                 { label: 'Inventory Health', value: 85, total: 100, color: 'bg-emerald-500' },
                 { label: 'Support Response', value: 92, total: 100, color: 'bg-amber-500' },
               ].map((item, idx) => (
@@ -187,7 +193,7 @@ export function AdminSalesReport({ orders }: AdminSalesReportProps) {
             </div>
           </div>
           
-          <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/10 rounded-full blur-[100px] -mr-32 -mt-32"></div>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/10 dark:bg-emerald-600/10 rounded-full blur-[100px] -mr-32 -mt-32"></div>
         </div>
       </div>
     </div>

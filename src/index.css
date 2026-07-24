@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
 @variant dark (&:where(.dark, .dark *));
 
 @theme {
@@ -25,3 +26,4 @@ html.dark body {
 .technical-gradient {
   background: linear-gradient(135deg, var(--color-slate-900) 0%, var(--color-slate-950) 100%);
 }
+

@@ -34,42 +34,42 @@ export function OrderSuccess() {
     return () => unsub();
   }, [orderId]);
 
-  if (loading) return <div className="pt-32 text-center text-slate-900">Verifying order status...</div>;
-  if (!order) return <div className="pt-32 text-center text-slate-900">Order record not found.</div>;
+  if (loading) return <div className="pt-32 text-center text-slate-900 dark:text-white">Verifying order status...</div>;
+  if (!order) return <div className="pt-32 text-center text-slate-900 dark:text-white">Order record not found.</div>;
 
   const isPending = order.status === 'pending';
   const isPaid = order.status === 'paid' || order.status === 'delivered';
   const isRejected = order.status === 'rejected';
 
   return (
-    <div className="pt-24 pb-20 bg-slate-50 min-h-screen flex items-center justify-center">
+    <div className="pt-24 pb-20 bg-slate-50 dark:bg-slate-950 min-h-screen flex items-center justify-center">
       <div className="max-w-3xl w-full px-4">
         <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-white rounded-[3rem] border border-slate-200 shadow-2xl p-8 md:p-16 text-center shadow-slate-200/50"
+            className="bg-white dark:bg-slate-900 rounded-[3rem] border border-slate-200 dark:border-slate-800 shadow-2xl p-8 md:p-16 text-center shadow-slate-200/50 dark:shadow-none"
         >
             {/* Status Icon */}
             <div className="mb-8">
                 {isPaid ? (
-                    <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center text-white mx-auto shadow-2xl shadow-green-200">
+                    <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center text-white mx-auto shadow-2xl shadow-green-200 dark:shadow-none">
                         <CheckCircle2 size={48} />
                     </div>
                 ) : isRejected ? (
-                    <div className="w-24 h-24 bg-red-500 rounded-full flex items-center justify-center text-white mx-auto shadow-2xl shadow-red-200">
+                    <div className="w-24 h-24 bg-red-500 rounded-full flex items-center justify-center text-white mx-auto shadow-2xl shadow-red-200 dark:shadow-none">
                         <ShieldX size={48} />
                     </div>
                 ) : (
-                    <div className="w-24 h-24 bg-amber-500 rounded-full flex items-center justify-center text-white mx-auto shadow-2xl shadow-amber-200">
+                    <div className="w-24 h-24 bg-amber-500 rounded-full flex items-center justify-center text-white mx-auto shadow-2xl shadow-amber-200 dark:shadow-none">
                         <Clock size={48} className="animate-spin-slow" style={{ animationDuration: '4s' }} />
                     </div>
                 )}
             </div>
 
-            <h1 className="text-4xl font-display font-extrabold text-slate-900 mb-4">
+            <h1 className="text-4xl font-display font-extrabold text-slate-900 dark:text-white mb-4">
                 {isPaid ? 'Payment Verified!' : isRejected ? 'Order Rejected' : 'Order Received!'}
             </h1>
-            <p className="text-slate-500 text-lg mb-12 max-w-md mx-auto">
+            <p className="text-slate-500 dark:text-slate-400 text-lg mb-12 max-w-md mx-auto">
                 {isPaid 
                   ? 'Thank you! Your payment has been verified. You can download your product now.' 
                   : isRejected 
@@ -78,10 +78,10 @@ export function OrderSuccess() {
             </p>
 
             {/* Order Details Display Card */}
-            <div className="bg-slate-50 rounded-[2rem] border border-slate-200 overflow-hidden mb-12 text-left">
-                <div className="p-6 border-b border-slate-100 bg-white/50 flex items-center justify-between">
+            <div className="bg-slate-50 dark:bg-slate-800/50 rounded-[2rem] border border-slate-200 dark:border-slate-700 overflow-hidden mb-12 text-left">
+                <div className="p-6 border-b border-slate-100 dark:border-slate-700/80 bg-white/50 dark:bg-slate-800/80 flex items-center justify-between">
                     <span className="text-[10px] uppercase font-black text-slate-400 tracking-widest">Order Details</span>
-                    <span className="text-[10px] bg-indigo-50 text-indigo-600 px-2 py-1 rounded-md font-bold font-mono">#{order.id.slice(-6).toUpperCase()}</span>
+                    <span className="text-[10px] bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 px-2 py-1 rounded-md font-bold font-mono">#{order.id.slice(-6).toUpperCase()}</span>
                 </div>
                 <div className="p-8 space-y-6">
                     <div className="flex items-center justify-between">
@@ -90,14 +90,14 @@ export function OrderSuccess() {
                                 <Package size={24} />
                             </div>
                             <div>
-                                <h4 className="font-bold text-slate-900 leading-tight">{order.productName}</h4>
+                                <h4 className="font-bold text-slate-900 dark:text-white leading-tight">{order.productName}</h4>
                                 <span className="text-xs text-slate-400 font-semibold">{currency}{order.amount.toLocaleString()}</span>
                             </div>
                         </div>
                     </div>
 
                     {isPaid && order.licenseKey && (
-                        <div className="flex flex-col gap-2 p-6 bg-indigo-600 rounded-[1.25rem] text-white shadow-xl shadow-indigo-200">
+                        <div className="flex flex-col gap-2 p-6 bg-indigo-600 dark:bg-emerald-600 rounded-[1.25rem] text-white shadow-xl shadow-indigo-200 dark:shadow-none">
                             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest opacity-70">
                                 <Key size={14} />
                                 Licensing Key
@@ -119,29 +119,29 @@ export function OrderSuccess() {
                       href={product.buyUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full bg-indigo-600 text-white py-5 rounded-[1.25rem] font-bold text-xl hover:bg-indigo-700 transition-all shadow-2xl shadow-indigo-600/20 flex items-center justify-center gap-3"
+                      className="w-full bg-indigo-600 dark:bg-emerald-600 text-white py-5 rounded-[1.25rem] font-bold text-xl hover:bg-indigo-700 dark:hover:bg-emerald-500 transition-all shadow-2xl shadow-indigo-600/20 dark:shadow-none flex items-center justify-center gap-3"
                     >
                         <Download size={24} />
                         Download Now
                     </a>
                 ) : isPending ? (
-                    <button disabled className="w-full bg-slate-100 text-slate-400 py-5 rounded-[1.25rem] font-bold text-xl cursor-not-allowed">
+                    <button disabled className="w-full bg-slate-100 dark:bg-slate-800 text-slate-400 py-5 rounded-[1.25rem] font-bold text-xl cursor-not-allowed">
                         Waiting for Verification
                     </button>
                 ) : (
                     <Link 
                       to="/marketplace" 
-                      className="w-full bg-indigo-600 text-white py-5 rounded-[1.25rem] font-bold text-xl hover:bg-slate-900 transition-all shadow-2xl shadow-indigo-600/20 flex items-center justify-center gap-3"
+                      className="w-full bg-indigo-600 dark:bg-emerald-600 text-white py-5 rounded-[1.25rem] font-bold text-xl hover:bg-slate-900 dark:hover:bg-emerald-500 transition-all shadow-2xl shadow-indigo-600/20 dark:shadow-none flex items-center justify-center gap-3"
                     >
                         Browse More
                         <ArrowRight size={24} />
                     </Link>
                 )}
                 
-                <Link to="/profile" className="text-indigo-600 font-bold hover:text-indigo-700 transition-colors uppercase text-[10px] tracking-widest mt-2">
+                <Link to="/profile" className="text-indigo-600 dark:text-emerald-400 font-bold hover:text-indigo-700 dark:hover:text-emerald-300 transition-colors uppercase text-[10px] tracking-widest mt-2">
                     View My Order History
                 </Link>
-                <Link to="/" className="text-slate-500 font-bold hover:text-indigo-600 transition-colors uppercase text-[10px] tracking-widest">
+                <Link to="/" className="text-slate-500 dark:text-slate-400 font-bold hover:text-indigo-600 dark:hover:text-emerald-400 transition-colors uppercase text-[10px] tracking-widest">
                     Return to Homepage
                 </Link>
             </div>

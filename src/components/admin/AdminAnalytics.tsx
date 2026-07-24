@@ -14,6 +14,7 @@ import {
 } from 'recharts';
 import { Users, Globe, Smartphone, Monitor, MousePointer2, Clock, Map } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useTheme } from '../../context/ThemeContext';
 
 const visitData = [
   { name: 'Mon', visits: 2400, bounce: 400 },
@@ -32,16 +33,19 @@ const deviceData = [
 ];
 
 export function AdminAnalytics() {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+
   return (
-    <div className="p-8 space-y-8 max-w-[1600px] mx-auto">
+    <div className="p-8 space-y-8 max-w-[1600px] mx-auto text-slate-900 dark:text-slate-100">
       <div className="flex items-end justify-between">
         <div>
-          <h1 className="text-3xl font-display font-black text-slate-900 tracking-tight">Traffic Analytics</h1>
-          <p className="text-slate-500 font-medium mt-1">Real-time insights into your store's visitor behavior.</p>
+          <h1 className="text-3xl font-display font-black text-slate-900 dark:text-white tracking-tight">Traffic Analytics</h1>
+          <p className="text-slate-500 dark:text-slate-400 font-medium mt-1">Real-time insights into your store's visitor behavior.</p>
         </div>
-        <div className="bg-white p-1 rounded-xl shadow-sm border border-slate-200 flex">
+        <div className="bg-white dark:bg-slate-900 p-1 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 flex">
            {['24h', '7d', '30d', '1y'].map((period) => (
-             <button key={period} className={`px-4 py-2 rounded-lg text-xs font-black uppercase tracking-wider transition-all ${period === '7d' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200' : 'text-slate-400 hover:text-slate-900'}`}>
+             <button key={period} className={`px-4 py-2 rounded-lg text-xs font-black uppercase tracking-wider transition-all ${period === '7d' ? 'bg-indigo-600 dark:bg-emerald-600 text-white shadow-lg shadow-indigo-200 dark:shadow-none' : 'text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white'}`}>
                {period}
              </button>
            ))}
@@ -50,33 +54,33 @@ export function AdminAnalytics() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
-          { label: 'Total Visits', value: '48.2k', icon: Globe, color: 'text-blue-600', bg: 'bg-blue-50' },
-          { label: 'Unique Users', value: '12.5k', icon: Users, color: 'text-indigo-600', bg: 'bg-indigo-50' },
-          { label: 'Avg. Duration', value: '3m 24s', icon: Clock, color: 'text-emerald-600', bg: 'bg-emerald-50' },
-          { label: 'Bounce Rate', value: '24.5%', icon: MousePointer2, color: 'text-amber-600', bg: 'bg-amber-50' },
+          { label: 'Total Visits', value: '48.2k', icon: Globe, color: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-50 dark:bg-blue-950/40' },
+          { label: 'Unique Users', value: '12.5k', icon: Users, color: 'text-indigo-600 dark:text-indigo-400', bg: 'bg-indigo-50 dark:bg-indigo-950/40' },
+          { label: 'Avg. Duration', value: '3m 24s', icon: Clock, color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-50 dark:bg-emerald-950/40' },
+          { label: 'Bounce Rate', value: '24.5%', icon: MousePointer2, color: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-50 dark:bg-amber-950/40' },
         ].map((s, i) => (
-            <div key={i} className="bg-white p-6 rounded-[2rem] border border-slate-200 shadow-sm flex items-center gap-5">
+            <div key={i} className="bg-white dark:bg-slate-900 p-6 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-5">
                 <div className={`p-4 rounded-2xl ${s.bg} ${s.color}`}>
                     <s.icon size={24} />
                 </div>
                 <div>
-                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{s.label}</p>
-                    <h4 className="text-xl font-display font-black text-slate-900">{s.value}</h4>
+                    <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">{s.label}</p>
+                    <h4 className="text-xl font-display font-black text-slate-900 dark:text-white">{s.value}</h4>
                 </div>
             </div>
         ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        <div className="lg:col-span-8 bg-white p-10 rounded-[3rem] border border-slate-200 shadow-sm">
+        <div className="lg:col-span-8 bg-white dark:bg-slate-900 p-10 rounded-[3rem] border border-slate-200 dark:border-slate-800 shadow-sm">
             <div className="flex items-center justify-between mb-10">
                 <div>
-                    <h3 className="text-xl font-display font-black text-slate-900 uppercase tracking-tight">Active Traffic</h3>
-                    <p className="text-xs text-slate-400 font-bold mt-1">Real-time session monitoring</p>
+                    <h3 className="text-xl font-display font-black text-slate-900 dark:text-white uppercase tracking-tight">Active Traffic</h3>
+                    <p className="text-xs text-slate-400 dark:text-slate-500 font-bold mt-1">Real-time session monitoring</p>
                 </div>
                 <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-indigo-600 rounded-full animate-ping"></div>
-                    <span className="text-xs font-black text-slate-900">48 ONLINE NOW</span>
+                    <div className="w-3 h-3 bg-indigo-600 dark:bg-emerald-500 rounded-full animate-ping"></div>
+                    <span className="text-xs font-black text-slate-900 dark:text-white">48 ONLINE NOW</span>
                 </div>
             </div>
 
@@ -85,28 +89,36 @@ export function AdminAnalytics() {
                     <AreaChart data={visitData} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
                         <defs>
                             <linearGradient id="colorVisits" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.1}/>
-                                <stop offset="95%" stopColor="#4f46e5" stopOpacity={0}/>
+                                <stop offset="5%" stopColor={isDark ? "#10b981" : "#4f46e5"} stopOpacity={0.15}/>
+                                <stop offset="95%" stopColor={isDark ? "#10b981" : "#4f46e5"} stopOpacity={0}/>
                             </linearGradient>
                         </defs>
-                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={isDark ? "#334155" : "#f1f5f9"} />
                         <XAxis 
                             dataKey="name" 
                             axisLine={false} 
                             tickLine={false}
-                            tick={{ fontSize: 10, fontWeight: 700, fill: '#64748b' }}
+                            tick={{ fontSize: 10, fontWeight: 700, fill: isDark ? '#94a3b8' : '#64748b' }}
                             dy={10}
                         />
                         <YAxis 
                             axisLine={false} 
                             tickLine={false}
-                            tick={{ fontSize: 10, fontWeight: 700, fill: '#64748b' }}
+                            tick={{ fontSize: 10, fontWeight: 700, fill: isDark ? '#94a3b8' : '#64748b' }}
                         />
-                        <Tooltip />
+                        <Tooltip 
+                          contentStyle={{ 
+                            backgroundColor: isDark ? '#0f172a' : '#ffffff', 
+                            borderColor: isDark ? '#334155' : '#e2e8f0', 
+                            borderRadius: '1rem',
+                            color: isDark ? '#ffffff' : '#0f172a',
+                            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+                          }} 
+                        />
                         <Area 
                             type="monotone" 
                             dataKey="visits" 
-                            stroke="#4f46e5" 
+                            stroke={isDark ? "#10b981" : "#4f46e5"} 
                             strokeWidth={3}
                             fillOpacity={1} 
                             fill="url(#colorVisits)" 
@@ -116,8 +128,8 @@ export function AdminAnalytics() {
             </div>
         </div>
 
-        <div className="lg:col-span-4 bg-white p-10 rounded-[3rem] border border-slate-200 shadow-sm">
-            <h3 className="text-xl font-display font-black text-slate-900 uppercase tracking-tight mb-8">Device Mix</h3>
+        <div className="lg:col-span-4 bg-white dark:bg-slate-900 p-10 rounded-[3rem] border border-slate-200 dark:border-slate-800 shadow-sm">
+            <h3 className="text-xl font-display font-black text-slate-900 dark:text-white uppercase tracking-tight mb-8">Device Mix</h3>
             <div className="h-[300px]">
                 <ResponsiveContainer width="100%" height="100%">
                     <RePieChart>
@@ -134,7 +146,14 @@ export function AdminAnalytics() {
                                 <Cell key={`cell-${index}`} fill={entry.color} />
                             ))}
                         </Pie>
-                        <Tooltip />
+                        <Tooltip 
+                          contentStyle={{ 
+                            backgroundColor: isDark ? '#0f172a' : '#ffffff', 
+                            borderColor: isDark ? '#334155' : '#e2e8f0', 
+                            borderRadius: '1rem',
+                            color: isDark ? '#ffffff' : '#0f172a'
+                          }} 
+                        />
                         <Legend verticalAlign="bottom" height={36}/>
                     </RePieChart>
                 </ResponsiveContainer>
@@ -142,12 +161,12 @@ export function AdminAnalytics() {
 
             <div className="mt-8 space-y-4">
                 {deviceData.map((d, i) => (
-                    <div key={i} className="flex justify-between items-center bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                    <div key={i} className="flex justify-between items-center bg-slate-50 dark:bg-slate-800/80 p-4 rounded-2xl border border-slate-100 dark:border-slate-700">
                         <div className="flex items-center gap-3">
                             <div className="w-3 h-3 rounded-full" style={{ backgroundColor: d.color }}></div>
-                            <span className="text-sm font-bold text-slate-700">{d.name}</span>
+                            <span className="text-sm font-bold text-slate-700 dark:text-slate-200">{d.name}</span>
                         </div>
-                        <span className="text-sm font-black text-slate-900">{d.value}%</span>
+                        <span className="text-sm font-black text-slate-900 dark:text-white">{d.value}%</span>
                     </div>
                 ))}
             </div>
@@ -155,10 +174,10 @@ export function AdminAnalytics() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-slate-900 p-10 rounded-[3rem] text-white">
+        <div className="bg-slate-900 dark:bg-slate-900 p-10 rounded-[3rem] text-white border border-slate-800">
             <div className="flex items-center justify-between mb-10">
                 <h3 className="text-xl font-display font-black uppercase tracking-tight">Geo Traffic</h3>
-                <Map size={24} className="text-indigo-400" />
+                <Map size={24} className="text-indigo-400 dark:text-emerald-400" />
             </div>
             <div className="space-y-6">
                 {[
@@ -173,15 +192,15 @@ export function AdminAnalytics() {
                             <span>{item.users.toLocaleString()}</span>
                         </div>
                         <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
-                            <div className="h-full bg-indigo-500 rounded-full" style={{ width: `${item.percentage}%` }}></div>
+                            <div className="h-full bg-indigo-500 dark:bg-emerald-500 rounded-full" style={{ width: `${item.percentage}%` }}></div>
                         </div>
                     </div>
                 ))}
             </div>
         </div>
 
-        <div className="bg-white p-10 rounded-[3rem] border border-slate-200 shadow-sm overflow-hidden">
-            <h3 className="text-xl font-display font-black text-slate-900 uppercase tracking-tight mb-8">Top Pages</h3>
+        <div className="bg-white dark:bg-slate-900 p-10 rounded-[3rem] border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+            <h3 className="text-xl font-display font-black text-slate-900 dark:text-white uppercase tracking-tight mb-8">Top Pages</h3>
             <div className="space-y-2">
                 {[
                     { page: '/', views: '12,450', bounce: '12%' },
@@ -189,21 +208,21 @@ export function AdminAnalytics() {
                     { page: '/service-details', views: '4,210', bounce: '18%' },
                     { page: '/auth', views: '3,110', bounce: '44%' },
                 ].map((item, i) => (
-                    <div key={i} className="flex items-center justify-between p-4 hover:bg-slate-50 transition-colors rounded-2xl group">
+                    <div key={i} className="flex items-center justify-between p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors rounded-2xl group">
                         <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                            <div className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-slate-800 flex items-center justify-center text-indigo-600 dark:text-emerald-400 group-hover:bg-indigo-600 dark:group-hover:bg-emerald-600 group-hover:text-white transition-colors">
                                 <Globe size={16} />
                             </div>
-                            <span className="text-sm font-bold text-slate-700">{item.page}</span>
+                            <span className="text-sm font-bold text-slate-700 dark:text-slate-200">{item.page}</span>
                         </div>
                         <div className="flex items-center gap-6">
                             <div className="text-right">
-                                <p className="text-[10px] font-black text-slate-400 uppercase">Views</p>
-                                <p className="text-xs font-black text-slate-900">{item.views}</p>
+                                <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase">Views</p>
+                                <p className="text-xs font-black text-slate-900 dark:text-white">{item.views}</p>
                             </div>
                             <div className="text-right">
-                                <p className="text-[10px] font-black text-slate-400 uppercase">Bounce</p>
-                                <p className="text-xs font-black text-slate-900">{item.bounce}</p>
+                                <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase">Bounce</p>
+                                <p className="text-xs font-black text-slate-900 dark:text-white">{item.bounce}</p>
                             </div>
                         </div>
                     </div>

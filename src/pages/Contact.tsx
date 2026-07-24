@@ -35,14 +35,14 @@ export function Contact() {
   };
 
   return (
-    <div className="pt-32 pb-20 bg-white">
+    <div className="pt-32 pb-20 bg-white dark:bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-20">
-          <p className="text-emerald-600 font-black uppercase text-xs tracking-[0.3em] mb-4">Contact Us</p>
-          <h1 className="text-4xl lg:text-6xl font-display font-black text-slate-900 tracking-tight mb-6">
-            Get in <span className="text-emerald-600">Touch</span>
+          <p className="text-emerald-600 dark:text-emerald-400 font-black uppercase text-xs tracking-[0.3em] mb-4">Contact Us</p>
+          <h1 className="text-4xl lg:text-6xl font-display font-black text-slate-900 dark:text-white tracking-tight mb-6">
+            Get in <span className="text-emerald-600 dark:text-emerald-400">Touch</span>
           </h1>
-          <p className="text-slate-500 max-w-2xl mx-auto text-lg">
+          <p className="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto text-lg">
             Have questions about our Digital Ledger Solutions or need a custom enterprise setup? We're here to help.
           </p>
         </div>
@@ -51,19 +51,19 @@ export function Contact() {
           {/* Info Side */}
           <div className="space-y-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100">
+              <div className="bg-slate-50 dark:bg-slate-900 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-800">
                 <div className="w-12 h-12 bg-emerald-600 rounded-2xl flex items-center justify-center text-white mb-6">
                   <Mail size={24} />
                 </div>
-                <h4 className="font-bold text-slate-900 mb-2">Email Us</h4>
-                <p className="text-slate-500 text-sm">{settings.contactEmail || 'mdrifathossainpersonal@gmail.com'}</p>
+                <h4 className="font-bold text-slate-900 dark:text-white mb-2">Email Us</h4>
+                <p className="text-slate-500 dark:text-slate-400 text-sm">{settings.contactEmail || 'mdrifathossainpersonal@gmail.com'}</p>
               </div>
-              <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100">
+              <div className="bg-slate-50 dark:bg-slate-900 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-800">
                 <div className="w-12 h-12 bg-yellow-500 rounded-2xl flex items-center justify-center text-slate-900 mb-6">
                   <Phone size={24} />
                 </div>
-                <h4 className="font-bold text-slate-900 mb-2">Call Us</h4>
-                <p className="text-slate-500 text-sm">+880 1700 000000</p>
+                <h4 className="font-bold text-slate-900 dark:text-white mb-2">Call Us</h4>
+                <p className="text-slate-500 dark:text-slate-400 text-sm">+880 1700 000000</p>
               </div>
             </div>
 
@@ -88,21 +88,21 @@ export function Contact() {
           </div>
 
           {/* Form Side */}
-          <div className="bg-white p-8 md:p-12 rounded-[3rem] border border-slate-200 shadow-xl shadow-slate-200/50">
+          <div className="bg-white dark:bg-slate-900 p-8 md:p-12 rounded-[3rem] border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
             {submitted ? (
               <motion.div 
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 className="text-center py-20"
               >
-                <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-8">
+                <div className="w-20 h-20 bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-8">
                   <Send size={40} />
                 </div>
-                <h2 className="text-3xl font-display font-black text-slate-900 mb-4">Message Sent!</h2>
-                <p className="text-slate-500 mb-8">Thank you for reaching out. We'll get back to you shortly.</p>
+                <h2 className="text-3xl font-display font-black text-slate-900 dark:text-white mb-4">Message Sent!</h2>
+                <p className="text-slate-500 dark:text-slate-400 mb-8">Thank you for reaching out. We'll get back to you shortly.</p>
                 <button 
                   onClick={() => setSubmitted(false)}
-                  className="bg-slate-900 text-white px-8 py-3 rounded-xl font-bold hover:bg-slate-800 transition-all"
+                  className="bg-slate-900 dark:bg-emerald-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-slate-800 dark:hover:bg-emerald-500 transition-all"
                 >
                   Send Another Message
                 </button>
@@ -118,7 +118,7 @@ export function Contact() {
                       value={formData.name}
                       onChange={e => setFormData({...formData, name: e.target.value})}
                       placeholder="John Doe"
-                      className="w-full bg-slate-50 border border-slate-100 rounded-2xl px-6 py-4 text-slate-900 focus:border-emerald-500 outline-none transition-all"
+                      className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-2xl px-6 py-4 text-slate-900 dark:text-white focus:border-emerald-500 outline-none transition-all"
                     />
                   </div>
                   <div className="space-y-2">
@@ -129,7 +129,7 @@ export function Contact() {
                       value={formData.email}
                       onChange={e => setFormData({...formData, email: e.target.value})}
                       placeholder="john@example.com"
-                      className="w-full bg-slate-50 border border-slate-100 rounded-2xl px-6 py-4 text-slate-900 focus:border-emerald-500 outline-none transition-all"
+                      className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-2xl px-6 py-4 text-slate-900 dark:text-white focus:border-emerald-500 outline-none transition-all"
                     />
                   </div>
                 </div>
@@ -141,7 +141,7 @@ export function Contact() {
                     value={formData.subject}
                     onChange={e => setFormData({...formData, subject: e.target.value})}
                     placeholder="How can we help?"
-                    className="w-full bg-slate-50 border border-slate-100 rounded-2xl px-6 py-4 text-slate-900 focus:border-emerald-500 outline-none transition-all"
+                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-2xl px-6 py-4 text-slate-900 dark:text-white focus:border-emerald-500 outline-none transition-all"
                   />
                 </div>
                 <div className="space-y-2">
@@ -152,7 +152,7 @@ export function Contact() {
                     value={formData.message}
                     onChange={e => setFormData({...formData, message: e.target.value})}
                     placeholder="Tell us about your requirements..."
-                    className="w-full bg-slate-50 border border-slate-100 rounded-2xl px-6 py-4 text-slate-900 focus:border-emerald-500 outline-none transition-all resize-none"
+                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-2xl px-6 py-4 text-slate-900 dark:text-white focus:border-emerald-500 outline-none transition-all resize-none"
                   ></textarea>
                 </div>
                 <button 
