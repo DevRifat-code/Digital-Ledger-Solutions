@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { db, handleFirestoreError } from '../lib/firebase';
 import { ProductCard } from '../components/ProductCard';
+import { ProductGridSkeleton } from '../components/Skeletons';
 import { motion } from 'motion/react';
 import { Search } from 'lucide-react';
 
@@ -60,11 +61,7 @@ export function Marketplace() {
         </div>
 
         {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3].map(i => (
-              <div key={i} className="h-[400px] bg-white border border-slate-100 rounded-[2rem] animate-pulse shadow-sm" />
-            ))}
-          </div>
+          <ProductGridSkeleton count={6} />
         ) : filteredProducts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             {filteredProducts.map((p) => (

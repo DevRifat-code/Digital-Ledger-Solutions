@@ -5,6 +5,7 @@ import { db } from '../lib/firebase';
 import { motion } from 'motion/react';
 import { ChevronRight, ShoppingCart, CheckCircle2, ArrowLeft } from 'lucide-react';
 import { useSiteSettings } from '../hooks/useSiteSettings';
+import { ProductDetailsSkeleton } from '../components/Skeletons';
 
 const PLANS: Record<string, { name: string; price: number; category: string; description: string; features?: string[] }> = {
   'starter-one-time': {
@@ -69,7 +70,13 @@ export function ProductDetails() {
     fetchProduct();
   }, [id]);
 
-  if (loading) return <div className="pt-32 text-center text-slate-900">Loading component...</div>;
+  if (loading) {
+    return (
+      <div className="pt-24 pb-20 bg-slate-50 min-h-screen">
+        <ProductDetailsSkeleton />
+      </div>
+    );
+  }
   if (!product) return <div className="pt-32 text-center text-slate-900">Product not found.</div>;
 
   return (

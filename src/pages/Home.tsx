@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { ProductCard } from '../components/ProductCard';
+import { ProductGridSkeleton } from '../components/Skeletons';
 import { useEffect, useState } from 'react';
 import { collection, query, limit, getDocs } from 'firebase/firestore';
 import { auth, db, handleFirestoreError } from '../lib/firebase';
@@ -31,6 +32,7 @@ import { useSEO } from '../hooks/useSEO';
 
 export function Home() {
   const [featuredProducts, setFeaturedProducts] = useState<any[]>([]);
+  const [loadingFeatured, setLoadingFeatured] = useState(true);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [isYearly, setIsYearly] = useState(false);
   const [user, setUser] = useState<FirebaseUser | null>(null);
@@ -91,6 +93,8 @@ export function Home() {
         setFeaturedProducts(items);
       } catch (error) {
         handleFirestoreError(error, 'list', 'products');
+      } finally {
+        setLoadingFeatured(false);
       }
     }
     fetchFeatured();
@@ -607,7 +611,9 @@ export function Home() {
             </Link>
           </div>
           
-          {featuredProducts.length > 0 ? (
+          {loadingFeatured ? (
+            <ProductGridSkeleton count={3} />
+          ) : featuredProducts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {featuredProducts.map((p) => (
                 <ProductCard key={p.id} product={p as any} />

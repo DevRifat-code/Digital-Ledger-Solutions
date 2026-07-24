@@ -8,6 +8,7 @@ import Markdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import { useSEO } from '../hooks/useSEO';
 import { formatDate, formatFullIso } from '../lib/dateUtils';
+import { BlogPostDetailsSkeleton } from '../components/Skeletons';
 
 export function BlogPostDetails() {
   const { id } = useParams();
@@ -93,11 +94,8 @@ export function BlogPostDetails() {
 
   if (isLoading) {
     return (
-      <div className="pt-32 pb-20 min-h-screen flex items-center justify-center bg-slate-50">
-        <div className="text-center">
-            <Loader2 size={40} className="text-indigo-600 animate-spin mx-auto mb-4" />
-            <p className="text-slate-400 font-black uppercase tracking-[0.2em] text-[10px]">Assembling Editorial...</p>
-        </div>
+      <div className="pt-24 pb-20 min-h-screen bg-slate-50">
+        <BlogPostDetailsSkeleton />
       </div>
     );
   }

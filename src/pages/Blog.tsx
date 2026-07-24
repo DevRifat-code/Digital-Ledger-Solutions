@@ -6,6 +6,7 @@ import { db, handleFirestoreError } from '../lib/firebase';
 import { collection, query, getDocs, orderBy } from 'firebase/firestore';
 import { useSEO } from '../hooks/useSEO';
 import { formatDate } from '../lib/dateUtils';
+import { BlogGridSkeleton } from '../components/Skeletons';
 
 export function Blog() {
   const [posts, setPosts] = useState<any[]>([]);
@@ -66,10 +67,7 @@ export function Blog() {
         </div>
 
         {isLoading ? (
-          <div className="flex flex-col items-center justify-center py-32">
-            <Loader2 size={40} className="text-indigo-600 animate-spin mb-4" />
-            <p className="text-slate-400 font-black uppercase tracking-[0.2em] text-[10px]">Loading Editorial Content</p>
-          </div>
+          <BlogGridSkeleton count={6} />
         ) : posts.length > 0 ? (
           <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
             {posts.map((post, idx) => (
