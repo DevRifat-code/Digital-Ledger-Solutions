@@ -13,7 +13,17 @@ export function BlogPostDetails() {
   const [post, setPost] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Dynamic SEO metadata for Google indexing
+  const formatDate = (dateVal: any) => {
+    if (!dateVal) return 'Recent';
+    if (dateVal?.toDate) return dateVal.toDate().toLocaleDateString();
+    if (dateVal instanceof Date) return dateVal.toLocaleDateString();
+    if (typeof dateVal === 'string' || typeof dateVal === 'number') {
+      const d = new Date(dateVal);
+      return isNaN(d.getTime()) ? 'Recent' : d.toLocaleDateString();
+    }
+    return 'Recent';
+  };
+
   const postExcerpt = post ? (post.excerpt || post.content?.replace(/[#*`_~]/g, '').substring(0, 160) + '...') : '';
   const postCanonical = `https://digitalledgersolutions.pro.bd/blog/${post?.permalink || id}`;
 
@@ -162,7 +172,7 @@ export function BlogPostDetails() {
                 </div>
                 <div>
                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Published</p>
-                    <p className="text-sm font-bold text-slate-900">{post.createdAt?.toDate().toLocaleDateString()}</p>
+                    <p className="text-sm font-bold text-slate-900">{formatDate(post.createdAt)}</p>
                 </div>
             </div>
             <div className="flex items-center gap-3">

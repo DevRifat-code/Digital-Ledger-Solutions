@@ -34,6 +34,17 @@ export function Blog() {
     }
   };
 
+  const formatDate = (dateVal: any) => {
+    if (!dateVal) return 'Recent';
+    if (dateVal?.toDate) return dateVal.toDate().toLocaleDateString();
+    if (dateVal instanceof Date) return dateVal.toLocaleDateString();
+    if (typeof dateVal === 'string' || typeof dateVal === 'number') {
+      const d = new Date(dateVal);
+      return isNaN(d.getTime()) ? 'Recent' : d.toLocaleDateString();
+    }
+    return 'Recent';
+  };
+
   return (
     <div className="pt-32 pb-20 min-h-screen bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -99,7 +110,7 @@ export function Blog() {
                   <div className="flex items-center gap-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">
                     <span className="flex items-center gap-1.5">
                       <Calendar size={14} />
-                      {post.createdAt?.toDate().toLocaleDateString() || 'Recent'}
+                      {formatDate(post.createdAt)}
                     </span>
                     <span className="flex items-center gap-1.5">
                       <User size={14} />
