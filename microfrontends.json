@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/microfrontends.json",
+  "applications": {
+    "digital-ledger-solutions": {
+      "development": {
+        "fallback": "digitalledgersolutions.pro.bd"
+      }
+    }
+  }
+}
