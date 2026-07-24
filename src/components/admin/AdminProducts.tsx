@@ -135,7 +135,7 @@ export function AdminProducts({
                                 accept="image/*"
                                 onChange={handleImageUpload}
                               />
-                            {newProduct.imageUrl && newProduct.imageUrl !== "" ? (
+                            {newProduct.imageUrl && newProduct.imageUrl.trim() !== "" ? (
                                 <img src={newProduct.imageUrl} alt="Preview" className="w-full h-full object-contain" />
                             ) : (
                                 <div className="text-slate-300 flex flex-col items-center gap-2">
@@ -225,7 +225,7 @@ export function AdminProducts({
                 <div className="relative z-10 flex flex-col h-full">
                     <div className="flex gap-6 items-start mb-6">
                         <div className="w-20 h-20 rounded-3xl bg-slate-100 overflow-hidden shrink-0 border-2 border-white shadow-inner flex items-center justify-center">
-                            {p.imageUrl ? (
+                            {p.imageUrl && p.imageUrl.trim() !== "" ? (
                                 <img src={p.imageUrl} alt={p.name} className="w-full h-full object-cover group-hover:scale-125 transition-transform duration-700" />
                             ) : (
                                 <Package size={24} className="text-slate-300" />

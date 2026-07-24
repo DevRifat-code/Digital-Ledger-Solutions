@@ -28,7 +28,7 @@ export function ProductCard({ product }: ProductCardProps) {
       {/* Visual Header */}
       <div className="p-4">
         <div className="aspect-[4/3] relative rounded-[1.5rem] overflow-hidden bg-indigo-600 flex items-center justify-center p-8 group-hover:scale-[1.02] transition-transform duration-500 shadow-inner">
-          {product.imageUrl && product.imageUrl !== "" ? (
+          {product.imageUrl && product.imageUrl.trim() !== "" ? (
             <img
               src={product.imageUrl}
               alt={product.name}

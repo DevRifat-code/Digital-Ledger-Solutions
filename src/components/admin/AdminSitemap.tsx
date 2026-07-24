@@ -50,14 +50,22 @@ export function AdminSitemap() {
     setLoading(true);
     try {
       // 1. Fetch products
-      const pSnap = await getDocs(collection(db, 'products'));
-      const pData = pSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setProducts(pData);
+      try {
+        const pSnap = await getDocs(query(collection(db, 'products'), orderBy('createdAt', 'desc')));
+        setProducts(pSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      } catch (e) {
+        const pSnap = await getDocs(collection(db, 'products'));
+        setProducts(pSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      }
 
-      // 2. Fetch blog posts
-      const bSnap = await getDocs(query(collection(db, 'blog_posts'), orderBy('createdAt', 'desc')));
-      const bData = bSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setBlogPosts(bData);
+      // 2. Fetch blog posts from 'blog' collection
+      try {
+        const bSnap = await getDocs(query(collection(db, 'blog'), orderBy('createdAt', 'desc')));
+        setBlogPosts(bSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      } catch (e) {
+        const bSnap = await getDocs(collection(db, 'blog'));
+        setBlogPosts(bSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      }
     } catch (error) {
       console.error("Error fetching data for sitemap:", error);
     } finally {

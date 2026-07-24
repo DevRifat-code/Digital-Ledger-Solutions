@@ -5,6 +5,7 @@ import { Calendar, User, ArrowLeft, Clock, Share2, Facebook, Twitter, Linkedin, 
 import { db, handleFirestoreError } from '../lib/firebase';
 import { doc, getDoc, collection, query, where, getDocs, limit } from 'firebase/firestore';
 import Markdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
 import { useSEO } from '../hooks/useSEO';
 
 export function BlogPostDetails() {
@@ -191,7 +192,7 @@ export function BlogPostDetails() {
         `}} />
 
         {/* Featured Image */}
-        {post.imageUrl && (
+        {post.imageUrl && post.imageUrl.trim() !== "" && (
             <motion.div 
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -211,7 +212,26 @@ export function BlogPostDetails() {
               className="prose prose-slate prose-indigo max-w-none"
             >
                 <div className="blog-content text-slate-600 text-lg md:text-xl leading-[1.8] font-serif space-y-6 [&_img]:rounded-3xl [&_img]:shadow-2xl [&_img]:shadow-indigo-100/50 [&_img]:mx-auto [&_img]:max-w-full [&_img]:my-12">
-                    <Markdown>{post.content}</Markdown>
+                    <Markdown 
+                      rehypePlugins={[rehypeRaw]}
+                      urlTransform={(url) => url}
+                      components={{
+                        img: ({ node, ...props }) => {
+                          if (!props.src || props.src.trim() === '') return null;
+                          return (
+                            <img
+                              {...props}
+                              alt={props.alt || 'Article Image'}
+                              className="rounded-3xl shadow-2xl shadow-indigo-100/50 mx-auto max-w-full my-8 object-cover border border-slate-100"
+                              loading="lazy"
+                              referrerPolicy="no-referrer"
+                            />
+                          );
+                        }
+                      }}
+                    >
+                      {post.content}
+                    </Markdown>
                 </div>
             </motion.div>
 

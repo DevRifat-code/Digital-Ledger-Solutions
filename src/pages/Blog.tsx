@@ -80,7 +80,7 @@ export function Blog() {
                 className="break-inside-avoid bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden group hover:shadow-2xl hover:shadow-indigo-100 transition-all duration-500 mb-8"
               >
                 <div className="overflow-hidden relative">
-                  {post.imageUrl ? (
+                  {post.imageUrl && post.imageUrl.trim() !== "" ? (
                     <img 
                       src={post.imageUrl} 
                       alt={post.title} 

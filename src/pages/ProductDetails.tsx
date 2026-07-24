@@ -93,7 +93,7 @@ export function ProductDetails() {
           >
             <div className="aspect-[4/3] bg-indigo-600 rounded-[2rem] flex items-center justify-center p-12 overflow-hidden shadow-inner">
                <img 
-                 src={product.imageUrl || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c'} 
+                 src={(product.imageUrl && product.imageUrl.trim() !== '') ? product.imageUrl : 'https://images.unsplash.com/photo-1555066931-4365d14bab8c'} 
                  alt={product.name}
                  className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
                  referrerPolicy="no-referrer"

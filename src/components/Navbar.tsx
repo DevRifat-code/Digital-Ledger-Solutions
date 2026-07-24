@@ -58,7 +58,7 @@ export function Navbar() {
           isScrolled ? "h-16" : "h-20"
         )}>
           <Link to="/" className="flex items-center space-x-2 group">
-            {settings.logoUrl && settings.logoUrl !== "" ? (
+            {settings.logoUrl && settings.logoUrl.trim() !== "" ? (
               <img src={settings.logoUrl} alt={settings.siteName} className="w-10 h-10 object-contain" referrerPolicy="no-referrer" />
             ) : (
               <div className="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-500/20 group-hover:rotate-6 transition-transform">

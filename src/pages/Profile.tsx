@@ -333,7 +333,7 @@ export function Profile() {
                 <div className="bg-white p-10 rounded-[3rem] border border-slate-200 shadow-sm text-center">
                     <div className="relative inline-block mb-8 group">
                         <div className="w-32 h-32 bg-indigo-50 rounded-[2.5rem] flex items-center justify-center text-indigo-600 text-4xl font-black border border-indigo-100 transition-transform group-hover:scale-105 duration-500 overflow-hidden shadow-inner">
-                            {photoURL ? (
+                            {photoURL && photoURL.trim() !== "" ? (
                               <img src={photoURL} alt="" className="w-full h-full object-cover" />
                             ) : (
                               user.email?.charAt(0).toUpperCase()
@@ -455,7 +455,9 @@ export function Profile() {
                                     photoURL === url ? "border-indigo-600 scale-110" : "border-slate-100"
                                   )}
                                 >
-                                  <img src={url} alt="" className="w-full h-full object-cover" />
+                                  {url && url.trim() !== "" && (
+                                    <img src={url} alt="" className="w-full h-full object-cover" />
+                                  )}
                                 </button>
                               ))}
                            </div>

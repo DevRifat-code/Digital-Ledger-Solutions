@@ -176,11 +176,13 @@ export function Admin() {
     }
   };
 
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const handleSidebarItemClick = (tab: AdminTab) => {
     setActiveTab(tab);
-    setIsSidebarOpen(false); // Close sidebar on mobile after clicking
+    if (window.innerWidth < 1024) {
+      setIsSidebarOpen(false); // Close sidebar on mobile after clicking
+    }
   };
 
   const handleLogout = async () => {
@@ -389,6 +391,7 @@ export function Admin() {
           onLogout={handleLogout} 
           onMenuToggle={() => setIsSidebarOpen(!isSidebarOpen)} 
           onProfileClick={() => setActiveTab('profile')}
+          isSidebarOpen={isSidebarOpen}
         />
         <div className="w-full">
           {renderContent()}

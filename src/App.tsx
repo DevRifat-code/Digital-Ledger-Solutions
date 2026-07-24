@@ -154,7 +154,7 @@ export default function App() {
     if (settings.siteName) {
       document.title = settings.siteName;
     }
-    if (settings.faviconUrl) {
+    if (settings.faviconUrl && settings.faviconUrl.trim() !== "") {
       const link: HTMLLinkElement | null = document.querySelector("link[rel~='icon']");
       if (link) {
         link.href = settings.faviconUrl;

@@ -142,7 +142,7 @@ export function AdminProfile() {
             <div className="relative z-10">
                 <div className="relative inline-block mb-6">
                     <div className="w-32 h-32 bg-indigo-600 rounded-[2.5rem] flex items-center justify-center text-white text-4xl font-black shadow-2xl shadow-indigo-200 group-hover:scale-105 transition-transform overflow-hidden">
-                        {photoURL ? (
+                        {photoURL && photoURL.trim() !== "" ? (
                           <img src={photoURL} alt="" className="w-full h-full object-cover rounded-[2.5rem]" />
                         ) : (
                           user?.email?.charAt(0).toUpperCase()

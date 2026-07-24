@@ -99,7 +99,7 @@ export function AdminSettings({ settings, setSettings, onSave, isSaving }: Admin
                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Site Logo</label>
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 bg-slate-50 border border-slate-200 rounded-2xl flex items-center justify-center overflow-hidden shrink-0">
-                    {settings.logoUrl ? (
+                    {settings.logoUrl && settings.logoUrl.trim() !== "" ? (
                       <img src={settings.logoUrl} alt="Logo" className="w-full h-full object-contain" />
                     ) : (
                       <Camera size={24} className="text-slate-300" />
@@ -119,7 +119,7 @@ export function AdminSettings({ settings, setSettings, onSave, isSaving }: Admin
                   >
                     Select Logo
                   </button>
-                  {settings.logoUrl && (
+                  {settings.logoUrl && settings.logoUrl.trim() !== "" && (
                     <button 
                       type="button"
                       onClick={() => setSettings({ ...settings, logoUrl: '' })}
@@ -136,7 +136,7 @@ export function AdminSettings({ settings, setSettings, onSave, isSaving }: Admin
                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Favicon</label>
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 bg-slate-50 border border-slate-200 rounded-2xl flex items-center justify-center overflow-hidden shrink-0">
-                    {settings.faviconUrl ? (
+                    {settings.faviconUrl && settings.faviconUrl.trim() !== "" ? (
                       <img src={settings.faviconUrl} alt="Favicon" className="w-6 h-6 object-contain" />
                     ) : (
                       <Globe size={24} className="text-slate-300" />

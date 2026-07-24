@@ -637,7 +637,7 @@ export function Checkout() {
                     <div className="p-8">
                         <div className="flex gap-6 mb-8">
                             <div className="w-24 h-24 bg-indigo-600 rounded-2xl flex items-center justify-center p-4 border border-indigo-400 overflow-hidden shrink-0 shadow-lg shadow-indigo-100">
-                                {product.imageUrl && product.imageUrl !== "" ? (
+                                {product.imageUrl && product.imageUrl.trim() !== "" ? (
                                     <img src={product.imageUrl} alt={product.name} className="w-full h-full object-contain drop-shadow-2xl" referrerPolicy="no-referrer" />
                                 ) : (
                                     <ShoppingBag size={32} className="text-white opacity-20" />
