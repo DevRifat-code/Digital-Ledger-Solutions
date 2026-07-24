@@ -7,22 +7,12 @@ import { doc, getDoc, collection, query, where, getDocs, limit } from 'firebase/
 import Markdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import { useSEO } from '../hooks/useSEO';
+import { formatDate, formatFullIso } from '../lib/dateUtils';
 
 export function BlogPostDetails() {
   const { id } = useParams();
   const [post, setPost] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
-
-  const formatDate = (dateVal: any) => {
-    if (!dateVal) return 'Recent';
-    if (dateVal?.toDate) return dateVal.toDate().toLocaleDateString();
-    if (dateVal instanceof Date) return dateVal.toLocaleDateString();
-    if (typeof dateVal === 'string' || typeof dateVal === 'number') {
-      const d = new Date(dateVal);
-      return isNaN(d.getTime()) ? 'Recent' : d.toLocaleDateString();
-    }
-    return 'Recent';
-  };
 
   const postExcerpt = post ? (post.excerpt || post.content?.replace(/[#*`_~]/g, '').substring(0, 160) + '...') : '';
   const postCanonical = `https://digitalledgersolutions.pro.bd/blog/${post?.permalink || id}`;
@@ -44,7 +34,7 @@ export function BlogPostDetails() {
       'headline': post.title,
       'description': postExcerpt,
       'image': post.imageUrl ? [post.imageUrl] : undefined,
-      'datePublished': post.createdAt?.toDate ? post.createdAt.toDate().toISOString() : new Date().toISOString(),
+      'datePublished': formatFullIso(post.createdAt),
       'author': {
         '@type': 'Person',
         'name': post.author || 'Digital Ledger Solutions'

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { db, handleFirestoreError } from '../lib/firebase';
 import { collection, query, getDocs, orderBy } from 'firebase/firestore';
 import { useSEO } from '../hooks/useSEO';
+import { formatDate } from '../lib/dateUtils';
 
 export function Blog() {
   const [posts, setPosts] = useState<any[]>([]);
@@ -32,17 +33,6 @@ export function Blog() {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const formatDate = (dateVal: any) => {
-    if (!dateVal) return 'Recent';
-    if (dateVal?.toDate) return dateVal.toDate().toLocaleDateString();
-    if (dateVal instanceof Date) return dateVal.toLocaleDateString();
-    if (typeof dateVal === 'string' || typeof dateVal === 'number') {
-      const d = new Date(dateVal);
-      return isNaN(d.getTime()) ? 'Recent' : d.toLocaleDateString();
-    }
-    return 'Recent';
   };
 
   return (
